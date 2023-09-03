@@ -8,7 +8,7 @@ optional_packages = {
 }
 
 setup(
-    name="beir",
+    name="bcqa",
     version="2.0.0",
     author="Venktesh V",
     author_email="venkyviswa12@gmail.com",

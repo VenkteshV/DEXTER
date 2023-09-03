@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: bcqa
+Version: 2.0.0
+Summary: A Benchmark for Complex Heterogeneous Question answering
+Home-page: https://github.com/VenkteshV/BCQA
+Download-URL: 
+Author: Venktesh V
+Author-email: venkyviswa12@gmail.com
+License: Apache License 2.0
+Keywords: Information Retrieval Transformer Networks BERT PyTorch Question Answering IR NLP deep learning
+Classifier: Development Status :: Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Provides-Extra: tf
+
+# BCQA (Benchmarking Complex QA)
+
+BCQA is a benchmark for a wide range of complex Qa tasks. It also aims to provide a easy to use framework for evaluating retrieval and reasoning approaches for answering complex multi-hop questions.
