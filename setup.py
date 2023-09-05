@@ -24,8 +24,11 @@ setup(
         'sentence-transformers',
         'pytrec_eval',
         'faiss_cpu',
+        'logging',
         'elasticsearch==7.9.1',
-        'datasets'
+        'datasets',
+        'toml',
+        'zope.interface'
     ],
     extras_require = optional_packages,
     classifiers=[
