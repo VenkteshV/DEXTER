@@ -1,0 +1,16 @@
+fastapi
+torch
+uvicorn
+strsim
+pyyaml
+wandb
+nest_asyncio
+playwright
+asyncio_atexit
+gensim
+openai
+numpy
+pandas
+scikit-learn
+wikipedia
+tqdm
