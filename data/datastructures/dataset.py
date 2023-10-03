@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset
 
 
-class MyDataset(Dataset):
+class QaDataset(Dataset):
     def __init__(self, enc_ids, enc_mask, dec_ids, dec_mask, is_training):
         assert len(enc_ids) == len(enc_mask)
         assert len(dec_ids) == len(dec_mask)

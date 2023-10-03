@@ -7,15 +7,16 @@ from torch.utils.data import Dataset, DataLoader, RandomSampler, SequentialSampl
 
 from constants import Split
 from data.datastructures.answer import Answer, AmbigNQAnswer
-from data.datastructures.dataset import MyDataset
+from data.datastructures.dataset import QaDataset
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample, AmbigNQSample
 from data.loaders.tokenizer import Tokenizer
 
 
 class GenericDataLoader(DataLoader):
-    def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path="config.ini", split=Split.TRAIN,
-                 batch_size=None):
+    def __init__(self, dataset: str, tokenizer: str = "bert-base-uncased", config_path: str = "config.ini",
+                 split: Split = Split.TRAIN,
+                 batch_size: int = None):
         self.raw_data = []
         self.meta = {}
         self.tokenizer = Tokenizer(tokenizer)
@@ -34,7 +35,7 @@ class GenericDataLoader(DataLoader):
             sampler = RandomSampler(self.dataset)
         else:
             sampler = SequentialSampler(self.dataset)
-        print("Dataset loaded of length",len(self.dataset))
+        print("Dataset loaded of length", len(self.dataset))
         super(GenericDataLoader, self).__init__(self.dataset, sampler=sampler, batch_size=batch_size)
 
     @staticmethod
@@ -55,7 +56,7 @@ class GenericDataLoader(DataLoader):
             self.raw_data.append(Sample(data["id"], Question(data["question"], [Answer(data["answer"])])))
         ip_ids, ip_attention = self.tokenize_questions()
         op_ids, op_attention = self.tokenize_answers()
-        return MyDataset(ip_ids, ip_attention, op_ids, op_attention, self.is_training)
+        return QaDataset(ip_ids, ip_attention, op_ids, op_attention, self.is_training)
 
     def tokenize_questions(self):
         op = self.tokenizer.tokenize([data.question.text() for data in self.raw_data], padding=True, truncation=True,
@@ -89,7 +90,7 @@ class AmbigQADataLoader(GenericDataLoader):
             self.raw_data.append(AmbigNQSample(_id, question, AmbigNQAnswer(sample_answers)))
         ip_ids, ip_attention = self.tokenize_questions()
         op_ids, op_attention = self.tokenize_answers()
-        return MyDataset(ip_ids, ip_attention, op_ids, op_attention, self.is_training)
+        return QaDataset(ip_ids, ip_attention, op_ids, op_attention, self.is_training)
 
     def tokenize_answers(self):
         max_length = 30  # TODO:parameterize this

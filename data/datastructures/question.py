@@ -1,6 +1,6 @@
 class Question:
 
-    def __init__(self, text, _id):
+    def __init__(self, text:str, _id):
         self._text = text
         self._id = id
         self.attention_mask = None
