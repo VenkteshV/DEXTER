@@ -26,9 +26,11 @@ setup(
         'faiss_cpu',
         'logging',
         'elasticsearch==7.9.1',
-        'datasets',
+        'data',
         'toml',
-        'zope.interface'
+        'zope.interface',
+        'transformers==4.27.0',
+        'protobuf'
     ],
     extras_require = optional_packages,
     classifiers=[
