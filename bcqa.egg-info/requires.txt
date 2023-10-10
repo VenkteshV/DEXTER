@@ -2,7 +2,11 @@ sentence-transformers
 pytrec_eval
 faiss_cpu
 elasticsearch==7.9.1
-datasets
+data
+toml
+zope.interface
+transformers==4.27.0
+protobuf
 
 [tf]
 tensorflow>=2.2.0
