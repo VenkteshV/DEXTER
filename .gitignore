@@ -9,3 +9,4 @@ data/loaders/__pycache__/BasedataLoader.cpython-310.pyc
 data/loaders/__pycache__/tokenizer.cpython-310.pyc
 data/readers/__pycache__/ReaderFactory.cpython-310.pyc
 data/readers/__pycache__/SpanPredictors.cpython-310.pyc
+tests/data/loaders/ambignq-light-temp/dev_light.json
