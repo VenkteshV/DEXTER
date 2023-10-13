@@ -1,0 +1,11 @@
+__pycache__/constants.cpython-310.pyc
+data/dpr_tokenized.json
+data/wikidata.json
+data/datastructures/__pycache__/answer.cpython-310.pyc
+data/datastructures/__pycache__/dataset.cpython-310.pyc
+data/datastructures/__pycache__/question.cpython-310.pyc
+data/datastructures/__pycache__/sample.cpython-310.pyc
+data/loaders/__pycache__/BasedataLoader.cpython-310.pyc
+data/loaders/__pycache__/tokenizer.cpython-310.pyc
+data/readers/__pycache__/ReaderFactory.cpython-310.pyc
+data/readers/__pycache__/SpanPredictors.cpython-310.pyc
