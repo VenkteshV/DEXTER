@@ -1,6 +1,9 @@
 import gzip
 import json
+import re
+import string
 from collections import defaultdict
+
 
 import numpy as np
 import torch
@@ -10,6 +13,8 @@ from constants import Split
 from data.datastructures.dataset import AmbigQAReaderDataset
 from data.loaders.BasedataLoader import AmbigQADataLoader, ReaderDataLoader
 from data.readers.ReaderFactory import ReaderFactory, ReaderName
+from tests.util import decode_span_batch
+
 
 # def load_db(data_path, subset=None):
 #         passages = {}
@@ -137,7 +142,77 @@ from data.readers.ReaderFactory import ReaderFactory, ReaderName
 #         features["negative_input_mask"][-1].append(attention_mask)
 #         features["negative_token_type_ids"][-1].append(token_type_ids)
 # tokenized_data = features
-def inference_span_predictor(model, dev_data, save_predictions=False):
+def decode_span(outputs,tokenizer,tokenized_data, n_paragraphs=50,max_ans_length=10,topk_answer=1,verbose=False,n_jobs=12):
+    # assert len(self.data)==len(self.tokenized_data["positive_input_ids"])== \
+    #        len(self.tokenized_data["positive_input_mask"])==len(outputs), \
+    #     (len(self.data), len(self.tokenized_data["positive_input_ids"]),
+    #      len(self.tokenized_data["positive_input_mask"]), len(outputs))
+    return decode_span_batch(list(zip(tokenized_data["positive_input_ids"],
+                                      tokenized_data["positive_input_mask"])),
+                             outputs,
+                             tokenizer=tokenizer,
+                             max_answer_length=max_ans_length,
+                             n_paragraphs=n_paragraphs,
+                             topk_answer=topk_answer,
+                             verbose=verbose,
+                             n_jobs=n_jobs,
+                             save_psg_sel_only=False)
+
+def evaluate(self, predictions, n_paragraphs=None):
+    assert len(predictions) == len(self), (len(predictions), len(self))
+    if self.args.save_psg_sel_only:
+        return [-1]
+    if n_paragraphs is None:
+        ems = []
+        for prediction, dp in zip(predictions, self.data):
+            if type(prediction) == list:
+                prediction = prediction[0]
+            if type(prediction) == dict:
+                prediction = prediction["text"]
+            ems.append(get_exact_match(prediction, dp["answer"]))
+        return ems
+    ems = defaultdict(list)
+    for prediction, dp in zip(predictions, self.data):
+        assert len(n_paragraphs) == len(prediction)
+        for pred, n in zip(prediction, n_paragraphs):
+            if type(pred) == list:
+                pred = pred[0]
+            if type(pred) == dict:
+                pred = pred["text"]
+            ems[n].append(get_exact_match(pred, dp["answer"]))
+    for n in n_paragraphs:
+        self.logger.info("n_paragraphs=%d\t#M=%.2f" % (n, np.mean(ems[n]) * 100))
+    return ems[n_paragraphs[-1]]
+
+def get_exact_match(answers1, answers2):
+    if type(answers1)==list:
+        if len(answers1)==0:
+            return 0
+        return np.max([get_exact_match(a, answers2) for a in answers1])
+    if type(answers2)==list:
+        if len(answers2)==0:
+            return 0
+        return np.max([get_exact_match(answers1, a) for a in answers2])
+    return (normalize_answer(answers1) == normalize_answer(answers2))
+
+def normalize_answer(s):
+    def remove_articles(text):
+        return re.sub(r'\b(a|an|the)\b', ' ', text)
+
+    def white_space_fix(text):
+        return ' '.join(text.split())
+
+    def remove_punc(text):
+        exclude = set(string.punctuation)
+        return ''.join(ch for ch in text if ch not in exclude)
+
+    def lower(text):
+        return text.lower()
+
+    return white_space_fix(remove_articles(remove_punc(lower(s))))
+
+
+def inference_span_predictor(tokenized_data,model, dev_data, save_predictions=False):
     outputs = []
     if True:
         dataloader = tqdm(dev_data)
@@ -153,17 +228,15 @@ def inference_span_predictor(model, dev_data, save_predictions=False):
             for start_logit, end_logit, sel_logit in zip(batch_start_logits, batch_end_logits, batch_sel_logits):
                 outputs.append((start_logit, end_logit, sel_logit))
 
-    if save_predictions and dev_data.args.n_paragraphs is None:
+    if save_predictions:
         n_paragraphs = [dev_data.args.test_M]
     elif save_predictions:
         n_paragraphs = [int(n) for n in dev_data.args.n_paragraphs.split(",")]
     else:
         n_paragraphs = None
-    predictions = dev_data.decode_span(outputs,
+    predictions = decode_span(outputs,dev_data.tokenizer,tokenized_data,
                                        n_paragraphs=n_paragraphs)
-    if save_predictions:
-        dev_data.save_predictions(predictions)
-    return np.mean(dev_data.evaluate(predictions, n_paragraphs=n_paragraphs))
+    return np.mean(evaluate(predictions, n_paragraphs=n_paragraphs))
 
 
 
@@ -179,7 +252,7 @@ reader = ReaderFactory().create_reader(
 )
 reader.eval()
 
-inference_span_predictor(model=reader,dev_data=data_loader,save_predictions=True)
+inference_span_predictor(tokenized_data,model=reader,dev_data=data_loader,save_predictions=False)
 
 # with open("data/dpr_tokenized.json", "w") as f:
 #     json.dump(tokenized_data, f)
