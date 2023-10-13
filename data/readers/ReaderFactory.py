@@ -44,18 +44,18 @@ class ReaderFactory:
 
     def _load_from_checkpoint(self, checkpoint, base, Model, Config):
         # TODO: DeepaliP98GPU handling
-        # def convert_to_single_gpu(state_dict):
-        #     if "model_dict" in state_dict:
-        #         state_dict = state_dict["model_dict"]
-        #
-        #     def _convert(key):
-        #         if key.startswith("module."):
-        #             return key[7:]
-        #         return key
-        #
-        #     return {_convert(key): value for key, value in state_dict.items()}
+        def convert_to_single_gpu(state_dict):
+            if "model_dict" in state_dict:
+                state_dict = state_dict["model_dict"]
 
-        state_dict = torch.load(checkpoint, map_location=torch.device("cpu"))
+            def _convert(key):
+                if key.startswith("module."):
+                    return key[7:]
+                return key
+
+            return {_convert(key): value for key, value in state_dict.items()}
+
+        state_dict = convert_to_single_gpu(torch.load(checkpoint))
         model = Model(Config.from_pretrained(base))
         # TODO: DeepaliP98 figure out how to incorporate the below for bart
         # if "bart" in args.bert_name:

@@ -9,4 +9,6 @@ class Tokenizer:
         return self.tokenizer(input, **kwargs)
 
     def decode(self, idx):
-        return self.tokenizer.decode(idx)
+        return self.tokenizer.decode(idx,
+                                     skip_special_tokens=True,
+                                     clean_up_tokenization_spaces=True).strip().replace(" - ", "-").replace(" : ", ":")
