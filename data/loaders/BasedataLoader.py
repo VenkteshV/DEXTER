@@ -62,6 +62,11 @@ class GenericDataLoader(DataLoader):
         op = self.tokenizer.tokenize([data.question.text() for data in self.raw_data], padding=True, truncation=True,
                                      return_tensors="pt")
         return op['input_ids'], op['attention_mask']
+    def tokenize_evidences(self):
+        op = self.tokenizer.tokenize([data.evidences.text() for data in self.raw_data], padding=True, truncation=True,
+                                     return_tensors="pt")
+        return op['input_ids'], op['attention_mask']
+        
 
     def tokenize_answers(self):
         return self.tokenizer.tokenize([data.answer.text() for data in self.raw_data])

@@ -10,7 +10,7 @@ optional_packages = {
 setup(
     name="bcqa",
     version="2.0.0",
-    author="Venktesh V",
+    author="Venktesh V, Deepali Prabhu",
     author_email="venkyviswa12@gmail.com",
     description="A Benchmark for Complex Heterogeneous Question answering",
     long_description=readme,
