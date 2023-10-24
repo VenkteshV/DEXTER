@@ -3,3 +3,6 @@ class Split:
     TRAIN = "train"
     DEV = "dev"
     PRED = "predict"
+
+class Dataset:
+    AMBIGQA = "ambignq"

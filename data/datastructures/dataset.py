@@ -22,7 +22,24 @@ class QADataset(Dataset):
         else:
             return self.enc_ids[idx], self.enc_mask[idx]
 
-class AmbigQAReaderDataset(Dataset):
+class PassageDataset(Dataset):
+    def __init__(self,passage_ids,input_ids,attention_mask):
+        assert len(input_ids)==len(passage_ids)==len(attention_mask)
+        self.input_ids = input_ids
+        self.passage_ids = passage_ids
+        self.attention_mask = attention_mask
+    
+    def __len__(self):
+        return len(self.passage_ids)
+    
+    def __getitem__(self, idx):
+        assert idx in self.passage_ids
+        return self.input_ids[idx], self.attention_mask[idx]
+    
+    def get_by_id(self,idx):
+        return self.__getitem__(idx)
+        
+class ReaderDataset(Dataset):
     def __init__(self, data,
                  is_training=False, train_M=16, test_M=16):
         self.data = data

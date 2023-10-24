@@ -9,7 +9,7 @@ from data.loaders.tokenizer import Tokenizer
 
 class MyTestCase(unittest.TestCase):
     def test_loader(self):
-        loader = AmbigQADataLoader("ambignq-light", config_path="test_config.ini", split=Split.DEV, batch_size=10)
+        loader = AmbigQADataLoader("ambignq-light", config_path="tests/data/test_config.ini", split=Split.DEV, batch_size=10)
         assert len(loader.raw_data) == len(loader.dataset)
         self.assertTrue(isinstance(loader.dataset, QADataset))
         self.assertTrue(isinstance(loader.tokenizer, Tokenizer))
