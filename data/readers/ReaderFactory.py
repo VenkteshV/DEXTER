@@ -51,16 +51,17 @@ class Reader:
     def evaluate(self,data_loader:ReaderDataLoader,metrics:List[Metric],n_paragraphs:int=None):
         predictions = self.infer(data_loader,n_paragraphs)
         results = {}
-        for metric in metrics:
-            ems = defaultdict(list)
-            if n_paragraphs is None:        
+        for metric in metrics:            
+            if n_paragraphs is None:
+                ems = []      
                 for prediction, dp in zip(predictions, data_loader.base_dataset.raw_data):
                     if type(prediction) == list:
                         prediction = prediction[0]
                     if type(prediction) == dict:
                         prediction = prediction["text"]
                     ems.append(metric.evaluate(prediction, dp.answer.flatten()))                        
-            else:            
+            else:     
+                ems = defaultdict(list)       
                 for prediction, dp in zip(predictions, data_loader.base_dataset.raw_data):
                     assert len(n_paragraphs) == len(prediction)
                     for pred, n in zip(prediction, n_paragraphs):
@@ -72,7 +73,7 @@ class Reader:
                 for n in n_paragraphs:
                     print("n_paragraphs=%d\t#M=%.2f" % (n, np.mean(ems[n]) * 100))
                 ems = ems[n_paragraphs[-1]]
-            results[metric.name()]= ems
+            results[metric.name()]= np.mean(ems)
         return results
     
     def decode_span_batch(self,features, scores, tokenizer, max_answer_length,
