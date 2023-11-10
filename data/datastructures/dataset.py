@@ -20,3 +20,26 @@ class QaDataset(Dataset):
         else:
             return self.enc_ids[idx], self.enc_mask[idx]
 
+
+class DprDataset(Dataset):
+    def __init__(self, query_ids, query_mask, context_ids, context_mask):
+        """_summary_
+
+        Args:
+            query_ids (_type_): _description_
+            query_mask (_type_): _description_
+            context_ids (_type_): _description_
+            context_mask (_type_): _description_
+        """
+        assert len(query_ids) == len(query_mask)
+        assert len(context_ids) == len(context_mask)
+        self.query_ids = query_ids
+        self.query_mask = query_mask
+        self.context_ids = context_ids
+        self.context_mask = context_mask
+
+    def __len__(self):
+        return len(self.query_ids)
+
+    def __getitem__(self, idx):
+        return self.query_ids[idx], self.query_mask[idx], self.context_ids[idx], self.context_mask[idx]
