@@ -14,7 +14,7 @@ from data.loaders.tokenizer import Tokenizer
 
 
 class GenericDataLoader(DataLoader):
-    def __init__(self, dataset: str, tokenizer: str = "bert-base-uncased", config_path: str = "config.ini",
+    def __init__(self, dataset: str, tokenizer: str = "bert-base-uncased", config_path: str = "config.ini",config=None,
                  split: Split = Split.TRAIN,
                  batch_size: int = None):
         self.raw_data = []
@@ -23,14 +23,17 @@ class GenericDataLoader(DataLoader):
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
         self.is_training = split == Split.TRAIN
+        print(config)
         datapath = self.config["Data-Path"][dataset]
         if datapath.endswith("zip"):
             self.extract_zip_to_temp(dataset, self.config["Data-Path"][dataset])
             self.data_folder_path = dataset + "-" + "temp"
         else:
             self.data_folder_path = self.config["Data-Path"][dataset]
-
-        self.dataset = self.load_dataset(split)
+        if config!=None:
+            self.dataset = self.load_dataset(config,split)
+        else:
+            self.dataset = self.load_dataset(split)
         if self.is_training:
             sampler = RandomSampler(self.dataset)
         else:
@@ -73,9 +76,9 @@ class GenericDataLoader(DataLoader):
 
 
 class AmbigQADataLoader(GenericDataLoader):
-    def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
+    def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', config=None, split=Split.TRAIN,
                  batch_size=None):
-        super().__init__(dataset, tokenizer, config_path, split, batch_size)
+        super().__init__(dataset, tokenizer, config_path,config, split, batch_size)
 
     def load_dataset(self, split=Split.TRAIN):
 

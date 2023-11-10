@@ -39,7 +39,7 @@ class DprDataset(Dataset):
         self.context_mask = context_mask
 
     def __len__(self):
-        return len(self.enc_ids)
+        return len(self.query_ids)
 
     def __getitem__(self, idx):
         return self.query_ids[idx], self.query_mask[idx], self.context_ids[idx], self.context_mask[idx]

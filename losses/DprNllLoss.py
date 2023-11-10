@@ -1,3 +1,8 @@
+    """DPR losses
+
+    Returns:
+        _type_: _description_
+    """
 from torch import Tensor
 import collections
 import logging
@@ -8,6 +13,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from losses.BaseLoss import BaseLoss
+
+
 class DprNllLoss(BaseLoss):
     def loss_fn(
         self,
@@ -36,7 +43,8 @@ class DprNllLoss(BaseLoss):
 
         max_score, max_idxs = torch.max(softmax_scores, 1)
         correct_predictions_count = (
-            max_idxs == torch.tensor(positive_idx_per_question).to(max_idxs.device)
+            max_idxs == torch.tensor(
+                positive_idx_per_question).to(max_idxs.device)
         ).sum()
         return loss, correct_predictions_count
 

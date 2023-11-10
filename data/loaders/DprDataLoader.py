@@ -5,7 +5,7 @@ import numpy as np
 import random
 import torch
 from torch.utils.data import Dataset, DataLoader, RandomSampler, SequentialSampler
-
+import uuid
 from constants import Split
 from data.datastructures.answer import Answer, AmbigNQAnswer
 from data.datastructures.dataset import DprDataset
@@ -22,31 +22,32 @@ import logging
 logger = logging.getLogger(__name__)
 
 class DprDataLoader(GenericDataLoader):
-    def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
+    def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini',config = None, split=Split.TRAIN,
                  batch_size=None):
-        super().__init__(dataset, tokenizer, config_path, split, batch_size)
+        super().__init__(dataset, tokenizer, config_path,config, split, batch_size)
+
 
     def load_json(self, split=Split.TRAIN):
-        dataset_path = f'{self.data_folder_path}/{split}.json'
+        dataset_path = f'{self.data_folder_path}/{self.config["File-Path"]["file"]}.json'
         with open(dataset_path, 'r') as fp:
             dataset = json.load(fp)
         return dataset
     
     def load_dataset(self, config: DprHyperParams, split=Split.TRAIN,  shuffle: bool=False):
-
         dataset = self.load_json(split)
         for data in dataset:
             samples = []
-            _id = data['id']
+            _id = data['id'] if "id" in data.keys() else  uuid.uuid4()
             question = Question(data["question"], None)
             sample = {}
+            evidences = {}
 
-            positive_instances = [Evidence(document.title + ""+document.text, document.passage_id) for document in data["positive_ctxs"]]
+            evidences["positives"] = [Evidence(document["title"] + ""+document["text"], document["passage_id"]) for document in data["positive_ctxs"]]
 
-            evidences["negatives"] = [Evidence(document.title + ""+document.text, document.passage_id) for document in data["negative_ctxs"]]
+            evidences["negatives"] = [Evidence(document["title"] + ""+document["text"], document["passage_id"]) for document in data["negative_ctxs"]]
            
             if "hard_negative_ctxs" in list(data.keys()) and len(data["hard_negative_ctxs"])>0:
-                evidences["hard_negatives"] = [Evidence(document.title + ""+document.text, document.passage_id) for document in data["hard_negative_ctxs"]]
+                evidences["hard_negatives"] = [Evidence(document["title"] + ""+document["text"], document["passage_id"]) for document in data["hard_negative_ctxs"]]
 
         
             if shuffle:
@@ -56,7 +57,7 @@ class DprDataLoader(GenericDataLoader):
                     if "hard_negative_ctxs" in list(evidences.keys()):
                         random.shuffle(evidences["hard_negatives"])
             else:
-                    positive_ctx = evidences["positives"][0]
+                    positive_ctx = [evidences["positives"][0]]
                     evidences["positive_document"] = positive_ctx
             evidences["negatives"] = evidences["negatives"][:config.num_negative_samples]
             evidences["hard_negatives"] = evidences["negatives"][:config.num_negative_samples]
