@@ -28,8 +28,9 @@ setup(
         'data',
         'toml',
         'zope.interface',
-        'transformers==4.27.0',
-        'protobuf'
+        'transformers==4.30.0',
+        'protobuf',
+        'openai'
     ],
     extras_require = optional_packages,
     classifiers=[
