@@ -14,6 +14,7 @@ from data.loaders.ReaderDataLoader import ReaderDataLoader
 from data.readers.Seq2SeqPredictiors import Bart
 
 from data.readers.SpanPredictors import BertSpanPredictor, AlbertSpanPredictor
+from metrics.MetricsBase import Metric
 
 
 
