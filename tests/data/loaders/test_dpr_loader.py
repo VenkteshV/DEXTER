@@ -4,7 +4,7 @@ from constants import Split
 from data.datastructures.dataset import DprDataset
 from data.datastructures.sample import Sample
 from data.loaders.DprDataLoader import DprDataLoader
-from data.loaders.tokenizer import Tokenizer
+from data.loaders.Tokenizer import Tokenizer
 from data.datastructures.hyperparameters.dpr import DprHyperParams
 
 
