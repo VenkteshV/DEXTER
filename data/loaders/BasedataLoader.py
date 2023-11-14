@@ -10,7 +10,7 @@ from data.datastructures.answer import Answer, AmbigNQAnswer
 from data.datastructures.dataset import QaDataset
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample, AmbigNQSample
-from data.loaders.tokenizer import Tokenizer
+from data.loaders.Tokenizer import Tokenizer
 
 
 class GenericDataLoader(DataLoader):
