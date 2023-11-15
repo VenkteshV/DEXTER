@@ -1,4 +1,4 @@
-from inference.ir.dense.dpr_sentence_transformers_inference import DprSentSearch
+from methods.ir.dense.dpr.models.dpr_sentence_transformers_inference import DprSentSearch
 
 from data.datastructures.hyperparameters.dpr import DprHyperParams
 
