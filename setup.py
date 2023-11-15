@@ -30,7 +30,8 @@ setup(
         'zope.interface',
         'transformers==4.30.0',
         'protobuf',
-        'openai'
+        'openai',
+        'pytrec_eval'
     ],
     extras_require = optional_packages,
     classifiers=[
