@@ -1,8 +1,8 @@
-    """DPR losses
+"""DPR losses
 
-    Returns:
-        _type_: _description_
-    """
+Returns:
+    _type_: _description_
+"""
 from torch import Tensor
 import collections
 import logging

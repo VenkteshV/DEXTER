@@ -1,10 +1,9 @@
 import unittest
-
 from constants import Split
 from data.datastructures.dataset import DprDataset
 from data.datastructures.sample import Sample
 from data.loaders.DprDataLoader import DprDataLoader
-from data.loaders.tokenizer import Tokenizer
+from data.loaders.Tokenizer import Tokenizer
 from data.datastructures.hyperparameters.dpr import DprHyperParams
 
 
@@ -14,7 +13,7 @@ class MyTestCase(unittest.TestCase):
                                      document_encoder_path="facebook-dpr-ctx_encoder-single-nq-base",
                                      ann_search="annoy_search",
                                      num_negative_samples=5)
-        loader = DprDataLoader("nq-data", config_path="test_dpr_config.ini",config=config_instance, split=Split.DEV, batch_size=10)
+        loader = DprDataLoader("nq-data", config_path="tests/data/loaders/test_dpr_config.ini",config=config_instance, split=Split.DEV, batch_size=10)
         assert len(loader.raw_data) == len(loader.dataset)
         self.assertTrue(isinstance(loader.dataset, DprDataset))
         self.assertTrue(isinstance(loader.tokenizer, Tokenizer))

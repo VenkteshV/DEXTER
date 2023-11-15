@@ -1,0 +1,532 @@
+[{
+    "pre_text": [
+        "largest operators of open-loop and closed-loop retail electronic payments networks the largest operators of open-loop and closed-loop retail electronic payments networks are visa , mastercard , american express , discover , jcb and diners club .",
+        "with the exception of discover , which primarily operates in the united states , all of the other network operators can be considered multi- national or global providers of payments network services .",
+        "based on payments volume , total volume , number of transactions and number of cards in circulation , visa is the largest retail electronic payments network in the world .",
+        "the following chart compares our network with those of our major competitors for calendar year 2007 : company payments volume volume transactions cards ( billions ) ( billions ) ( billions ) ( millions ) visa inc. ( 1 ) .",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        "$ 2457 $ 3822 50.3 1592 ."
+    ],
+    "post_text": [
+        "( 1 ) visa inc .",
+        "figures as reported previously in our filings .",
+        "source : the nilson report , issue 902 ( may 2008 ) and issue 903 ( may 2008 ) .",
+        "note : visa inc .",
+        "figures exclude visa europe .",
+        "figures for competitors include their respective european operations .",
+        "visa figures include visa , visa electron , and interlink brands .",
+        "visa cards include plus proprietary cards , but proprietary plus cash volume is not included .",
+        "domestic china figures are excluded .",
+        "mastercard figures include pin-based debit card figures on mastercard cards , but not maestro or cirrus figures .",
+        "china commercial funds transfers are excluded .",
+        "american express and discover include business from third-party issuers .",
+        "jcb figures are for april 2006 through march 2007 , but cards and outlets are as of september 2007 .",
+        "jcb total transaction figures are estimates .",
+        "our primary operations we generate revenue from the transaction processing services we offer to our customers .",
+        "our customers deliver visa products and payment services to consumers and merchants based on the product platforms we define and manage .",
+        "payments network management is a core part of our operations , as it ensures that our payments system provides a safe , efficient , consistent , and interoperable service to cardholders , merchants , and financial institutions worldwide .",
+        "transaction processing services core processing services our core processing services involve the routing of payment information and related data to facilitate the authorization , clearing and settlement of transactions between visa issuers , which are the financial institutions that issue visa cards to cardholders , and acquirers , which are the financial institutions that offer visa network connectivity and payments acceptance services to merchants .",
+        "in addition , we offer a range of value-added processing services to support our customers 2019 visa programs and to promote the growth and security of the visa payments network .",
+        "authorization is the process of approving or declining a transaction before a purchase is finalized or cash is disbursed .",
+        "clearing is the process of delivering final transaction data from an acquirer to an issuer for posting to the cardholder 2019s account , the calculation of certain fees and charges that apply to the issuer and acquirer involved in the transaction , and the conversion of transaction amounts to the ."
+    ],
+    "filename": "V/2008/page_17.pdf",
+    "table_ori": [
+        [
+            "Company",
+            "Payments Volume  (billions)",
+            "Total Volume  (billions)<i></i>",
+            "Total Transactions  (billions)",
+            "<i></i> Cards  (millions)"
+        ],
+        [
+            "Visa Inc.<sup>(1)</sup>",
+            "$2,457",
+            "$3,822",
+            "50.3<i></i>",
+            "1,592"
+        ],
+        [
+            "MasterCard",
+            "1,697",
+            "2,276",
+            "27.0",
+            "916"
+        ],
+        [
+            "American Express",
+            "637",
+            "647",
+            "5.0",
+            "86"
+        ],
+        [
+            "Discover",
+            "102",
+            "119",
+            "1.6",
+            "57"
+        ],
+        [
+            "JCB",
+            "55",
+            "61",
+            "0.6",
+            "58"
+        ],
+        [
+            "Diners Club",
+            "29",
+            "30",
+            "0.2",
+            "7"
+        ]
+    ],
+    "table": [
+        [
+            "company",
+            "payments volume ( billions )",
+            "total volume ( billions )",
+            "total transactions ( billions )",
+            "cards ( millions )"
+        ],
+        [
+            "visa inc. ( 1 )",
+            "$ 2457",
+            "$ 3822",
+            "50.3",
+            "1592"
+        ],
+        [
+            "mastercard",
+            "1697",
+            "2276",
+            "27.0",
+            "916"
+        ],
+        [
+            "american express",
+            "637",
+            "647",
+            "5.0",
+            "86"
+        ],
+        [
+            "discover",
+            "102",
+            "119",
+            "1.6",
+            "57"
+        ],
+        [
+            "jcb",
+            "55",
+            "61",
+            "0.6",
+            "58"
+        ],
+        [
+            "diners club",
+            "29",
+            "30",
+            "0.2",
+            "7"
+        ]
+    ],
+    "qa": {
+        "question": "what is the average payment volume per transaction for american express?",
+        "answer": "127.40",
+        "explanation": "",
+        "ann_table_rows": [
+            3
+        ],
+        "ann_text_rows": [],
+        "steps": [
+            {
+                "op": "divide1-1",
+                "arg1": "637",
+                "arg2": "const_5",
+                "res": "127.40"
+            }
+        ],
+        "program": "divide(637, const_5)",
+        "gold_inds": {
+            "table_3": "company the american express of payments volume ( billions ) is 637 ; the american express of total volume ( billions ) is 647 ; the american express of total transactions ( billions ) is 5.0 ; the american express of cards ( millions ) is 86 ;"
+        },
+        "exe_ans": 127.4,
+        "tfidftopn": {
+            "text_55": "american express and discover include business from third-party issuers .",
+            "text_57": "jcb total transaction figures are estimates ."
+        },
+        "program_re": "divide(637, const_5)",
+        "model_input": [
+            [
+                "text_43",
+                "$ 2457 $ 3822 50.3 1592 ."
+            ],
+            [
+                "table_1",
+                "company the visa inc. ( 1 ) of payments volume ( billions ) is $ 2457 ; the visa inc. ( 1 ) of total volume ( billions ) is $ 3822 ; the visa inc. ( 1 ) of total transactions ( billions ) is 50.3 ; the visa inc. ( 1 ) of cards ( millions ) is 1592 ;"
+            ],
+            [
+                "table_3",
+                "company the american express of payments volume ( billions ) is 637 ; the american express of total volume ( billions ) is 647 ; the american express of total transactions ( billions ) is 5.0 ; the american express of cards ( millions ) is 86 ;"
+            ]
+        ]
+    },
+    "id": "V/2008/page_17.pdf-1",
+    "table_retrieved": [
+        {
+            "score": 3.2108232975006104,
+            "ind": "table_3"
+        },
+        {
+            "score": -0.7681400775909424,
+            "ind": "table_1"
+        },
+        {
+            "score": -2.073254108428955,
+            "ind": "table_5"
+        }
+    ],
+    "text_retrieved": [
+        {
+            "score": -1.715970516204834,
+            "ind": "text_43"
+        },
+        {
+            "score": -2.0985116958618164,
+            "ind": "text_3"
+        }
+    ],
+    "table_retrieved_all": [
+        {
+            "score": 3.2108232975006104,
+            "ind": "table_3"
+        },
+        {
+            "score": -0.7681400775909424,
+            "ind": "table_1"
+        },
+        {
+            "score": -2.073254108428955,
+            "ind": "table_5"
+        },
+        {
+            "score": -2.6297411918640137,
+            "ind": "table_2"
+        },
+        {
+            "score": -2.969886541366577,
+            "ind": "table_6"
+        },
+        {
+            "score": -3.037274122238159,
+            "ind": "table_4"
+        },
+        {
+            "score": -3.510836362838745,
+            "ind": "table_0"
+        }
+    ],
+    "text_retrieved_all": [
+        {
+            "score": -1.715970516204834,
+            "ind": "text_43"
+        },
+        {
+            "score": -2.0985116958618164,
+            "ind": "text_3"
+        },
+        {
+            "score": -2.7326362133026123,
+            "ind": "text_45"
+        },
+        {
+            "score": -2.986504554748535,
+            "ind": "text_56"
+        },
+        {
+            "score": -3.03603458404541,
+            "ind": "text_55"
+        },
+        {
+            "score": -3.1650302410125732,
+            "ind": "text_60"
+        },
+        {
+            "score": -3.1695451736450195,
+            "ind": "text_64"
+        },
+        {
+            "score": -3.226694107055664,
+            "ind": "text_2"
+        },
+        {
+            "score": -3.2272932529449463,
+            "ind": "text_62"
+        },
+        {
+            "score": -3.2500457763671875,
+            "ind": "text_63"
+        },
+        {
+            "score": -3.2663421630859375,
+            "ind": "text_49"
+        },
+        {
+            "score": -3.2664241790771484,
+            "ind": "text_57"
+        },
+        {
+            "score": -3.324010133743286,
+            "ind": "text_0"
+        },
+        {
+            "score": -3.344172477722168,
+            "ind": "text_1"
+        },
+        {
+            "score": -3.356581211090088,
+            "ind": "text_52"
+        },
+        {
+            "score": -3.45807147026062,
+            "ind": "text_61"
+        },
+        {
+            "score": -3.4868476390838623,
+            "ind": "text_53"
+        },
+        {
+            "score": -3.5097579956054688,
+            "ind": "text_50"
+        },
+        {
+            "score": -3.517197608947754,
+            "ind": "text_59"
+        },
+        {
+            "score": -3.533071279525757,
+            "ind": "text_46"
+        },
+        {
+            "score": -3.5416648387908936,
+            "ind": "text_51"
+        },
+        {
+            "score": -3.5937511920928955,
+            "ind": "text_54"
+        },
+        {
+            "score": -3.604983329772949,
+            "ind": "text_58"
+        },
+        {
+            "score": -3.611854076385498,
+            "ind": "text_48"
+        },
+        {
+            "score": -3.6930675506591797,
+            "ind": "text_44"
+        },
+        {
+            "score": -3.7623205184936523,
+            "ind": "text_47"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_4"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_5"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_6"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_7"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_8"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_9"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_10"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_11"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_12"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_13"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_14"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_15"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_16"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_17"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_18"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_19"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_20"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_21"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_22"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_23"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_24"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_25"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_26"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_27"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_28"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_29"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_30"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_31"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_32"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_33"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_34"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_35"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_36"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_37"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_38"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_39"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_40"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_41"
+        },
+        {
+            "score": -3.868288040161133,
+            "ind": "text_42"
+        }
+    ]
+}]

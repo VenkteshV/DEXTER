@@ -3,15 +3,15 @@ from typing import List
 
 
 class Answer:
-    def __init__(self, text: str, _id=None):
+    def __init__(self, text: str, idx=None):
         self._text = text
-        self._id = id
+        self._idx = idx
 
     def text(self):
         return self._text
 
     def id(self):
-        return self._id
+        return self._idx
 
     def flatten(self):
         return [self._text]
