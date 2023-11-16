@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 class RetrievalMetrics:
     """retrieval metrics ndcg, mrr etc.
     """    
-    def __init__(self,  k_values: List[int] = [1,3,5,10,100,1000]):
+    def __init__(self,  k_values: List[int] = [1,3,5,10,100]):
         self.k_values = k_values
         self.top_k = max(k_values)
 
