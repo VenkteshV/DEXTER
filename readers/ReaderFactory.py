@@ -11,10 +11,12 @@ from tqdm import tqdm
 from transformers import BertConfig, AlbertConfig, BartConfig
 from data.datastructures.dataset import ReaderDataset
 from data.loaders.ReaderDataLoader import ReaderDataLoader
-from data.readers.Seq2SeqPredictiors import Bart
 
-from data.readers.SpanPredictors import BertSpanPredictor, AlbertSpanPredictor
+
+
 from metrics.MetricsBase import Metric
+from readers.Seq2SeqPredictiors import Bart
+from readers.SpanPredictors import AlbertSpanPredictor, BertSpanPredictor
 
 
 

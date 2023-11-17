@@ -3,9 +3,10 @@ import unittest
 from constants import Split
 from data.datastructures.dataset import QADataset
 from data.datastructures.sample import AmbigNQSample
-from data.loaders.BasedataLoader import AmbigQADataLoader, PassageDataLoader, ReaderDataLoader
+from data.loaders import ReaderDataLoader
+from data.loaders.BasedataLoader import AmbigQADataLoader, PassageDataLoader
 from data.loaders.Tokenizer import Tokenizer
-from data.readers.ReaderFactory import ReaderFactory, ReaderName
+from readers.ReaderFactory import ReaderFactory, ReaderName
 from metrics.ExactMatch import ExactMatch
 
 

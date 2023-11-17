@@ -10,7 +10,8 @@ from data.datastructures.hyperparameters.dpr import DprHyperParams
 from data.loaders.DprDataLoader import DprDataLoader
 from transformers import (DPRContextEncoderTokenizerFast,
                           DPRQuestionEncoderTokenizerFast)
-from methods.ir.dense.dpr.bi_encoder import BiEncoder
+from methods.ir.dense.dpr.models.bi_encoder import BiEncoder
+
 from trainers.utils import get_optimizer
 
 logger = logging.getLogger(__name__)

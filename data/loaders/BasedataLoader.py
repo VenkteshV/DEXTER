@@ -131,14 +131,18 @@ class PassageDataLoader(DataLoader):
             self.raw_data = []
             if(".json" in self.data_path):
                 with open(self.data_path,'r') as fp:
-                    db = json.load(fp)
-                    passages,titles = db['passages'],db['titles']
+                    db = json.load(fp) #format {"id":{"passage":"..","title":...}
+                    passages = {}
+                    titles = {}
+                    for id in db.keys():
+                        passages[id] = db[id]["passage"]
+                        titles[id] = db[id]["passage"]
             else:
                 passages,titles = self.load_passage_db(self.data_path,copy.copy(self.subset_ids))
-            passages,titles = db['passages'],db['titles']
+
             subset_ids = self.subset_ids
             if not(subset_ids):
-                subset_ids = list(range(len(passages)))
+                subset_ids = list(passages.keys())
             for i in range(len(subset_ids)):
                 self.raw_data.append(Evidence(text=passages[str(subset_ids[i])],idx=subset_ids[i],title=titles[str(subset_ids[i])]))            
             input_data = [passage.title() + " " + "[SEP]" + " " + passage.text() for passage in self.raw_data]
@@ -156,13 +160,14 @@ class PassageDataLoader(DataLoader):
     def load_passage_db(self,data_path, subset=None):
         passages = {}
         titles = {}
-        s_len = len(subset)
+        load_all = True if not(subset) else False
+        s_len = len(subset) if not(load_all) else None
 
         with gzip.open(data_path, "rb") as f:
             _ = f.readline()
             offset = 0
             for line in tqdm(f):
-                if offset in subset:
+                if load_all or offset in subset:
                     _id, passage, title = line.decode().strip().split("\t")
                     assert int(_id) - 1 == offset
                     passages[offset] = passage.lower()
@@ -171,7 +176,8 @@ class PassageDataLoader(DataLoader):
                     if(not(subset)):
                         break
                 offset += 1
-        assert s_len == len(titles) == len(passages)
+        if(not(load_all)):
+            assert s_len == len(titles) == len(passages)
         print("Loaded {} passages".format(len(passages)))
         return passages,titles 
         
