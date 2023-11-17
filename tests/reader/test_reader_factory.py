@@ -1,6 +1,6 @@
 import unittest
 
-from data.readers.ReaderFactory import ReaderFactory, ReaderName
+from readers.ReaderFactory import ReaderFactory, ReaderName
 
 
 class MyTestCase(unittest.TestCase):

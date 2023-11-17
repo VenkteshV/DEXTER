@@ -19,9 +19,9 @@ class FinQADataLoader(GenericDataLoader):
         for data in dataset:
             question = Question(data["qa"]["question"])
             answer = Answer(data["qa"]["answer"])
-            self.raw_data.append(Sample(data["id"], question, answer, TableEvidence(data["table"])))
-            self.raw_data.append(Sample(data["id"], question, answer, Evidence("".join(data["pre_text"]))))
-            self.raw_data.append(Sample(data["id"], question, answer, Evidence("".join(data["post_text"]))))
+            self.raw_data.append(Sample(data["id"]+"-0", question, answer, TableEvidence(data["table"],idx=data["id"]+".table")))
+            self.raw_data.append(Sample(data["id"]+"-1", question, answer, Evidence("".join(data["pre_text"]),idx=data["id"]+".pre")))
+            self.raw_data.append(Sample(data["id"]+"-2", question, answer, Evidence("".join(data["post_text"]),idx=data["id"]+".post")))
 
     def load_tokenized(self):
         if self.tokenized_path and os.path.exists(self.tokenized_path):
