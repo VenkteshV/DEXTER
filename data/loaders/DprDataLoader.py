@@ -14,7 +14,7 @@ from data.datastructures.evidence import Evidence
 
 from data.datastructures.sample import Sample, AmbigNQSample
 from data.loaders.Tokenizer import Tokenizer
-from data.datastructures.hyperparameters.dpr import DprHyperParams
+from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 from data.loaders.BasedataLoader import GenericDataLoader
 import logging
@@ -34,7 +34,7 @@ class DprDataLoader(GenericDataLoader):
             dataset = json.load(fp)
         return dataset
 
-    def load_dataset(self, config: DprHyperParams, split=Split.TRAIN, shuffle: bool = False):
+    def load_dataset(self, config: DenseHyperParams, split=Split.TRAIN, shuffle: bool = False):
         dataset = self.load_json(split)
         for data in dataset:
             samples = []

@@ -48,8 +48,12 @@ class WikiMultihopQADataLoader(GenericDataLoader):
             evidence = sample.evidences
             #print("str(sample.idx)",str(sample.idx),str(evidence.id()),qrels[str(sample.idx)])
             qrels[str(sample.idx)][str(evidence.id())] = 1
-
-        return queries,qrels,self.corpus
+        corpus_instances = []
+        for idx in list(self.corpus.keys()):
+            title = self.corpus[idx]["title"]
+            text = self.corpus[idx]["text"]
+            corpus_instances.append(Evidence(idx=idx,title=title,text=text))
+        return queries,qrels,corpus_instances
 
 
     def load_tokenized(self):
