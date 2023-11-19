@@ -27,6 +27,7 @@ if __name__ == "__main__":
 
     # with open("/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json") as f:
     #     corpus = json.load(f)
+
     dpr_sent_search.create_index(
         "", 100,corpus)
     response = dpr_sent_search.retrieve(

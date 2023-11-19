@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer, util
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from data.datastructures.hyperparameters.dpr import DprHyperParams
 from methods.ir.dense.dpr.indexer.indexer import AnnSearch
 import gzip
 import logging
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class DprSentSearch():
     def __init__(self,
-                 config: DenseHyperParams):
+                 config: DprHyperParams):
         self.query_encoder = SentenceTransformer(config.query_encoder_path, device='cuda')
         self.document_encoder = SentenceTransformer(
             config.document_encoder_path, device='cuda')
@@ -34,9 +34,9 @@ class DprSentSearch():
                         self.titles[index] = title
                         index += 1
         else:
-            for idx,evidence in enumerate(corpus):
-                self.documents[int(idx)] = evidence.text()
-                self.titles[int(idx)] = evidence.title()
+            for idx in list(corpus.keys()):
+                self.documents[int(idx)] = corpus[idx]["text"]
+                self.titles[int(idx)] = corpus[idx]["title"]
             print("here****",len(self.documents),self.documents[0])
 
         self.data = [self.documents[idx]+"[SEP]"+self.titles[idx]

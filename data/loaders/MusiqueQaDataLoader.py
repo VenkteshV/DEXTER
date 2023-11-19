@@ -57,6 +57,7 @@ class MusiqueQADataLoader(GenericDataLoader):
         return queries,qrels,corpus_instances
 
 
+
     def load_tokenized(self):
         if self.tokenized_path and os.path.exists(self.tokenized_path):
             self.logger.info("Loading DPR data from {}".format(self.tokenized_path))
