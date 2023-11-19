@@ -3,21 +3,13 @@ from methods.ir.dense.dpr.models.dpr_sentence_transformers_inference import DprS
 from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
 from constants import Split
 from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-
-<<<<<<< HEAD
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
-=======
-from data.datastructures.hyperparameters.dpr import DprHyperParams
->>>>>>> feature/retrieval
+
 
 
 if __name__ == "__main__":
 
-<<<<<<< HEAD
     config_instance = DenseHyperParams(query_encoder_path="facebook-dpr-question_encoder-multiset-base",
-=======
-    config_instance = DprHyperParams(query_encoder_path="facebook-dpr-question_encoder-multiset-base",
->>>>>>> feature/retrieval
                                      document_encoder_path="facebook-dpr-ctx_encoder-multiset-base",
                                      ann_search="faiss_search")
    # config = config_instance.get_all_params()
