@@ -17,8 +17,8 @@ class FinQADataLoader(GenericDataLoader):
     def load_raw_dataset(self, split=Split.TRAIN):
         dataset = self.load_json(split)
         for data in dataset:
-            question = Question(data["qa"]["question"])
-            answer = Answer(data["qa"]["answer"])
+            question = Question(data["qa"]["question"],idx=data["id"])
+            answer = Answer(data["qa"]["answer"],idx=data["id"])
             self.raw_data.append(Sample(data["id"]+"-0", question, answer, TableEvidence(data["table"],idx=data["id"]+".table")))
             self.raw_data.append(Sample(data["id"]+"-1", question, answer, Evidence("".join(data["pre_text"]),idx=data["id"]+".pre")))
             self.raw_data.append(Sample(data["id"]+"-2", question, answer, Evidence("".join(data["post_text"]),idx=data["id"]+".post")))

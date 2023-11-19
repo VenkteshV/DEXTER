@@ -1,13 +1,8 @@
-import annoy
 from annoy import AnnoyIndex
 import os
-import pandas as pd
 from torch import Tensor
-import numpy as np
 import torch
-from sentence_transformers import SentenceTransformer
 
-from sklearn.metrics.pairwise import cosine_similarity
 from typing import List,Dict
 import logging
 

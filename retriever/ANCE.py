@@ -19,8 +19,8 @@ class ANCE(BaseRetriver):
         super().__init__()
         self.config = ConfigParser()
         self.config.read(config_path)
-        self.question_encoder = SentenceTransformer(self.config["Retriever"]["question_encoder"])
-        self.context_encoder = SentenceTransformer(self.config["Retriever"]["context_encoder"])
+        self.question_encoder = SentenceTransformer(self.config["Retrieval"]["question-encoder"])
+        self.context_encoder = SentenceTransformer(self.config["Retrieval"]["context-encoder"])
         self.show_progress_bar = show_progress_bar
         self.convert_to_tensor = convert_to_tensor
         self.batch_size = batch_size
@@ -28,7 +28,7 @@ class ANCE(BaseRetriver):
     
     def encode_queries(self, queries: List[Question], batch_size: int = 16, **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
         queries = [query.text() for query in queries]
-        return self.q_model.encode(queries, batch_size=batch_size, **kwargs)
+        return self.question_encoder.encode(queries, batch_size=batch_size)
     
     def encode_corpus(self, corpus: List[Evidence],sep:str=None, batch_size: int = 8, **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
         contexts = []
@@ -39,7 +39,7 @@ class ANCE(BaseRetriver):
             else:
                 context = evidence.text().strip()
             contexts.append(context)
-        return self.doc_model.encode(contexts, batch_size=batch_size, **kwargs)
+        return self.context_encoder.encode(contexts, batch_size=batch_size)
 
 
     def retrieve(self, 
@@ -48,13 +48,16 @@ class ANCE(BaseRetriver):
                top_k: int, 
                score_function: SimilarityMetric,
                return_sorted: bool = False, 
+               batch_size: int=16,
+               sep: str="#",
                **kwargs) -> Dict[str, Dict[str, float]]:
 
-            
+        
         self.logger.info("Encoding Queries...")
-        query_ids = [query.idx() for query in queries]
+        query_ids = [query.id() for query in queries]
         self.results = {qid: {} for qid in query_ids}
-        queries = [query.text() for query in queries]
+        self.batch_size = batch_size
+        self.sep = sep
         query_embeddings = self.encode_queries(queries, batch_size=self.batch_size)
           
         self.logger.info("Sorting Corpus by document length (Longest first)...")
@@ -62,17 +65,22 @@ class ANCE(BaseRetriver):
         corpus = sorted(corpus, key=lambda evidence: len(evidence.title() + self.sep + evidence.text() if evidence.title() else evidence.text()), reverse=True)
    
         self.logger.info("Encoding Corpus in batches... Warning: This might take a while!")
-        self.logger.info("Scoring Function: {} ({})".format(self.score_function_desc[score_function], score_function))
+        self.logger.info("Scoring Function: {} ({})".format(score_function.name(), score_function))
         
         corpus_embeddings = self.encode_corpus(corpus)
 
         # Compute similarites using either cosine-similarity or dot product
         cos_scores = score_function.evaluate(query_embeddings,corpus_embeddings)
         # Get top-k values
-        cos_scores_top_k_values, cos_scores_top_k_idx = torch.topk(cos_scores, min(top_k+1, len(cos_scores[1])), dim=1, largest=True, sorted=return_sorted)
+        cos_scores_top_k_values, cos_scores_top_k_idx = torch.topk(cos_scores, min(top_k+1, len(cos_scores[0])), dim=1, largest=True, sorted=return_sorted)
         cos_scores_top_k_values = cos_scores_top_k_values.cpu().tolist()
         cos_scores_top_k_idx = cos_scores_top_k_idx.cpu().tolist()
 
-        ##TODO:: Deepali provide output in standard format
+        qrels = {}
+        for q in range(len(cos_scores_top_k_idx)):
+            qid = queries[q].id()
+            qrels[qid] = {}
+            for doc in cos_scores_top_k_idx[0]:
+                qrels[qid][corpus[doc].id()] = cos_scores[q][doc].item()
                 
-        return cos_scores 
+        return qrels 

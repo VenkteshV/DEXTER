@@ -2,14 +2,8 @@
  FAISS-based index components for dense retriver
 """
 
-import os
-import time
 import logging
-import pickle
-from typing import List, Tuple, Iterator
 
-import faiss
-import numpy as np
 
 logger = logging.getLogger()
 
