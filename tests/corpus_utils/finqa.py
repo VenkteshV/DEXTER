@@ -9,7 +9,7 @@ for data in loader.raw_data:
     ev = {"passage":data.evidences.text(),"title":data.evidences.title()}
     corpus[data.evidences.id()] = ev
 
-with open("./finqa_corpus.json","w+") as fp:
+with open("tests/corpus_utils/finqa_corpus.json","w+") as fp:
     json.dump(corpus,fp)
 
 

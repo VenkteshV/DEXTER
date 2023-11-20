@@ -80,7 +80,7 @@ class ANCE(BaseRetriver):
         for q in range(len(cos_scores_top_k_idx)):
             qid = queries[q].id()
             qrels[qid] = {}
-            for doc in cos_scores_top_k_idx[0]:
+            for doc in cos_scores_top_k_idx[q]:
                 qrels[qid][corpus[doc].id()] = cos_scores[q][doc].item()
                 
         return qrels 
