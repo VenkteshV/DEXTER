@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from torch import Tensor as T
 from torch import nn
 from transformers import DPRQuestionEncoder, DPRContextEncoder
-from data.datastructures.hyperparameters.dpr import DprHyperParams
+from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ class BiEncoder(torch.nn.Module):
     between queries and positive contexts.
     """
 
-    def __init__(self, hypers: DprHyperParams):
+    def __init__(self, hypers: DenseHyperParams):
         super().__init__()
         self.hypers = hypers
         logger.info(
