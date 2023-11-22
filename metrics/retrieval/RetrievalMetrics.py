@@ -12,16 +12,13 @@ class RetrievalMetrics:
         self.k_values = k_values
         self.top_k = max(k_values)
 
-    @staticmethod
-    def evaluate_retrieval( qrels: Dict[str, Dict[str, int]], 
-                 results: Dict[str, Dict[str, float]], 
-                 k_values: List[int]) -> Tuple[Dict[str, float], Dict[str, float], Dict[str, float], Dict[str, float]]:
+    def evaluate_retrieval(self,qrels: Dict[str, Dict[str, int]], 
+                 results: Dict[str, Dict[str, float]]):
         """_summary_
 
         Args:
             qrels (Dict[str, Dict[str, int]]): query doc relevance mapping for evaluation of results
             results (Dict[str, Dict[str, float]]): _description_
-            k_values (List[int]): _description_
 
         Returns:
             Tuple[Dict[str, float], Dict[str, float], Dict[str, float], Dict[str, float]]: _description_
@@ -34,28 +31,28 @@ class RetrievalMetrics:
         precision = {}
         accuracy = {}
         
-        for k in k_values:
+        for k in self.k_values:
             ndcg[f"NDCG@{k}"] = 0.0
             _map[f"MAP@{k}"] = 0.0
             recall[f"Recall@{k}"] = 0.0
             precision[f"P@{k}"] = 0.0
             accuracy[f"acc@{k}"] = 0.0
         
-        map_string = "map_cut." + ",".join([str(k) for k in k_values])
-        ndcg_string = "ndcg_cut." + ",".join([str(k) for k in k_values])
-        recall_string = "recall." + ",".join([str(k) for k in k_values])
-        precision_string = "P." + ",".join([str(k) for k in k_values])
+        map_string = "map_cut." + ",".join([str(k) for k in self.k_values])
+        ndcg_string = "ndcg_cut." + ",".join([str(k) for k in self.k_values])
+        recall_string = "recall." + ",".join([str(k) for k in self.k_values])
+        precision_string = "P." + ",".join([str(k) for k in self.k_values])
         evaluator = pytrec_eval.RelevanceEvaluator(qrels, {map_string, ndcg_string, recall_string, precision_string})
         scores = evaluator.evaluate(results)
         
         for query_id in scores.keys():
-            for k in k_values:
+            for k in self.k_values:
                 ndcg[f"NDCG@{k}"] += scores[query_id]["ndcg_cut_" + str(k)]
                 _map[f"MAP@{k}"] += scores[query_id]["map_cut_" + str(k)]
                 recall[f"Recall@{k}"] += scores[query_id]["recall_" + str(k)]
                 precision[f"P@{k}"] += scores[query_id]["P_"+ str(k)]
         
-        for k in k_values:
+        for k in self.k_values:
             ndcg[f"NDCG@{k}"] = round(ndcg[f"NDCG@{k}"]/len(scores), 5)
             _map[f"MAP@{k}"] = round(_map[f"MAP@{k}"]/len(scores), 5)
             recall[f"Recall@{k}"] = round(recall[f"Recall@{k}"]/len(scores), 5)
@@ -65,6 +62,6 @@ class RetrievalMetrics:
             logger.info("\n")
             for k in eval.keys():
                 logger.info("{}: {:.4f}".format(k, eval[k]))
-        accuracy[f"acc@{k}"] = top_k_accuracy(qrels, results, k_values)
+        accuracy[f"acc@{k}"] = top_k_accuracy(qrels, results, self.k_values)
 
         return ndcg, _map, recall, precision
