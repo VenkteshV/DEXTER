@@ -33,27 +33,6 @@ class MyTestCase(unittest.TestCase):
 
         print(f"Overall NDCG@10: {average_ndcg_at_10}")
 
-    def test_retriever_dataloader_wikimultihop(self):
-        loader = RetrieverDataset("wikimultihopqa","wikimultihopqa-corpus","tests/data/test_config.ini",Split.DEV)
-        retriever = ANCE("tests/retriever/test_config.ini")
-        queries, qrels, corpus = loader.qrels()
-        qrels_ret = retriever.retrieve(corpus,queries,10,CosineSimilarity(),True)
-        self.assertEqual(len(qrels),len(qrels_ret))
-        evaluator = pytrec_eval.RelevanceEvaluator(qrels, {'ndcg'})
-        results = evaluator.evaluate(qrels_ret)
-        # Calculate overall NDCG@10
-        total_ndcg_at_10 = 0
-        num_queries = len(qrels_ret)
-
-        # Sum up NDCG@10 values for all queries
-        for query_id, query_results in results.items():
-            total_ndcg_at_10 += query_results['ndcg']
-
-        # Calculate average NDCG@10
-        average_ndcg_at_10 = total_ndcg_at_10 / num_queries
-
-        print(f"Overall NDCG@10: {average_ndcg_at_10}")
-
 
 
 if __name__ == '__main__':

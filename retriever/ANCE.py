@@ -28,7 +28,7 @@ class ANCE(BaseRetriver):
     
     def encode_queries(self, queries: List[Question], batch_size: int = 16, **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
         queries = [query.text() for query in queries]
-        return self.question_encoder.encode(queries, batch_size=batch_size)
+        return self.question_encoder.encode(queries, batch_size=batch_size,show_progress_bar=self.show_progress_bar,convert_to_tensor = self.convert_to_tensor,**kwargs)
     
     def encode_corpus(self, corpus: List[Evidence],sep:str=None, batch_size: int = 8, **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
         contexts = []
@@ -39,7 +39,7 @@ class ANCE(BaseRetriver):
             else:
                 context = evidence.text().strip()
             contexts.append(context)
-        return self.context_encoder.encode(contexts, batch_size=batch_size)
+        return self.context_encoder.encode(contexts, batch_size=batch_size,show_progress_bar=self.show_progress_bar,convert_to_tensor = self.convert_to_tensor,**kwargs)
 
 
     def retrieve(self, 
