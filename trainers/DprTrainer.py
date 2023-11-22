@@ -6,19 +6,18 @@ import torch
 import numpy as np
 
 import random
-from data.datastructures.hyperparameters.dpr import DprHyperParams
+from data.datastructures.hyperparameters.dpr import DenseHyperParams
 from data.loaders.DprDataLoader import DprDataLoader
 from transformers import (DPRContextEncoderTokenizerFast,
                           DPRQuestionEncoderTokenizerFast)
 from methods.ir.dense.dpr.models.bi_encoder import BiEncoder
-
 from trainers.utils import get_optimizer
 
 logger = logging.getLogger(__name__)
 
 
 class BiEncoderTrainer():
-    def __init__(self, config: DprHyperParams):
+    def __init__(self, config: DenseHyperParams):
         self.args = config
 
         self.query_tokenizer = DPRQuestionEncoderTokenizerFast.from_pretrained(

@@ -10,7 +10,7 @@ from data.datastructures.sample import Sample
 from data.loaders.BasedataLoader import GenericDataLoader
 
 
-class WikiMultihopQADataLoader(GenericDataLoader):
+class MusiqueQADataLoader(GenericDataLoader):
     def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
                  batch_size=None, corpus_path: str = None):
         with open(corpus_path) as f:
@@ -23,13 +23,13 @@ class WikiMultihopQADataLoader(GenericDataLoader):
     def load_raw_dataset(self, split=Split.TRAIN):
         dataset = self.load_json(split)
         print(len(dataset))
-        for  query_index, data in enumerate(tqdm.tqdm(dataset[:1200])):
-            if len(data["context"]) == 0:
-                data["context"] = ['some random title', ['some random stuff']]
-            for evidence_set in data["context"]:
-                title = evidence_set[0]
+        for  query_index, data in enumerate(tqdm.tqdm(dataset)):
+            if len(data["paragraphs"]) == 0:
+                data["paragraphs"] = ['some random title', ['some random stuff']]
+            for evidence_set in data["paragraphs"]:
+                title = evidence_set["title"]
                 #for evidence in evidence_set[1]:
-                evidence = " ".join(evidence_set[1])
+                evidence = evidence_set["paragraph_text"]
                 #print(list(self.titles).index(title.split(" - ")[0]))
                 self.raw_data.append(
                     Sample(query_index, Question(data["question"]), Answer(data["answer"]),
@@ -53,6 +53,7 @@ class WikiMultihopQADataLoader(GenericDataLoader):
             title = self.corpus[idx]["title"]
             text = self.corpus[idx]["text"]
             corpus_instances.append(Evidence(idx=idx,title=title,text=text))
+
         return queries,qrels,corpus_instances
 
 

@@ -35,6 +35,8 @@ class GenericDataLoader(DataLoader):
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
         self.is_training = split == Split.TRAIN
+        print(self.config["Data-Path"].keys())
+
         datapath = self.config["Data-Path"][dataset]
         tokenized_path = f"{dataset}_{tokenizer}_tokenized"
         self.prefix = prefix if prefix else ""
