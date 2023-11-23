@@ -12,10 +12,10 @@ if __name__ == "__main__":
 
    # config = config_instance.get_all_params()
 
-    loader = RetrieverDataset("wikimultihopqa","wikimultihopqa-corpus","evaluation/config.ini",Split.DEV)
+    loader = RetrieverDataset("finqa","finqa-corpus","tests/retriever/test_config.ini",Split.DEV)
 
     queries, qrels, corpus = loader.qrels()
-    print("queries",len(queries),len(qrels),len(corpus),queries[0],qrels["0"])
+
     bm25_search = BM25Search(index_name="wikimusique",initialize=True)
 
 

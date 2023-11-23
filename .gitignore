@@ -2,3 +2,4 @@ node_modules
 *.pyc
 __pycache__/
 /tests/corpus_utils/dataset/*
+/indices/*

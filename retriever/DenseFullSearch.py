@@ -31,7 +31,8 @@ class DenseFullSearch(BaseRetriver):
         self.logger = logging.getLogger(__name__)
     
     def encode_queries(self, queries: List[Question], batch_size: int = 16, **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
-        return self.question_encoder.encode(queries, batch_size=batch_size, **kwargs)
+        queries = [query.text() for query in queries]
+        return self.question_encoder.encode(queries, batch_size=batch_size,**kwargs)
     
     def encode_corpus(self, corpus: List[Evidence], **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
         contexts = []
@@ -63,9 +64,8 @@ class DenseFullSearch(BaseRetriver):
 
             
         self.logger.info("Encoding Queries...")
-        queries = [query.text() for query in list(queries.values())]
-        print("queries****",queries[0])
-        query_embeddings = self.encode_queries(queries, batch_size=self.batch_size)
+
+        query_embeddings = self.encode_queries(queries, batch_size=self.batch_size,show_progress_bar=self.show_progress_bar,convert_to_tensor=self.convert_to_tensor,**kwargs)
           
 
    
@@ -75,7 +75,7 @@ class DenseFullSearch(BaseRetriver):
         if index_present:
             corpus_embeddings = embeddings
         else:
-            corpus_embeddings = self.encode_corpus(corpus)
+            corpus_embeddings = self.encode_corpus(corpus,show_progress_bar=self.show_progress_bar,convert_to_tensor=self.convert_to_tensor,**kwargs)
             joblib.dump(corpus_embeddings,"indices/corpus/index")
 
         # Compute similarites using either cosine-similarity or dot product
@@ -86,8 +86,9 @@ class DenseFullSearch(BaseRetriver):
         cos_scores_top_k_idx = cos_scores_top_k_idx.cpu().tolist()
         response = {}
         for idx, q in enumerate(queries):
-            response[str(idx)] = {}
+            response[q.id()] = {}
             for index, id in enumerate(cos_scores_top_k_idx[idx]):
-                response[str(idx)][str(id)] = float(cos_scores_top_k_values[idx][index])
+                document_id = corpus[id].id()
+                response[q.id()][document_id] = float(cos_scores_top_k_values[idx][index])
         return response
                 

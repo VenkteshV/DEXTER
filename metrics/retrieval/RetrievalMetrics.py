@@ -38,11 +38,11 @@ class RetrievalMetrics:
             precision[f"P@{k}"] = 0.0
             accuracy[f"acc@{k}"] = 0.0
         
-        map_string = "map_cut." + ",".join([str(k) for k in self.k_values])
-        ndcg_string = "ndcg_cut." + ",".join([str(k) for k in self.k_values])
-        recall_string = "recall." + ",".join([str(k) for k in self.k_values])
-        precision_string = "P." + ",".join([str(k) for k in self.k_values])
-        evaluator = pytrec_eval.RelevanceEvaluator(qrels, {map_string, ndcg_string, recall_string, precision_string})
+        map_string =  set(["map_cut."+str(k) for k in self.k_values])
+        ndcg_string = set(["ndcg_cut."+str(k) for k in self.k_values])
+        recall_string =  set(["recall."+str(k) for k in self.k_values])
+        precision_string =  set(["P."+str(k) for k in self.k_values])
+        evaluator = pytrec_eval.RelevanceEvaluator(qrels, map_string|ndcg_string|recall_string|precision_string)
         scores = evaluator.evaluate(results)
         
         for query_id in scores.keys():

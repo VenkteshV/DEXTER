@@ -52,7 +52,7 @@ class BM25Search(BaseRetriver):
             sleep(self.sleep_for)
         
         #retrieve results from BM25 
-        query_ids = [index for index, query in enumerate(queries)]
+        query_ids = [query.id() for index, query in enumerate(queries)]
         print("query_ids**",query_ids)
         queries = [query.text() for query in list(queries.values())]
 
@@ -66,8 +66,9 @@ class BM25Search(BaseRetriver):
             for (query_id, hit) in zip(query_ids_batch, results):
                 scores = {}
                 for corpus_id, score in hit['hits']:
-                    if corpus_id != query_id: # query doesnt return in results
-                        scores[corpus_id] = score
+                    c_id = corpus[corpus_id].id()
+                    if c_id != query_id: # query doesnt return in results
+                        scores[c_id] = score
                     self.results[str(query_id)] = scores
         
         return self.results
