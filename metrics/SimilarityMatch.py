@@ -4,6 +4,9 @@ from metrics.MetricsBase import Metric
 
 class SimilarityMetric(Metric):
 
+    def name(self):
+        return "None"  
+
     def normalize_embedding(self,embeddings):
         if not isinstance(embeddings, torch.Tensor):
             embeddings = torch.tensor(embeddings)
@@ -26,6 +29,7 @@ class SimilarityMetric(Metric):
 
 
 class CosineSimilarity(SimilarityMetric):
+
     def name(self):
         return "Cosine Similarity"  
     
@@ -40,7 +44,7 @@ class DotScore(SimilarityMetric):
     def name(self):
         return "Dot Similarity"
     
-    def score(embeddings1, embeddings2):
+    def score(self,embeddings1, embeddings2):
         scores  = torch.mm(embeddings1, embeddings2.transpose(0, 1))
         scores[torch.isnan(scores)] = -1
         return scores

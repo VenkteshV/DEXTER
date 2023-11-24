@@ -35,6 +35,8 @@ class GenericDataLoader(DataLoader):
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
         self.is_training = split == Split.TRAIN
+        print(self.config["Data-Path"].keys())
+
         datapath = self.config["Data-Path"][dataset]
         tokenized_path = f"{dataset}_{tokenizer}_tokenized"
         self.prefix = prefix if prefix else ""
@@ -112,6 +114,7 @@ class PassageDataLoader(DataLoader):
         tokenizer: str = "bert-base-uncased",
         config_path: str = "config.ini",
         ):
+        self.raw_data:List[Evidence] = []
         self.subset_ids = subset_ids
         self.tokenizer_name = tokenizer     
         self.tokenizer = Tokenizer(self.tokenizer_name)
@@ -128,7 +131,6 @@ class PassageDataLoader(DataLoader):
             with open(self.tokenized_path, "r") as fp:
                 return json.load(fp)
         else:
-            self.raw_data = []
             if(".json" in self.data_path):
                 with open(self.data_path,'r') as fp:
                     db = json.load(fp) #format {"id":{"passage":"..","title":...}

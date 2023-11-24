@@ -1,15 +1,15 @@
 class Question:
 
-    def __init__(self, text:str, _id=None):
+    def __init__(self, text:str, idx=None):
         self._text = text
-        self._id = id
+        self._idx = idx
         self.attention_mask = None
 
     def text(self):
         return self._text
 
     def id(self):
-        return self._id
+        return self._idx
 
     def set_id(self, id):
         self._id = id

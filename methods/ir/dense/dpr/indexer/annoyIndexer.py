@@ -1,13 +1,8 @@
-import annoy
 from annoy import AnnoyIndex
 import os
-import pandas as pd
 from torch import Tensor
-import numpy as np
 import torch
-from sentence_transformers import SentenceTransformer
 
-from sklearn.metrics.pairwise import cosine_similarity
 from typing import List,Dict
 import logging
 
@@ -32,7 +27,7 @@ class AnnoySearch:
             top_matches = self.ann.get_nns_by_vector(vec,top_k,include_distances=return_distances)
             indices = [idx for idx in top_matches[0]]
             distances = [dist for dist in top_matches[1]]
-            matches.append(top_matches)
+            matches.append(indices)
             all_distances.append(distances)
 
 

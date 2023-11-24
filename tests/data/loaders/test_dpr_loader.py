@@ -4,12 +4,12 @@ from data.datastructures.dataset import DprDataset
 from data.datastructures.sample import Sample
 from data.loaders.DprDataLoader import DprDataLoader
 from data.loaders.Tokenizer import Tokenizer
-from data.datastructures.hyperparameters.dpr import DprHyperParams
+from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 
 class MyTestCase(unittest.TestCase):
     def test_loader(self):
-        config_instance = DprHyperParams(query_encoder_path="facebook-dpr-question_encoder-single-nq-base",
+        config_instance = DenseHyperParams(query_encoder_path="facebook-dpr-question_encoder-single-nq-base",
                                      document_encoder_path="facebook-dpr-ctx_encoder-single-nq-base",
                                      ann_search="annoy_search",
                                      num_negative_samples=5)

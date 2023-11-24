@@ -1,20 +1,16 @@
-import configparser
 import json
-import zipfile
 import numpy as np
 import random
-import torch
-from torch.utils.data import Dataset, DataLoader, RandomSampler, SequentialSampler
 import uuid
 from constants import Split
-from data.datastructures.answer import Answer, AmbigNQAnswer
+from data.datastructures.answer import AmbigNQAnswer
 from data.datastructures.dataset import DprDataset
 from data.datastructures.question import Question
 from data.datastructures.evidence import Evidence
 
 from data.datastructures.sample import Sample, AmbigNQSample
 from data.loaders.Tokenizer import Tokenizer
-from data.datastructures.hyperparameters.dpr import DprHyperParams
+from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 from data.loaders.BasedataLoader import GenericDataLoader
 import logging
@@ -34,7 +30,7 @@ class DprDataLoader(GenericDataLoader):
             dataset = json.load(fp)
         return dataset
 
-    def load_dataset(self, config: DprHyperParams, split=Split.TRAIN, shuffle: bool = False):
+    def load_dataset(self, config: DenseHyperParams, split=Split.TRAIN, shuffle: bool = False):
         dataset = self.load_json(split)
         for data in dataset:
             samples = []
