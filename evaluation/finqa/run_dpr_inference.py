@@ -13,7 +13,7 @@ if __name__ == "__main__":
                                      document_encoder_path="facebook-dpr-ctx_encoder-multiset-base",
                                      ann_search="faiss_search",show_progress_bar=True)
 
-    loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
+    loader = RetrieverDataset("finqa","finqa-corpus","evaluation/config.ini",Split.DEV)
     queries, qrels, corpus = loader.qrels()
     dpr_sent_search = DprSentSearch(config_instance)
     _ = dpr_sent_search.get_ann_algo(768, 100, "euclidean")

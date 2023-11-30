@@ -42,7 +42,7 @@ class BM25Search(BaseRetriver):
     def retrieve(self, corpus: List[Evidence], queries: List[Question], top_k: int, *args, **kwargs) -> Dict[str, Dict[str, float]]:
         
         corpus_final = {}
-        for index, evidence in enumerate(corpus):
+        for evidence in corpus:
             corpus_final[evidence.id()] = {"title":evidence.title(),"text":evidence.text()}
         # Index the corpus within elastic-search
         # False, if the corpus has been already indexed
