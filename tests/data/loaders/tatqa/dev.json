@@ -1,0 +1,366 @@
+[  {
+  "table": {
+    "uid": "3ffd9053-a45d-491c-957a-1b2fa0af0570",
+    "table": [
+      [
+        "",
+        "",
+        "Years Ended September 30,",
+        ""
+      ],
+      [
+        "",
+        "2019",
+        "2018",
+        "2017"
+      ],
+      [
+        "Fixed Price",
+        "$  1,452.4",
+        "$  1,146.2",
+        "$  1,036.9"
+      ],
+      [
+        "Other",
+        "44.1",
+        "56.7",
+        "70.8"
+      ],
+      [
+        "Total sales",
+        "$1,496.5",
+        "$1,202.9",
+        "$1,107.7"
+      ]
+    ]
+  },
+  "paragraphs": [
+    {
+      "uid": "f4ac7069-10a2-47e9-995c-3903293b3d47",
+      "order": 1,
+      "text": "Sales by Contract Type: Substantially all of our contracts are fixed-price type contracts. Sales included in Other contract types represent cost plus and time and material type contracts."
+    },
+    {
+      "uid": "79e37805-6558-4a8c-b033-32be6bffef48",
+      "order": 2,
+      "text": "On a fixed-price type contract, we agree to perform the contractual statement of work for a predetermined sales price. On a cost-plus type contract, we are paid our allowable incurred costs plus a profit which can be fixed or variable depending on the contract’s fee arrangement up to predetermined funding levels determined by the customer. On a time-and-material type contract, we are paid on the basis of direct labor hours expended at specified fixed-price hourly rates (that include wages, overhead, allowable general and administrative expenses and profit) and materials at cost. The table below presents total net sales disaggregated by contract type (in millions):"
+    }
+  ],
+  "questions": [
+    {
+      "uid": "23801627-ff77-4597-8d24-1c99e2452082",
+      "order": 1,
+      "question": "What is the company paid on a cost-plus type contract?",
+      "answer": [
+        "our allowable incurred costs plus a profit which can be fixed or variable depending on the contract’s fee arrangement up to predetermined funding levels determined by the customer"
+      ],
+      "derivation": "",
+      "answer_type": "span",
+      "answer_from": "text",
+      "rel_paragraphs": [
+        "2"
+      ],
+      "req_comparison": false,
+      "scale": ""
+    },
+    {
+      "uid": "4960801d-277d-4f79-8eca-c4d0200fa9d6",
+      "order": 2,
+      "question": "What is the amount of total sales in 2019?",
+      "answer": [
+        "$1,496.5"
+      ],
+      "derivation": "",
+      "answer_type": "span",
+      "answer_from": "table-text",
+      "rel_paragraphs": [
+        "2"
+      ],
+      "req_comparison": false,
+      "scale": "million"
+    },
+    {
+      "uid": "593c4388-5209-4462-8b83-b429c8612c25",
+      "order": 3,
+      "question": "What are the contract types?",
+      "answer": [
+        "fixed-price type",
+        "cost-plus type",
+        "time-and-material type"
+      ],
+      "derivation": "",
+      "answer_type": "multi-span",
+      "answer_from": "text",
+      "rel_paragraphs": [
+        "1",
+        "2"
+      ],
+      "req_comparison": false,
+      "scale": ""
+    },
+    {
+      "uid": "f4142349-eb72-49eb-9a76-f3ccb1010cbc",
+      "order": 4,
+      "question": "In which year is the amount of total sales the largest?",
+      "answer": [
+        "2019"
+      ],
+      "derivation": "1,496.5>1,202.9>1,107.7",
+      "answer_type": "span",
+      "answer_from": "table-text",
+      "rel_paragraphs": [
+        "2"
+      ],
+      "req_comparison": true,
+      "scale": ""
+    },
+    {
+      "uid": "eb787966-fa02-401f-bfaf-ccabf3828b23",
+      "order": 5,
+      "question": "What is the change in Other in 2019 from 2018?",
+      "answer": -12.6,
+      "derivation": "44.1-56.7",
+      "answer_type": "arithmetic",
+      "answer_from": "table-text",
+      "rel_paragraphs": [
+        "2"
+      ],
+      "req_comparison": false,
+      "scale": "million"
+    },
+    {
+      "uid": "05b670d3-5b19-438c-873f-9bf6de29c69e",
+      "order": 6,
+      "question": "What is the percentage change in Other in 2019 from 2018?",
+      "answer": -22.22,
+      "derivation": "(44.1-56.7)/56.7",
+      "answer_type": "arithmetic",
+      "answer_from": "table-text",
+      "rel_paragraphs": [
+        "2"
+      ],
+      "req_comparison": false,
+      "scale": "percent"
+    }
+  ]
+},
+{
+  "table": {
+    "uid": "53474060-2736-46cb-bd97-1eb42f0ff3c1",
+    "table": [
+      [
+        "",
+        "",
+        "Fiscal",
+        ""
+      ],
+      [
+        "",
+        "2019",
+        "2018",
+        "2017"
+      ],
+      [
+        "",
+        "",
+        "(in millions)",
+        ""
+      ],
+      [
+        "Transportation Solutions:",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Automotive",
+        "$ 5,686",
+        "$ 6,092",
+        "$  5,228"
+      ],
+      [
+        "Commercial transportation",
+        "1,221",
+        "1,280",
+        "997"
+      ],
+      [
+        "Sensors",
+        "914",
+        "918",
+        "814"
+      ],
+      [
+        "Total Transportation Solutions",
+        "7,821",
+        "8,290",
+        "7,039"
+      ],
+      [
+        "Industrial Solutions:",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Industrial equipment",
+        "1,949",
+        "1,987",
+        "1,747"
+      ],
+      [
+        "Aerospace, defense, oil, and gas",
+        "1,306",
+        "1,157",
+        "1,075"
+      ],
+      [
+        "Energy",
+        "699",
+        "712",
+        "685"
+      ],
+      [
+        "Total Industrial Solutions",
+        "3,954",
+        "3,856",
+        "3,507"
+      ],
+      [
+        "Communications Solutions:",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Data and devices",
+        "993",
+        "1,068",
+        "963"
+      ],
+      [
+        "Appliances",
+        "680",
+        "774",
+        "676"
+      ],
+      [
+        "Total Communications Solutions",
+        "1,673",
+        "1,842",
+        "1,639"
+      ],
+      [
+        "Total",
+        "$ 13,448",
+        "$ 13,988",
+        "$ 12,185"
+      ]
+    ]
+  },
+  "paragraphs": [
+    {
+      "uid": "f235886a-f95b-4194-939e-87ecdb5899b8",
+      "order": 1,
+      "text": "Net sales by segment and industry end market(1) were as follows:"
+    },
+    {
+      "uid": "5710b1c7-1e62-4f62-9a1b-b24e696fbc2f",
+      "order": 2,
+      "text": "(1) Industry end market information is presented consistently with our internal management reporting and may be revised periodically as management deems necessary."
+    }
+  ],
+  "questions": [
+    {
+      "uid": "86ae8d77-4dcd-4f82-baac-61c6a2551760",
+      "order": 1,
+      "question": "How is industry end market information presented?",
+      "answer": [
+        "consistently with our internal management reporting and may be revised periodically as management deems necessary."
+      ],
+      "derivation": "",
+      "answer_type": "span",
+      "answer_from": "text",
+      "rel_paragraphs": [
+        "1",
+        "2"
+      ],
+      "req_comparison": false,
+      "scale": ""
+    },
+    {
+      "uid": "b1018041-1c58-47f2-94db-fa8df0a631cb",
+      "order": 2,
+      "question": "In which years was for the net sales by segment and industry end market calculated?",
+      "answer": [
+        "2019",
+        "2018",
+        "2017"
+      ],
+      "derivation": "",
+      "answer_type": "multi-span",
+      "answer_from": "table-text",
+      "rel_paragraphs": [
+        "1"
+      ],
+      "req_comparison": false,
+      "scale": ""
+    },
+    {
+      "uid": "d841005e-c88b-4071-aa53-16bd8a892656",
+      "order": 3,
+      "question": "What are the types of Solutions segments in the table?",
+      "answer": [
+        "Transportation Solutions",
+        "Industrial Solutions",
+        "Communications Solutions"
+      ],
+      "derivation": "",
+      "answer_type": "multi-span",
+      "answer_from": "table-text",
+      "rel_paragraphs": [
+        "1"
+      ],
+      "req_comparison": false,
+      "scale": ""
+    },
+    {
+      "uid": "870c1bda-0cd7-4bd0-bba6-8deb178e24ce",
+      "order": 4,
+      "question": "In which year was the amount for Sensors the largest?",
+      "answer": [
+        "2018"
+      ],
+      "derivation": "918>914>814",
+      "answer_type": "span",
+      "answer_from": "table",
+      "rel_paragraphs": [],
+      "req_comparison": true,
+      "scale": ""
+    },
+    {
+      "uid": "b2786c1a-37de-4120-b03c-32bf5c81f157",
+      "order": 5,
+      "question": "What was the change in the amount for Appliances in 2019 from 2018?",
+      "answer": -94,
+      "derivation": "680-774",
+      "answer_type": "arithmetic",
+      "answer_from": "table",
+      "rel_paragraphs": [],
+      "req_comparison": false,
+      "scale": "million"
+    },
+    {
+      "uid": "fe11f001-3bfe-4089-8108-412676f0a780",
+      "order": 6,
+      "question": "What was the percentage change in the amount for Appliances in 2019 from 2018?",
+      "answer": -12.14,
+      "derivation": "(680-774)/774",
+      "answer_type": "arithmetic",
+      "answer_from": "table",
+      "rel_paragraphs": [],
+      "req_comparison": false,
+      "scale": "percent"
+    }
+  ]
+}]
