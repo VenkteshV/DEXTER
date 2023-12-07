@@ -8,6 +8,7 @@ class Dataset:
     AMBIGQA = "ambignq"
     WIKIMULTIHOPQA = "wikimultihopqa"
     FINQA = "finqa"
+    TATQA = "tatqa"
 
 class Separators:
     TABLE_ROW_SEP = '\n'

@@ -1,6 +1,7 @@
-from constants import Dataset
+from constants import Dataset, Split
 from data.loaders.AmbigQADataLoader import AmbigQADataLoader
 from data.loaders.FinQADataLoader import FinQADataLoader
+from data.loaders.TATQADataLoader import TATQADataLoader
 from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
 
 
@@ -9,14 +10,22 @@ class DataLoaderFactory:
     def __int__(self):
         pass
 
-    def create_dataloader(self, dataloader_name,config_path,split,batch_size,tokenizer):
+    def create_dataloader(
+        self,
+        dataloader_name: str,
+        tokenizer="bert-base-uncased",
+        config_path="test_config.ini",
+        split=Split.TRAIN,
+        batch_size=None,
+    ):
         if Dataset.AMBIGQA in dataloader_name:
             loader = AmbigQADataLoader
-        elif(Dataset.FINQA) in dataloader_name:
+        elif Dataset.FINQA in dataloader_name:
             loader = FinQADataLoader
-        elif(Dataset.WIKIMULTIHOPQA) in dataloader_name:
+        elif Dataset.WIKIMULTIHOPQA in dataloader_name:
             loader = WikiMultihopQADataLoader
-        
+        elif Dataset.TATQA in dataloader_name:
+            loader = TATQADataLoader        
         else:
             raise NotImplemented(f"{dataloader_name} not implemented yet.")
         return loader(dataloader_name,tokenizer, config_path,split,batch_size)

@@ -34,3 +34,14 @@ class AmbigNQAnswer:
                 for answer in query:
                     flattened_answers.append(answer.text())
         return flattened_answers
+
+class TATQAAnswer(Answer):
+
+    def __init__(self, answers: List[Answer], idx=None):
+        self.answers = answers
+
+    def text(self):
+        return ",".join(self._text)
+
+    def id(self):
+        return self._idx
