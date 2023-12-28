@@ -9,6 +9,7 @@ class Dataset:
     WIKIMULTIHOPQA = "wikimultihopqa"
     FINQA = "finqa"
     TATQA = "tatqa"
+    MUSIQUEQA="musiqueqa"
     OTTQA = "ottqa"
 
 class Separators:

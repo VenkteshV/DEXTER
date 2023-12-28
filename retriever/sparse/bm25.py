@@ -60,7 +60,7 @@ class BM25Search(BaseRetriver):
         #retrieve results from BM25 
         query_ids = [query.id() for index, query in enumerate(queries)]
         print("query_ids**",query_ids)
-        queries = [query.text() for query in queries]
+        queries = [query.text() for query in list(queries)]
 
         
         for start_idx in tqdm.trange(0, len(queries), self.batch_size, desc='progress'):

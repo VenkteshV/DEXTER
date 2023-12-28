@@ -1,6 +1,7 @@
 import json
 import os
 import tqdm
+from typing import List
 from constants import Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import DprDataset
@@ -12,7 +13,10 @@ from data.loaders.BaseDataLoader import GenericDataLoader
 
 class WikiMultihopQADataLoader(GenericDataLoader):
     def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
-                 batch_size=None, corpus_path: str = None):
+                 batch_size=None, corpus_path: str = None, corpus: List[Evidence]=None):
+        self.corpus = corpus
+        self.titles = [self.corpus[idx].title().split(" - ")[0] for idx,_ in enumerate(self.corpus)]
+        print(self.titles[100],self.corpus[100].title())
         super().__init__(dataset, tokenizer, config_path, split, batch_size)
 
 
@@ -28,8 +32,9 @@ class WikiMultihopQADataLoader(GenericDataLoader):
                 evidence = " ".join(evidence_set[1])
                 #print(list(self.titles).index(title.split(" - ")[0]))
                 self.raw_data.append(
-                    Sample(query_index, Question(data["question"]), Answer(data["answer"]),
-                            Evidence(evidence, title)
+                    Sample(query_index, Question(data["question"],idx=data["_id"]), Answer(data["answer"]),
+                            Evidence(text=evidence, 
+                                    idx=list(self.titles).index(title.split(" - ")[0]),title=title)
                 ))
 
     def load_tokenized(self):
