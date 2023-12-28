@@ -1,5 +1,7 @@
 import json
 import os
+
+from tqdm import tqdm
 from constants import Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import DprDataset
@@ -16,7 +18,7 @@ class OTTQADataLoader(GenericDataLoader):
 
     def load_raw_dataset(self, split=Split.TRAIN):
         dataset = self.load_json(split)
-        for data in tqdm.tqdataset:
+        for data in tqdm(dataset):
             question = Question(data["question"],idx=data['qid'])
             answer = Answer(data["answer"],idx=data['qid'])
             count = 0

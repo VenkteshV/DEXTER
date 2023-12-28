@@ -6,6 +6,7 @@ import os
 import joblib
 from torch import Tensor
 import torch
+from tqdm import tqdm
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
 from metrics.SimilarityMatch import SimilarityMetric
@@ -57,6 +58,8 @@ class HfRetriever(BaseRetriver):
             contexts.append(context)
         context_embeddings = []
         index = 0
+        pbar = tqdm(total = len(contexts))
+        print("Starting encoding of contexts....")
         with torch.no_grad():
             while index < len(contexts):
                 samples = contexts[index:index+self.batch_size]
@@ -65,6 +68,8 @@ class HfRetriever(BaseRetriver):
                 sentence_emb = self.mean_pooling(token_emb[0],tokenized_contexts["attention_mask"])
                 context_embeddings.append(sentence_emb)
                 index += self.batch_size
+                pbar.update(self.batch_size)
+        pbar.close()
         context_embeddings = torch.cat(context_embeddings,dim=0)
         print("context_embeddings",context_embeddings.shape)
         return context_embeddings
@@ -96,6 +101,9 @@ class HfRetriever(BaseRetriver):
         self.logger.info("Encoding Corpus in batches... Warning: This might take a while!")
         #self.logger.info("Scoring Function: {} ({})".format(self.score_function_desc[score_function], score_function))
         embeddings, index_present = self.load_index_if_available()
+
+        #TODO:Comment below for index usage
+        index_present = False
         if index_present:
             corpus_embeddings = embeddings
         else:

@@ -1,6 +1,7 @@
 from constants import Dataset, Split
 from data.loaders.AmbigQADataLoader import AmbigQADataLoader
 from data.loaders.FinQADataLoader import FinQADataLoader
+from data.loaders.OTTQADataLoader import OTTQADataLoader
 from data.loaders.TATQADataLoader import TATQADataLoader
 from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
 
@@ -25,7 +26,9 @@ class DataLoaderFactory:
         elif Dataset.WIKIMULTIHOPQA in dataloader_name:
             loader = WikiMultihopQADataLoader
         elif Dataset.TATQA in dataloader_name:
-            loader = TATQADataLoader        
+            loader = TATQADataLoader  
+        elif Dataset.OTTQA in dataloader_name:
+            loader = OTTQADataLoader
         else:
             raise NotImplemented(f"{dataloader_name} not implemented yet.")
         return loader(dataloader_name,tokenizer, config_path,split,batch_size)

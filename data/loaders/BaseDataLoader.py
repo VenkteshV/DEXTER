@@ -31,7 +31,6 @@ class GenericDataLoader(DataLoader):
         self.raw_data:List[Sample] = []
         self.meta = {}
         self.tokenizer_name = tokenizer
-        self.tokenizer = Tokenizer(self.tokenizer_name)
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
         self.is_training = split == Split.TRAIN
@@ -52,15 +51,18 @@ class GenericDataLoader(DataLoader):
             self.data_folder_path = self.config["Data-Path"][dataset]
 
         self.load_raw_dataset(split)
-        self.dataset = self.load_tokenized()
-        if self.is_training:
-            sampler = RandomSampler(self.dataset)
-        else:
-            sampler = SequentialSampler(self.dataset)
-        print("Dataset loaded of length", len(self.dataset))
-        super(GenericDataLoader, self).__init__(
-            self.dataset, sampler=sampler, batch_size=batch_size
-        )
+        #If no tokenizer given, only load raw dataset
+        if(self.tokenizer_name):
+            self.tokenizer = Tokenizer(self.tokenizer_name)
+            self.dataset = self.load_tokenized()
+            if self.is_training:
+                sampler = RandomSampler(self.dataset)
+            else:
+                sampler = SequentialSampler(self.dataset)
+            print("Dataset loaded of length", len(self.dataset))
+            super(GenericDataLoader, self).__init__(
+                self.dataset, sampler=sampler, batch_size=batch_size
+            )
 
     @staticmethod
     def extract_zip_to_temp(dataset: str, zip_file_path):
@@ -116,47 +118,53 @@ class PassageDataLoader(DataLoader):
         ):
         self.raw_data:List[Evidence] = []
         self.subset_ids = subset_ids
-        self.tokenizer_name = tokenizer     
-        self.tokenizer = Tokenizer(self.tokenizer_name)
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
-        self.data_path = self.config["Data-Path"][dataset]
-        self.tokenized_path = f"{dataset}_{tokenizer}_tokenized"
-        tokenized_data = self._load_tokenized_data()
-        self.dataset = PassageDataset(tokenized_data['input_ids'].keys(),tokenized_data['input_ids'],tokenized_data['attention_mask'])
+        self.data_path = self.config["Data-Path"][dataset]  
+        self.tokenizer_name = tokenizer      
+        self._load_data()
+
+        if(self.tokenizer_name):
+            self.tokenized_path = f"{dataset}_{tokenizer}_tokenized"
+            self.tokenizer_name = tokenizer     
+            self.tokenizer = Tokenizer(self.tokenizer_name)            
+            tokenized_data = self._load_tokenized_data()
+            self.dataset = PassageDataset(tokenized_data['input_ids'].keys(),tokenized_data['input_ids'],tokenized_data['attention_mask'])
+    
+    def _load_data(self):
+        if(".json" in self.data_path):
+            with open(self.data_path,'r') as fp:
+                db = json.load(fp) #format {"id":{"passage":"..","title":...}
+                passages = {}
+                titles = {}
+                types = {}
+                for id in tqdm(db.keys(),total=len(db),desc="Loading passages"):
+                    passages[id] = db[id]["passage"]
+                    titles[id] = db[id]["title"] if db[id]["title"] else ""
+                    if("type" in db[id].keys()):
+                        types[id] = db[id]["type"]
+        else:
+            passages,titles = self.load_passage_db(self.data_path,copy.copy(self.subset_ids))
+        subset_ids = self.subset_ids
+        if not(subset_ids):
+            subset_ids = list(passages.keys())
+        for i in tqdm(range(len(subset_ids)),total = len(subset_ids),desc="Transforming passage dataset"):
+            idx = str(subset_ids[i])
+            if(idx in types.keys() and types[idx]==DataTypes.TABLE):
+                rows = passages[idx].split(Separators.TABLE_ROW_SEP)
+                columns = rows[0].split(Separators.TABLE_COL_SEP)
+                table = [row.split(Separators.TABLE_COL_SEP) for row in rows[1:]]
+                self.raw_data.append(TableEvidence(idx=idx,title=titles[idx],columns=columns,table=table))
+            else:
+                self.raw_data.append(Evidence(text=passages[str(subset_ids[i])],idx=subset_ids[i],title=titles[str(subset_ids[i])])) 
+
     
     def _load_tokenized_data(self):
         if self.tokenized_path and os.path.exists(self.tokenized_path):
             self.logger.info("Loading DPR data from {}".format(self.tokenized_path))
             with open(self.tokenized_path, "r") as fp:
                 return json.load(fp)
-        else:
-            if(".json" in self.data_path):
-                with open(self.data_path,'r') as fp:
-                    db = json.load(fp) #format {"id":{"passage":"..","title":...}
-                    passages = {}
-                    titles = {}
-                    types = {}
-                    for id in db.keys():
-                        passages[id] = db[id]["passage"]
-                        titles[id] = db[id]["title"] if db[id]["title"] else ""
-                        if("type" in db[id].keys()):
-                            types[id] = db[id]["type"]
-            else:
-                passages,titles = self.load_passage_db(self.data_path,copy.copy(self.subset_ids))
-
-            subset_ids = self.subset_ids
-            if not(subset_ids):
-                subset_ids = list(passages.keys())
-            for i in range(len(subset_ids)):
-                idx = str(subset_ids[i])
-                if(idx in types.keys() and types[idx]==DataTypes.TABLE):
-                    rows = passages[idx].split(Separators.TABLE_ROW_SEP)
-                    columns = rows[0].split(Separators.TABLE_COL_SEP)
-                    table = [row.split(Separators.TABLE_COL_SEP) for row in rows[1:]]
-                    self.raw_data.append(TableEvidence(idx=idx,title=titles[idx],columns=columns,table=table))
-                else:
-                    self.raw_data.append(Evidence(text=passages[str(subset_ids[i])],idx=subset_ids[i],title=titles[str(subset_ids[i])]))    
+        else:             
             input_data = [passage.title() + " " + "[SEP]" + " " + passage.text() for passage in self.raw_data]
             psg_ids = [passage.id() for passage in self.raw_data]
             tokenized_data = self.tokenizer.tokenize(input_data,

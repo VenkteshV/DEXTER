@@ -29,8 +29,7 @@ class WikiMultihopQADataLoader(GenericDataLoader):
                 #print(list(self.titles).index(title.split(" - ")[0]))
                 self.raw_data.append(
                     Sample(query_index, Question(data["question"]), Answer(data["answer"]),
-                            Evidence(evidence, 
-                                    list(self.titles).index(title.split(" - ")[0]))
+                            Evidence(evidence, title)
                 ))
 
     def load_tokenized(self):
