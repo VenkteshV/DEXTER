@@ -1,5 +1,6 @@
 import json
 from retriever.Contriever import Contriever
+from data.loaders.RetrieverDataset import RetrieverDataset
 from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
 from constants import Split
 from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
@@ -12,10 +13,11 @@ if __name__ == "__main__":
    # config = config_instance.get_all_params()
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
-    loader = MusiqueQADataLoader(dataset="musiqueqa", config_path="evaluation/config.ini", split=Split.DEV,corpus_path=corpus_path)
-    queries, qrels, corpus = loader.load_corpus_qrels_queries(Split.DEV,corpus_path)
-    print("queries",len(queries),len(qrels),len(corpus),queries[0],qrels["0"])
-    bm25_search = BM25Search(index_name="wikimusique",initialize=True)
+    loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus",
+                               "evaluation/config.ini", Split.DEV)
+    queries, qrels, corpus = loader.qrels()
+    print("queries",len(queries),len(qrels),len(corpus),queries[0])
+    bm25_search = BM25Search(index_name="wikimusique",initialize=False)
 
     ## wikimultihop
     
@@ -25,5 +27,5 @@ if __name__ == "__main__":
 
     response = bm25_search.retrieve(corpus,queries,100)
     print("indices",len(response),response,qrels)
-    metrics = RetrievalMetrics()
-    print(metrics.evaluate_retrieval(qrels=qrels,results=response,k_values=[1,10,100]))
+    metrics = RetrievalMetrics(k_values=[1,10,100])
+    print(metrics.evaluate_retrieval(qrels=qrels,results=response))

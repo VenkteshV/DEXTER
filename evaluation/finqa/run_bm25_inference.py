@@ -16,10 +16,10 @@ if __name__ == "__main__":
 
     queries, qrels, corpus = loader.qrels()
 
-    bm25_search = BM25Search(index_name="wikimusique",initialize=True)
+    bm25_search = BM25Search(index_name="finqa",initialize=True)
 
 
     response = bm25_search.retrieve(corpus,queries,100)
     print("indices",len(response),response,qrels)
-    metrics = RetrievalMetrics()
-    print(metrics.evaluate_retrieval(qrels=qrels,results=response,k_values=[1,10,100]))
+    metrics = RetrievalMetrics(k_values=[1,10,100])
+    print(metrics.evaluate_retrieval(qrels=qrels,results=response))

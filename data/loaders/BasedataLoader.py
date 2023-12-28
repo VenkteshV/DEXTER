@@ -31,6 +31,7 @@ class GenericDataLoader(DataLoader):
         self.raw_data:List[Sample] = []
         self.meta = {}
         self.tokenizer_name = tokenizer
+        print("self.tokenizer_name",self.tokenizer_name)
         self.tokenizer = Tokenizer(self.tokenizer_name)
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
@@ -137,8 +138,11 @@ class PassageDataLoader(DataLoader):
                     passages = {}
                     titles = {}
                     for id in db.keys():
-                        passages[id] = db[id]["passage"]
-                        titles[id] = db[id]["passage"]
+                        if "text" in list(db[id].keys()):
+                            passages[id] = db[id]["text"]
+                        else:
+                            passages[id] = db[id]["passage"]
+                        titles[id] = db[id]["title"]
             else:
                 passages,titles = self.load_passage_db(self.data_path,copy.copy(self.subset_ids))
 
