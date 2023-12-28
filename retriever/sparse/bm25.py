@@ -54,7 +54,7 @@ class BM25Search(BaseRetriver):
         #retrieve results from BM25 
         query_ids = [query.id() for index, query in enumerate(queries)]
         print("query_ids**",query_ids)
-        queries = [query.text() for query in list(queries.values())]
+        queries = [query.text() for query in list(queries)]
 
         
         for start_idx in tqdm.trange(0, len(queries), self.batch_size, desc='progress'):
@@ -66,7 +66,8 @@ class BM25Search(BaseRetriver):
             for (query_id, hit) in zip(query_ids_batch, results):
                 scores = {}
                 for corpus_id, score in hit['hits']:
-                    c_id = corpus[corpus_id].id()
+                    print("corpus_id",corpus_id)
+                    c_id = corpus[int(corpus_id)].id()
                     if c_id != query_id: # query doesnt return in results
                         scores[c_id] = score
                     self.results[str(query_id)] = scores

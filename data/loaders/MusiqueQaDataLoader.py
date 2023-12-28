@@ -12,9 +12,11 @@ from data.loaders.BasedataLoader import GenericDataLoader
 
 class MusiqueQADataLoader(GenericDataLoader):
     def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
-                 batch_size=None):
-        self.titles = [self.corpus[idx]["title"].split(" - ")[0] for idx in list(self.corpus.keys())]
-        print(self.titles[100],self.corpus["100"])
+                 batch_size=None,
+                 corpus=None):
+        self.corpus = corpus
+        self.titles = [self.corpus[idx].title().split(" - ")[0] for idx,_ in enumerate(self.corpus)]
+        print(self.titles[100],self.corpus[100].title())
         super().__init__(dataset, tokenizer, config_path, split, batch_size)
 
 
@@ -30,9 +32,9 @@ class MusiqueQADataLoader(GenericDataLoader):
                 evidence = evidence_set["paragraph_text"]
                 #print(list(self.titles).index(title.split(" - ")[0]))
                 self.raw_data.append(
-                    Sample(query_index, Question(data["question"]), Answer(data["answer"]),
-                            Evidence(evidence, 
-                                    list(self.titles).index(title.split(" - ")[0]))
+                    Sample(query_index, Question(data["question"],idx=data["id"]), Answer(data["answer"]),
+                            Evidence(text=evidence, 
+                                    idx=list(self.titles).index(title.split(" - ")[0]),title=title)
                 ))
 
 
