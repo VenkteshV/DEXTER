@@ -5,11 +5,14 @@ import time
 from typing import List, Dict
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
+import os
 
 def sleep(seconds):
     if seconds: time.sleep(seconds)
 class BM25Search(BaseRetriver):
     def __init__(self, index_name: str, hostname: str = "localhost",
+                 cert_path:str="./http_cert",
+                 elastic_passoword:str="password",
                  keys: Dict[str, str] = {"title": "title", "body": "text"}, 
                  language: str = "english",
                  batch_size: int = 128, timeout: int = 100, 
@@ -28,7 +31,10 @@ class BM25Search(BaseRetriver):
             "retry_on_timeout": retry_on_timeout,
             "maxsize": maxsize,
             "number_of_shards": number_of_shards,
-            "language": language
+            "language": language,
+            "ca_certs":cert_path,
+            "basic_auth":("elastic", elastic_passoword)
+
         }
         self.es = ElasticSearch(self.config)
         if self.initialize:
@@ -54,7 +60,7 @@ class BM25Search(BaseRetriver):
         #retrieve results from BM25 
         query_ids = [query.id() for index, query in enumerate(queries)]
         print("query_ids**",query_ids)
-        queries = [query.text() for query in list(queries.values())]
+        queries = [query.text() for query in queries]
 
         
         for start_idx in tqdm.trange(0, len(queries), self.batch_size, desc='progress'):
@@ -66,10 +72,8 @@ class BM25Search(BaseRetriver):
             for (query_id, hit) in zip(query_ids_batch, results):
                 scores = {}
                 for corpus_id, score in hit['hits']:
-                    c_id = corpus[corpus_id].id()
-                    if c_id != query_id: # query doesnt return in results
-                        scores[c_id] = score
-                    self.results[str(query_id)] = scores
+                        scores[corpus_id] = score
+                self.results[str(query_id)] = scores
         
         return self.results
         

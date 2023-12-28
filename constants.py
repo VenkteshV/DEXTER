@@ -13,3 +13,7 @@ class Dataset:
 class Separators:
     TABLE_ROW_SEP = '\n'
     TABLE_COL_SEP = '|'
+
+class DataTypes:
+    TABLE = "table"
+    TEXT = "text"

@@ -7,7 +7,7 @@ from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample
-from data.loaders.BasedataLoader import GenericDataLoader
+from data.loaders.BaseDataLoader import GenericDataLoader
 
 
 class MusiqueQADataLoader(GenericDataLoader):

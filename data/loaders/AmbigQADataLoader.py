@@ -2,7 +2,7 @@ from constants import Split
 from data.datastructures.answer import AmbigNQAnswer, Answer
 from data.datastructures.question import Question
 from data.datastructures.sample import AmbigNQSample
-from data.loaders.BasedataLoader import GenericDataLoader
+from data.loaders.BaseDataLoader import GenericDataLoader
 
 
 class AmbigQADataLoader(GenericDataLoader):

@@ -4,7 +4,7 @@ from constants import Split
 from data.datastructures.dataset import QADataset
 from data.datastructures.sample import AmbigNQSample
 from data.loaders import ReaderDataLoader
-from data.loaders.BasedataLoader import AmbigQADataLoader, PassageDataLoader
+from data.loaders.BaseDataLoader import AmbigQADataLoader, PassageDataLoader
 from data.loaders.Tokenizer import Tokenizer
 from readers.ReaderFactory import ReaderFactory, ReaderName
 from metrics.ExactMatch import ExactMatch

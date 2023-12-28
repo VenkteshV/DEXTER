@@ -5,7 +5,7 @@ import json
 import tqdm
 from constants import Split
 from data.datastructures.dataset import ReaderDataset
-from data.loaders.BasedataLoader import PassageDataLoader
+from data.loaders.BaseDataLoader import PassageDataLoader
 from data.loaders.DataLoaderFactory import DataLoaderFactory
 from data.loaders.Tokenizer import Tokenizer
 from torch.utils.data import RandomSampler, SequentialSampler

@@ -9,10 +9,10 @@ import zipfile
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from tqdm import tqdm
 
-from constants import Split
+from constants import DataTypes, Separators, Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import PassageDataset, QADataset
-from data.datastructures.evidence import Evidence
+from data.datastructures.evidence import Evidence, TableEvidence
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample
 from data.loaders.Tokenizer import Tokenizer
@@ -136,9 +136,12 @@ class PassageDataLoader(DataLoader):
                     db = json.load(fp) #format {"id":{"passage":"..","title":...}
                     passages = {}
                     titles = {}
+                    types = {}
                     for id in db.keys():
                         passages[id] = db[id]["passage"]
-                        titles[id] = db[id]["passage"]
+                        titles[id] = db[id]["title"] if db[id]["title"] else ""
+                        if("type" in db[id].keys()):
+                            types[id] = db[id]["type"]
             else:
                 passages,titles = self.load_passage_db(self.data_path,copy.copy(self.subset_ids))
 
@@ -146,7 +149,14 @@ class PassageDataLoader(DataLoader):
             if not(subset_ids):
                 subset_ids = list(passages.keys())
             for i in range(len(subset_ids)):
-                self.raw_data.append(Evidence(text=passages[str(subset_ids[i])],idx=subset_ids[i],title=titles[str(subset_ids[i])]))            
+                idx = str(subset_ids[i])
+                if(idx in types.keys() and types[idx]==DataTypes.TABLE):
+                    rows = passages[idx].split(Separators.TABLE_ROW_SEP)
+                    columns = rows[0].split(Separators.TABLE_COL_SEP)
+                    table = [row.split(Separators.TABLE_COL_SEP) for row in rows[1:]]
+                    self.raw_data.append(TableEvidence(idx=idx,title=titles[idx],columns=columns,table=table))
+                else:
+                    self.raw_data.append(Evidence(text=passages[str(subset_ids[i])],idx=subset_ids[i],title=titles[str(subset_ids[i])]))    
             input_data = [passage.title() + " " + "[SEP]" + " " + passage.text() for passage in self.raw_data]
             psg_ids = [passage.id() for passage in self.raw_data]
             tokenized_data = self.tokenizer.tokenize(input_data,
