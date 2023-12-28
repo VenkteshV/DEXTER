@@ -15,7 +15,7 @@ if __name__ == "__main__":
                                      document_encoder_path="facebook/contriever"
                                      ,batch_size=32,show_progress_bar=True)
     
-    loader = RetrieverDataset("tatqa","tatqa-corpus","evaluation/config.ini",Split.DEV,tokenizer=None)
+    loader = RetrieverDataset("ottqa","ottqa-corpus","evaluation/config.ini",Split.DEV,tokenizer=None)
     queries, qrels, corpus = loader.qrels()
     tasb_search = Contriever(config_instance)
 

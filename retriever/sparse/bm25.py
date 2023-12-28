@@ -10,7 +10,7 @@ import os
 def sleep(seconds):
     if seconds: time.sleep(seconds)
 class BM25Search(BaseRetriver):
-    def __init__(self, index_name: str, hostname: str = "localhost",
+    def __init__(self, index_name: str, hostname: str = "https://localhost:9200",
                  cert_path:str="./http_cert",
                  elastic_passoword:str="password",
                  keys: Dict[str, str] = {"title": "title", "body": "text"}, 
@@ -59,7 +59,7 @@ class BM25Search(BaseRetriver):
         
         #retrieve results from BM25 
         query_ids = [query.id() for index, query in enumerate(queries)]
-        print("query_ids**",query_ids)
+        # print("query_ids**",query_ids)
         queries = [query.text() for query in list(queries)]
 
         

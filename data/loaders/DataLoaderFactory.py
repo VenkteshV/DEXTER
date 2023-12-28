@@ -38,4 +38,4 @@ class DataLoaderFactory:
             raise NotImplemented(f"{dataloader_name} not implemented yet.")
         return loader(dataset=dataloader_name, config_path=config_path,
                       split=split,batch_size=batch_size,
-                      tokenizer=tokenizer,corpus=corpus)
+                      tokenizer=tokenizer)
