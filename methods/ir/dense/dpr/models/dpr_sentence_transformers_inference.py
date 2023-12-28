@@ -44,6 +44,8 @@ class DprSentSearch():
                          for idx in self.idex_mapping]
         
         index_exists = self.ann_algo.load_index_if_available()
+        ##TODO: Uncomment below for index usage
+        index_exists = False
         if index_exists:
             logger.info(
                 f'Index already exists. Loading {self.args.ann_search} index')

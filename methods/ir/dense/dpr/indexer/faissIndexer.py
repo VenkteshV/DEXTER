@@ -33,5 +33,4 @@ class FaissSearch:
         self.ann.add(passage_vectors)
         if not os.path.exists("indices/faiss"):
             os.makedirs("indices/faiss")
-        print("here")
         faiss.write_index(self.ann, "indices/faiss/index_faiss")

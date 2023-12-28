@@ -69,6 +69,8 @@ class DenseFullSearch(BaseRetriver):
         self.logger.info("Encoding Corpus in batches... Warning: This might take a while!")
         #self.logger.info("Scoring Function: {} ({})".format(self.score_function_desc[score_function], score_function))
         embeddings, index_present = self.load_index_if_available()
+        #TODO: Comment below for index usage
+        index_present = False
         if index_present:
             corpus_embeddings = embeddings
         else:
@@ -78,7 +80,7 @@ class DenseFullSearch(BaseRetriver):
         # Compute similarites using either cosine-similarity or dot product
         cos_scores = score_function.evaluate(query_embeddings,corpus_embeddings)
         # Get top-k values
-        cos_scores_top_k_values, cos_scores_top_k_idx = torch.topk(cos_scores, min(top_k+1, corpus_embeddings.size()[0]), dim=1, largest=True, sorted=return_sorted)
+        cos_scores_top_k_values, cos_scores_top_k_idx = torch.topk(cos_scores, min(top_k+1, len(cos_scores[0])), dim=1, largest=True, sorted=return_sorted)
         cos_scores_top_k_values = cos_scores_top_k_values.cpu().tolist()
         cos_scores_top_k_idx = cos_scores_top_k_idx.cpu().tolist()
         response = {}
