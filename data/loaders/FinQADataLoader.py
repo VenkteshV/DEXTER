@@ -6,7 +6,7 @@ from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence, TableEvidence
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample
-from data.loaders.BasedataLoader import GenericDataLoader
+from data.loaders.BaseDataLoader import GenericDataLoader
 
 
 class FinQADataLoader(GenericDataLoader):
@@ -19,7 +19,7 @@ class FinQADataLoader(GenericDataLoader):
         for data in dataset:
             question = Question(data["qa"]["question"],idx=data["id"])
             answer = Answer(data["qa"]["answer"],idx=data["id"])
-            self.raw_data.append(Sample(data["id"]+"-0", question, answer, TableEvidence(data["table"],idx=data["id"]+".table")))
+            self.raw_data.append(Sample(data["id"]+"-0", question, answer, TableEvidence(data["table"][1:],columns=data["table"][0],idx=data["id"]+".table")))
             self.raw_data.append(Sample(data["id"]+"-1", question, answer, Evidence("".join(data["pre_text"]),idx=data["id"]+".pre")))
             self.raw_data.append(Sample(data["id"]+"-2", question, answer, Evidence("".join(data["post_text"]),idx=data["id"]+".post")))
 

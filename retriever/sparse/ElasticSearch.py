@@ -35,7 +35,9 @@ class ElasticSearch(object):
             [es_credentials["hostname"]], 
             timeout=es_credentials["timeout"], 
             retry_on_timeout=es_credentials["retry_on_timeout"], 
-            maxsize=es_credentials["maxsize"])
+            maxsize=es_credentials["maxsize"],
+            ca_certs=es_credentials["ca_certs"],
+            http_auth=es_credentials["basic_auth"])
 
     def check_language_supported(self):
         """Check Language Supported in Elasticsearch
@@ -210,7 +212,7 @@ class ElasticSearch(object):
                 doc = {
                     "_id": str(_id),
                     "_op_type": "index",
-                    "_type" : "_doc",
+
                     "refresh": "wait_for",
                     self.text_key: value[self.text_key],
                     self.title_key: value[self.title_key],
@@ -220,7 +222,7 @@ class ElasticSearch(object):
                     "_id": str(_id),
                     "_op_type": "update",
                     "refresh": "wait_for",
-                    "_type" : "_doc",
+
                     "doc": {
                         self.text_key: value[self.text_key],
                         self.title_key: value[self.title_key],

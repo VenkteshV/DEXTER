@@ -12,7 +12,7 @@ from data.datastructures.sample import Sample, AmbigNQSample
 from data.loaders.Tokenizer import Tokenizer
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
-from data.loaders.BasedataLoader import GenericDataLoader
+from data.loaders.BaseDataLoader import GenericDataLoader
 import logging
 
 logger = logging.getLogger(__name__)

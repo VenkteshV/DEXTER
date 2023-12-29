@@ -10,7 +10,12 @@ class Dataset:
     FINQA = "finqa"
     TATQA = "tatqa"
     MUSIQUEQA="musiqueqa"
+    OTTQA = "ottqa"
 
 class Separators:
     TABLE_ROW_SEP = '\n'
     TABLE_COL_SEP = '|'
+
+class DataTypes:
+    TABLE = "table"
+    TEXT = "text"

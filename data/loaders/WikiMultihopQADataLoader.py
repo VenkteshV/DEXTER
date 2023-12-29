@@ -8,15 +8,12 @@ from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample
-from data.loaders.BasedataLoader import GenericDataLoader
+from data.loaders.BaseDataLoader import GenericDataLoader
 
 
 class WikiMultihopQADataLoader(GenericDataLoader):
     def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
-                 batch_size=None, corpus_path: str = None, corpus: List[Evidence]=None):
-        self.corpus = corpus
-        self.titles = [self.corpus[idx].title().split(" - ")[0] for idx,_ in enumerate(self.corpus)]
-        print(self.titles[100],self.corpus[100].title())
+                 batch_size=None):
         super().__init__(dataset, tokenizer, config_path, split, batch_size)
 
 

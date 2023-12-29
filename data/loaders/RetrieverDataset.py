@@ -1,9 +1,10 @@
 import configparser
-from typing import List
+from typing import Dict, List
 
 from constants import Split
+from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
-from data.loaders.BasedataLoader import PassageDataLoader
+from data.loaders.BaseDataLoader import PassageDataLoader
 from data.loaders.DataLoaderFactory import DataLoaderFactory
 
 from data.loaders.Tokenizer import Tokenizer
@@ -15,16 +16,16 @@ class RetrieverDataset:
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
         self.tokenizer_name = tokenizer
-        self.tokenizer = Tokenizer(self.tokenizer_name)
-        self.passage_dataloader = PassageDataLoader(passage_dataset,None,self.tokenizer_name,config_path)
-        base_dataset = DataLoaderFactory().create_dataloader(dataset, config_path=config_path,
-                                                             split= self.split, 
-                                                             batch_size=batch_size,
-                                                             tokenizer=self.tokenizer_name, 
-                                                             corpus = self.passage_dataloader.raw_data)    
+        if(self.tokenizer_name):
+            self.tokenizer = Tokenizer(self.tokenizer_name)
+        else:
+            self.tokenizer = None
+        base_dataset = DataLoaderFactory().create_dataloader(dataset, config_path=config_path, split=self.split, batch_size=batch_size,tokenizer=self.tokenizer_name)
         self.base_dataset = base_dataset          
-
-    def qrels(self):
+        self.passage_dataloader = PassageDataLoader(passage_dataset,None,self.tokenizer_name,config_path)
+    
+    
+    def qrels(self)->(List[Question],Dict,List[Evidence]):
         qrels = {}
         queries = []
         corpus = self.passage_dataloader.raw_data

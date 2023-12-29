@@ -14,7 +14,7 @@ import json
 
 class MyTestCase(unittest.TestCase):
     def test_retriever_dataloader(self):
-        loader = RetrieverDataset("finqa","finqa-corpus","tests/retriever/test_config.ini",Split.DEV)
+        loader = RetrieverDataset("finqa","finqa-corpus","tests/retriever/test_config.ini",Split.DEV,tokenizer=None)
         retriever = ANCE("tests/retriever/test_config.ini")
         queries, qrels, corpus = loader.qrels()
         qrels_ret = retriever.retrieve(corpus,queries,100,CosineSimilarity(),True)
