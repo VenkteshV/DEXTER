@@ -21,7 +21,7 @@ class HfRetriever(BaseRetriver):
     def __init__(self,config=DenseHyperParams) -> None:
         super().__init__()
         self.config = config
-        print("self.config.query_encoder_path",self.config.query_encoder_path)
+        #print("self.config.query_encoder_path",self.config.query_encoder_path)
         self.question_tokenizer = AutoTokenizer.from_pretrained(self.config.query_encoder_path)
         self.context_tokenizer = AutoTokenizer.from_pretrained(self.config.document_encoder_path)
         self.question_encoder = AutoModel.from_pretrained(self.config.query_encoder_path)
@@ -38,7 +38,10 @@ class HfRetriever(BaseRetriver):
         return sentence_embeddings
 
 
-    def encode_queries(self, queries: List[Question], batch_size: int = 16, **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
+    def encode_queries(self, 
+                       queries: List[Question], 
+                       batch_size: int = 16,
+                         **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
         with torch.no_grad():
             tokenized_questions = self.question_tokenizer([query.text() for query in queries], padding=True, truncation=True, return_tensors='pt').to("cuda")
             token_emb =  self.question_encoder(**tokenized_questions)
@@ -47,7 +50,10 @@ class HfRetriever(BaseRetriver):
         print("sentence_emb",sentence_emb.shape)
         return sentence_emb
     
-    def encode_corpus(self, corpus: List[Evidence], **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
+    def encode_corpus(self, 
+                      corpus: List[Evidence], 
+                      **kwargs
+                      ) -> Union[List[Tensor], np.ndarray, Tensor]:
         contexts = []
         for evidence in corpus:
             context = ""

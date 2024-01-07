@@ -139,7 +139,10 @@ class PassageDataLoader(DataLoader):
                 titles = {}
                 types = {}
                 for id in tqdm(db.keys(),total=len(db),desc="Loading passages"):
-                    passages[id] = db[id]["passage"]
+                    if "text" in db[id].keys():
+                        passages[id] = db[id]["text"]
+                    else:
+                        passages[id] = db[id]["passage"]
                     titles[id] = db[id]["title"] if db[id]["title"] else ""
                     if("type" in db[id].keys()):
                         types[id] = db[id]["type"]
