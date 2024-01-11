@@ -38,20 +38,20 @@ class DprSentSearch():
             self.documents[data.id()] = data.text()
             self.titles[data.id()] = data.title()
                 
-        self.idex_mapping = list(self.documents.keys())
+        self.index_mapping = list(self.documents.keys())
 
         passages = [self.documents[idx]+"[SEP]"+self.titles[idx]
-                         for idx in self.idex_mapping]
+                         for idx in self.index_mapping]
         
         index_exists = self.ann_algo.load_index_if_available()
         ##TODO: Uncomment below for index usage
-        index_exists = False
+        #index_exists = False
         if index_exists:
             logger.info(
                 f'Index already exists. Loading {self.args.ann_search} index')
         else:
             passage_vectors = self.get_passage_embeddings(passages)
-            assert len(passage_vectors)==len(self.idex_mapping)
+            assert len(passage_vectors)==len(self.index_mapping)
             self.ann_algo.create_index(passage_vectors)
 
     def retrieve(self, queries:List[Question], top_k):
@@ -62,6 +62,8 @@ class DprSentSearch():
         for idx,q in enumerate(queries):
             response[str(q.id())] = {}
             for index, id in enumerate(top_neighbours["ids"][idx]):
+                #print("top_neighbours[distances][idx]",top_neighbours["distances"][idx], index)
+               # print("self.index_mapping[id]",self.index_mapping,id)
                 if(id>=0):
-                    response[str(q.id())][self.idex_mapping[id]] = float(top_neighbours["distances"][idx][index])
+                    response[str(q.id())][self.index_mapping[id]] = float(top_neighbours["distances"][idx][index])
         return response
