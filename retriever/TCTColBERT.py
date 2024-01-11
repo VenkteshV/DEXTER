@@ -32,10 +32,10 @@ class TCTColBERT():
             queries_text = [question.text() for question in queries]
             with Run().context(RunConfig(nranks=1, experiment="colbert")):
 
-                self.indexer.index(name="finq", collection=corpus_texts, overwrite=True)
+                self.indexer.index(name="colbert", collection=corpus_texts, overwrite="reuse")
 
                 self.indexer.get_index()
-                searcher = Searcher(index="finq", collection=corpus_texts)
+                searcher = Searcher(index="colbert", collection=corpus_texts)
 
                 result_qrels = {}
                 for idx,query in tqdm.tqdm(enumerate(queries)):
