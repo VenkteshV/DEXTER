@@ -60,7 +60,7 @@ class DenseFullSearch(BaseRetriver):
                top_k: int, 
                score_function: SimilarityMetric,
                return_sorted: bool = True,
-                chunksize: int =5000,
+                chunksize: int =200000,
                   **kwargs  ):
         corpus_ids = [doc.id() for doc in corpus]
         query_embeddings = self.encode_queries(queries, batch_size=self.batch_size,show_progress_bar=self.show_progress_bar,convert_to_tensor=self.convert_to_tensor,**kwargs)  
