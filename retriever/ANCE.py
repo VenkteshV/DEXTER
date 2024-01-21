@@ -20,7 +20,7 @@ class ANCE(DenseFullSearch):
     #Wrapper for ANCE on top of Dense.
     # Will be different from parent when train loop implemented
 
-    def __init__(self,config_path="config.ini",show_progress_bar=True,convert_to_tensor=True,batch_size=16) -> None:        
+    def __init__(self,config_path="config.ini",show_progress_bar=True,convert_to_tensor=True,batch_size=32) -> None:        
         self.config = ConfigParser()
         self.config.read(config_path)
         question_encoder = self.config["Retrieval"]["question-encoder"]

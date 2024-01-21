@@ -16,6 +16,6 @@ if __name__ == "__main__":
 
 
     response = bm25_search.retrieve(corpus,queries,100)
-    print("indices",len(response),response,qrels)
+    print("indices",len(response), len(queries),len(corpus))
     metrics = RetrievalMetrics(k_values=[1,10,100])
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))

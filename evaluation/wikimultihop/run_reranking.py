@@ -5,29 +5,35 @@ from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
 from constants import Split
 from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 from metrics.SimilarityMatch import CosineSimilarity as CosScore
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
-
+from retriever.sparse.bm25 import BM25Search
+from re_ranker.ReRanker import Reranker
 
 if __name__ == "__main__":
 
-    config_instance = DenseHyperParams(query_encoder_path="facebook/contriever",
-                                     document_encoder_path="facebook/contriever"
-                                     ,batch_size=16)
    # config = config_instance.get_all_params()
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
-    loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
+    loader = RetrieverDataset("wikimultihopqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
+
     queries, qrels, corpus = loader.qrels()
     print("queries",len(queries),len(qrels),len(corpus),queries[0])
-    tasb_search = Contriever(config_instance)
+    bm25_search = BM25Search(index_name="wikimusique",initialize=False)
 
     ## wikimultihop
+    
 
     # with open("/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json") as f:
     #     corpus = json.load(f)
 
-    similarity_measure = CosScore()
-    response = tasb_search.retrieve(corpus,queries,100,similarity_measure)
-    print("indices",len(response))
+    response = bm25_search.retrieve(corpus,queries,100)
     metrics = RetrievalMetrics(k_values=[1,10,100])
+
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))
+    reranker = Reranker(
+      "cross-encoder/ms-marco-MiniLM-L-12-v2"
+    )
+    #cross-encoder/ms-marco-MiniLM-L-6-v2
+    results = reranker.rerank(corpus,queries,response,100)
+    #print("results",results)
+    metrics = RetrievalMetrics(k_values=[1,10,100])
+    print(metrics.evaluate_retrieval(qrels=qrels,results=results))

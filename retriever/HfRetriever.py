@@ -3,6 +3,7 @@ import heapq
 from typing import Dict, List, Union, Tuple, Any
 import numpy as np
 import os
+import heapq
 import joblib
 from torch import Tensor
 import torch
@@ -21,7 +22,7 @@ class HfRetriever(BaseRetriver):
     def __init__(self,config=DenseHyperParams) -> None:
         super().__init__()
         self.config = config
-        print("self.config.query_encoder_path",self.config.query_encoder_path)
+        #print("self.config.query_encoder_path",self.config.query_encoder_path)
         self.question_tokenizer = AutoTokenizer.from_pretrained(self.config.query_encoder_path)
         self.context_tokenizer = AutoTokenizer.from_pretrained(self.config.document_encoder_path)
         self.question_encoder = AutoModel.from_pretrained(self.config.query_encoder_path)
@@ -38,7 +39,10 @@ class HfRetriever(BaseRetriver):
         return sentence_embeddings
 
 
-    def encode_queries(self, queries: List[Question], batch_size: int = 16, **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
+    def encode_queries(self, 
+                       queries: List[Question], 
+                       batch_size: int = 16,
+                         **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
         with torch.no_grad():
             tokenized_questions = self.question_tokenizer([query.text() for query in queries], padding=True, truncation=True, return_tensors='pt').to("cuda")
             token_emb =  self.question_encoder(**tokenized_questions)
@@ -47,7 +51,10 @@ class HfRetriever(BaseRetriver):
         print("sentence_emb",sentence_emb.shape)
         return sentence_emb
     
-    def encode_corpus(self, corpus: List[Evidence], **kwargs) -> Union[List[Tensor], np.ndarray, Tensor]:
+    def encode_corpus(self, 
+                      corpus: List[Evidence], 
+                      **kwargs
+                      ) -> Union[List[Tensor], np.ndarray, Tensor]:
         contexts = []
         for evidence in corpus:
             context = ""
@@ -83,12 +90,65 @@ class HfRetriever(BaseRetriver):
             corpus_embeddings=None
         return corpus_embeddings, index_present
 
+    def retrieve_in_chunks(self,
+               corpus: List[Evidence], 
+               queries: List[Question], 
+               top_k: int, 
+               score_function: SimilarityMetric,
+               return_sorted: bool = True,
+                chunksize: int =200000,
+                  **kwargs  ):
+        corpus_ids = [doc.id() for doc in corpus]
+        query_embeddings = self.encode_queries(queries, batch_size=self.batch_size,show_progress_bar=self.show_progress_bar,convert_to_tensor=self.convert_to_tensor,**kwargs)  
+        query_ids = [query.id() for query in queries]
+        result_heaps = {qid: [] for qid in query_ids}  # Keep only the top-k docs for each query
+        self.results = {qid: {} for qid in query_ids}
+        batches = range(0, len(corpus), chunksize)
+        for batch_num, corpus_start_idx in enumerate(batches):
+            self.logger.info("Encoding Batch {}/{}...".format(batch_num+1, len(batches)))
+            corpus_end_idx = min(corpus_start_idx + chunksize, len(corpus))
+
+            # Encode chunk of corpus    
+            sub_corpus_embeddings = self.encode_corpus(
+                corpus[corpus_start_idx:corpus_end_idx],
+                show_progress_bar=self.show_progress_bar, 
+                convert_to_tensor = self.convert_to_tensor
+                )
+
+            # Compute similarites using either cosine-similarity or dot product
+            cos_scores = score_function.evaluate(query_embeddings, sub_corpus_embeddings)
+            cos_scores[torch.isnan(cos_scores)] = -1
+
+            # Get top-k values
+            cos_scores_top_k_values, cos_scores_top_k_idx = torch.topk(cos_scores, min(top_k+1, len(cos_scores[1])), dim=1, largest=True, sorted=return_sorted)
+            cos_scores_top_k_values = cos_scores_top_k_values.cpu().tolist()
+            cos_scores_top_k_idx = cos_scores_top_k_idx.cpu().tolist()
+            
+            for query_itr in range(len(query_embeddings)):
+                query_id = query_ids[query_itr]                  
+                for sub_corpus_id, score in zip(cos_scores_top_k_idx[query_itr], cos_scores_top_k_values[query_itr]):
+                    corpus_id = corpus_ids[corpus_start_idx+sub_corpus_id]
+                    if corpus_id != query_id:
+                        if len(result_heaps[query_id]) < top_k:
+                            # Push item on the heap
+                            heapq.heappush(result_heaps[query_id], (score, corpus_id))
+                        else:
+                            # If item is larger than the smallest in the heap, push it on the heap then pop the smallest element
+                            heapq.heappushpop(result_heaps[query_id], (score, corpus_id))
+
+        for qid in result_heaps:
+            for score, corpus_id in result_heaps[qid]:
+                self.results[qid][corpus_id] = score
+        return self.results
+
     def retrieve(self, 
                corpus: List[Evidence], 
                queries: List[Question], 
                top_k: int, 
                score_function: SimilarityMetric,
                return_sorted: bool = True, 
+               chunk: bool = False,
+               chunksize = None,
                **kwargs) -> Dict[str, Dict[str, float]]:
 
             
@@ -96,7 +156,12 @@ class HfRetriever(BaseRetriver):
 
         query_embeddings = self.encode_queries(queries, batch_size=self.batch_size)
           
-
+        if chunk:
+            results = self.retrieve_in_chunks(corpus, 
+                                              queries,top_k=top_k,
+                                              score_function=score_function,return_sorted=return_sorted,
+                                              chunksize=chunksize)
+            return results
    
         self.logger.info("Encoding Corpus in batches... Warning: This might take a while!")
         #self.logger.info("Scoring Function: {} ({})".format(self.score_function_desc[score_function], score_function))

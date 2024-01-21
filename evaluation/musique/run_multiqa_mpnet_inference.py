@@ -3,6 +3,7 @@
 import json
 from retriever.DenseFullSearch import DenseFullSearch
 from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
+from data.loaders.RetrieverDataset import RetrieverDataset
 from constants import Split
 from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 from metrics.SimilarityMatch import CosineSimilarity as CosScore
@@ -17,9 +18,9 @@ if __name__ == "__main__":
    # config = config_instance.get_all_params()
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
-    loader = MusiqueQADataLoader(dataset="musiqueqa", config_path="evaluation/config.ini", split=Split.DEV,corpus_path=corpus_path)
-    queries, qrels, corpus = loader.load_corpus_qrels_queries(Split.DEV,corpus_path)
-    print("queries",len(queries),len(qrels),len(corpus),queries[0],qrels["0"])
+    loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
+    queries, qrels, corpus = loader.qrels()
+    print("queries",len(queries),len(qrels),len(corpus),queries[0])
     tasb_search = DenseFullSearch(config_instance)
 
     ## wikimultihop
@@ -30,5 +31,5 @@ if __name__ == "__main__":
     similarity_measure = CosScore()
     response = tasb_search.retrieve(corpus,queries,100,similarity_measure)
     print("indices",len(response))
-    metrics = RetrievalMetrics()
-    print(metrics.evaluate_retrieval(qrels=qrels,results=response,k_values=[1,10,100]))
+    metrics = RetrievalMetrics(k_values=[1,10,100])
+    print(metrics.evaluate_retrieval(qrels=qrels,results=response))

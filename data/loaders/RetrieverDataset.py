@@ -20,9 +20,10 @@ class RetrieverDataset:
             self.tokenizer = Tokenizer(self.tokenizer_name)
         else:
             self.tokenizer = None
-        base_dataset = DataLoaderFactory().create_dataloader(dataset, config_path=config_path, split=self.split, batch_size=batch_size,tokenizer=self.tokenizer_name)
-        self.base_dataset = base_dataset          
         self.passage_dataloader = PassageDataLoader(passage_dataset,None,self.tokenizer_name,config_path)
+        base_dataset = DataLoaderFactory().create_dataloader(dataset, config_path=config_path, split=self.split, batch_size=batch_size,tokenizer=self.tokenizer_name,
+                                                             corpus=self.passage_dataloader.raw_data)
+        self.base_dataset = base_dataset          
     
     
     def qrels(self)->(List[Question],Dict,List[Evidence]):

@@ -1,9 +1,10 @@
 from constants import Split
 from data.datastructures.answer import AmbigNQAnswer, Answer
 from data.datastructures.question import Question
+from data.datastructures.evidence import Evidence
 from data.datastructures.sample import AmbigNQSample
 from data.loaders.BaseDataLoader import GenericDataLoader
-
+import tqdm
 
 class AmbigQADataLoader(GenericDataLoader):
     def __init__(
@@ -13,14 +14,18 @@ class AmbigQADataLoader(GenericDataLoader):
         config_path="test_config.ini",
         split=Split.TRAIN,
         batch_size=None,
+        corpus=None
     ):
+        self.corpus = corpus
+        self.titles = [self.corpus[idx].title() for idx,_ in enumerate(self.corpus)]
+        print(self.titles[100],self.corpus[100].title(),len(self.titles))
         super().__init__(dataset, tokenizer, config_path, split, batch_size)
 
     def load_raw_dataset(self, split=Split.TRAIN):
         dataset = self.load_json(split)
-        for data in dataset:
+        for index, data in enumerate(tqdm.tqdm(dataset)):
             _id = data["id"]
-            question = Question(data["question"], None)
+            question = Question(data["question"], str(index))
             sample_answers = []
             for annotation in data["annotations"]:
                 if annotation["type"] == "singleAnswer":
@@ -35,9 +40,15 @@ class AmbigQADataLoader(GenericDataLoader):
                 else:
                     raise TypeError("Unknown annotation type: ", annotation["type"])
                 sample_answers.append(answers)
-            self.raw_data.append(
-                AmbigNQSample(_id, question, AmbigNQAnswer(sample_answers))
-            )
+            for article in data["viewed_doc_titles"]:
+                    if article in self.titles:
+                        evidence = Evidence(text= article,
+                                              title=article,
+                                              idx=(list(self.titles).index(article)))
+
+                    self.raw_data.append(
+                                AmbigNQSample(_id, question, AmbigNQAnswer(sample_answers), evidences=evidence)
+                            )
 
     def tokenize_answers(self, MAX_LENGTH=20):
         # tokenize answers and make list for each tokenized answer

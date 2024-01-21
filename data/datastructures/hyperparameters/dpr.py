@@ -3,13 +3,13 @@ from data.datastructures.hyperparameters.base import BaseHyperParameters
 
 
 class DenseHyperParams(BaseHyperParameters):
-    def __init__(self, query_max_length: int=64,
+    def __init__(self, query_max_length: int=128,
                  query_encoder_path: str = "facebook/dpr-question_encoder-multiset-base",
                  document_encoder_path: str = "facebook/dpr-ctx_encoder-multiset-base",
                  learning_rate: float = 1e-5,
                  num_negative_samples: int = 5,
-                 ann_search: str = "faiss_search",convert_to_tensor: bool = None, 
-                 show_progress_bar: bool = None, batch_size: int = None) -> None:
+                 ann_search: str = "faiss_search",convert_to_tensor: bool = True, 
+                 show_progress_bar: bool = True, batch_size: int = None) -> None:
         super().__init__()
 
         self.query_max_length = query_max_length

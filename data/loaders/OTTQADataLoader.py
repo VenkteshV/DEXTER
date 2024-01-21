@@ -13,7 +13,7 @@ from data.loaders.BaseDataLoader import GenericDataLoader
 
 class OTTQADataLoader(GenericDataLoader):
     def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
-                 batch_size=None):
+                 batch_size=None, corpus = None):
         super().__init__(dataset, tokenizer, config_path, split, batch_size)
 
     def load_raw_dataset(self, split=Split.TRAIN):

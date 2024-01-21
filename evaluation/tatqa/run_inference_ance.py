@@ -10,6 +10,6 @@ if __name__ == "__main__":
     queries, qrels, corpus = loader.qrels()
     qrels_ret = retriever.retrieve(corpus,queries,100,CosineSimilarity(),True)
 
-    print("indices",len(qrels_ret))
+    print("indices",len(queries),len(corpus),len(qrels_ret))
     metrics = RetrievalMetrics(k_values=[1,10,100])
     print(metrics.evaluate_retrieval(qrels=qrels,results=qrels_ret))
