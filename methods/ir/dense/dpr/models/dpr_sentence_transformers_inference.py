@@ -32,7 +32,6 @@ class DprSentSearch():
         self.logger = logging.getLogger(__name__)
 
     def get_passage_embeddings(self, passages:List[str] = None):
-        print("self.args.show_progress_bar",self.args.show_progress_bar)
         return self.document_encoder.encode(passages,convert_to_tensor=self.args.convert_to_tensor,
         show_progress_bar=self.args.show_progress_bar, batch_size=self.config.batch_size)
 

@@ -25,7 +25,9 @@ if __name__ == "__main__":
     #     corpus = json.load(f)
 
     similarity_measure = CosScore()
-    response = tasb_search.retrieve(corpus,queries,100,similarity_measure)
+    response = tasb_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=5000)
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
-    print(metrics.evaluate_retrieval(qrels=qrels,results=response))
+    res =metrics.evaluate_retrieval(qrels=qrels,results=response)
+    with open("evaluation/ottqa/results/ottqa_contrvr.json","w+") as fp:
+        json.dump(res,fp)
