@@ -101,7 +101,7 @@ class HfRetriever(BaseRetriver):
                 convert_to_tensor = True,
                   **kwargs  ):
         corpus_ids = [doc.id() for doc in corpus]
-        query_embeddings = self.encode_queries(queries, batch_size=self.batch_size,show_progress_bar=show_progress_bar,convert_to_tensor=convert_to_tensor,**kwargs)  
+        query_embeddings = self.encode_queries(queries, batch_size=self.batch_size)  
         query_ids = [query.id() for query in queries]
         result_heaps = {qid: [] for qid in query_ids}  # Keep only the top-k docs for each query
         self.results = {qid: {} for qid in query_ids}
@@ -112,9 +112,7 @@ class HfRetriever(BaseRetriver):
 
             # Encode chunk of corpus    
             sub_corpus_embeddings = self.encode_corpus(
-                corpus[corpus_start_idx:corpus_end_idx],
-                show_progress_bar=show_progress_bar, 
-                convert_to_tensor = convert_to_tensor
+                corpus[corpus_start_idx:corpus_end_idx]
                 )
 
             # Compute similarites using either cosine-similarity or dot product

@@ -1,6 +1,7 @@
 import logging
 import numpy as np
 import torch
+import heapq
 from numpy import ndarray
 from torch import Tensor
 import os
@@ -47,6 +48,55 @@ class SPLADE(BaseRetriver):
     def encode_corpus(self, corpus: List[Evidence], **kwargs) -> np.ndarray:
         sentences = [(doc.title() + ' ' + doc.text()).strip() for doc in corpus]
         return self.model.encode_sentence_bert(self.tokenizer, sentences)
+    def retrieve_in_chunks(self,
+               corpus: List[Evidence], 
+               queries: List[Question], 
+               top_k: int, 
+               score_function: SimilarityMetric,
+               return_sorted: bool = True,
+                chunksize: int =200000,
+                  **kwargs  ):
+        corpus_ids = [doc.id() for doc in corpus]
+        query_embeddings = self.encode_queries(queries, batch_size=self.batch_size)  
+        query_ids = [query.id() for query in queries]
+        result_heaps = {qid: [] for qid in query_ids}  # Keep only the top-k docs for each query
+        self.results = {qid: {} for qid in query_ids}
+        batches = range(0, len(corpus), chunksize)
+        for batch_num, corpus_start_idx in enumerate(batches):
+            self.logger.info("Encoding Batch {}/{}...".format(batch_num+1, len(batches)))
+            corpus_end_idx = min(corpus_start_idx + chunksize, len(corpus))
+
+            # Encode chunk of corpus    
+            sub_corpus_embeddings = self.encode_corpus(
+                corpus[corpus_start_idx:corpus_end_idx]
+                )
+
+            # Compute similarites using either cosine-similarity or dot product
+            cos_scores = score_function.evaluate(query_embeddings, sub_corpus_embeddings)
+            cos_scores[torch.isnan(cos_scores)] = -1
+
+            # Get top-k values
+            cos_scores_top_k_values, cos_scores_top_k_idx = torch.topk(cos_scores, min(top_k+1, len(cos_scores[1])), dim=1, largest=True, sorted=return_sorted)
+            cos_scores_top_k_values = cos_scores_top_k_values.cpu().tolist()
+            cos_scores_top_k_idx = cos_scores_top_k_idx.cpu().tolist()
+            
+            for query_itr in range(len(query_embeddings)):
+                query_id = query_ids[query_itr]                  
+                for sub_corpus_id, score in zip(cos_scores_top_k_idx[query_itr], cos_scores_top_k_values[query_itr]):
+                    corpus_id = corpus_ids[corpus_start_idx+sub_corpus_id]
+                    if corpus_id != query_id:
+                        if len(result_heaps[query_id]) < top_k:
+                            # Push item on the heap
+                            heapq.heappush(result_heaps[query_id], (score, corpus_id))
+                        else:
+                            # If item is larger than the smallest in the heap, push it on the heap then pop the smallest element
+                            heapq.heappushpop(result_heaps[query_id], (score, corpus_id))
+
+        for qid in result_heaps:
+            for score, corpus_id in result_heaps[qid]:
+                self.results[qid][corpus_id] = score
+        return self.results
+
 
     def retrieve(self, 
                corpus: List[Evidence], 
@@ -54,11 +104,18 @@ class SPLADE(BaseRetriver):
                top_k: int, 
                score_function: SimilarityMetric,
                return_sorted: bool = True, 
+               chunk: bool = False,
+               chunksize = None,
                **kwargs) -> Dict[str, Dict[str, float]]:        
         self.logger.info("Encoding Queries...")
 
         query_embeddings = self.encode_queries(queries, batch_size=self.batch_size)
-          
+        if chunk:
+            results = self.retrieve_in_chunks(corpus, 
+                                              queries,top_k=top_k,
+                                              score_function=score_function,return_sorted=return_sorted,
+                                              chunksize=chunksize)
+            return results     
 
    
         self.logger.info("Encoding Corpus in batches... Warning: This might take a while!")

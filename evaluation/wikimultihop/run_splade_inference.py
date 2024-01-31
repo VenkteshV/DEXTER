@@ -16,7 +16,7 @@ if __name__ == "__main__":
    # config = config_instance.get_all_params()
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
-    loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
+    loader = RetrieverDataset("wikimultihopqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
     queries, qrels, corpus = loader.qrels()
     print("queries",len(queries),len(qrels),len(corpus),queries[0])
     tasb_search = SPLADE(config_instance)
