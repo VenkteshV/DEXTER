@@ -6,6 +6,7 @@ from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
 from data.loaders.OTTQADataLoader import OTTQADataLoader
 from data.loaders.TATQADataLoader import TATQADataLoader
 from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
+from data.loaders.StrategyQADataLoader import StrategyQADataLoader
 
 
 
@@ -34,6 +35,8 @@ class DataLoaderFactory:
             loader = TATQADataLoader  
         elif Dataset.OTTQA in dataloader_name:
             loader = OTTQADataLoader
+        elif Dataset.StrategyQA in dataloader_name:
+            loader = StrategyQADataLoader
         else:
             raise NotImplemented(f"{dataloader_name} not implemented yet.")
         return loader(dataset=dataloader_name, config_path=config_path,

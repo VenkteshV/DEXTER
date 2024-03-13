@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     similarity_measure = DotScore()
     print("retrieve")
-    response = tasb_search.retrieve(corpus,queries,100, True, chunk=True, chunksize=300000)
+    response = tasb_search.retrieve(corpus,queries,100, True, chunk=True, chunksize=50000)
 
     metrics = RetrievalMetrics(k_values=[1,10,100])
     #print(response)
