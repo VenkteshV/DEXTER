@@ -27,4 +27,14 @@ if __name__ == "__main__":
     metrics = RetrievalMetrics(k_values=[1,10,100])
     #print(response)
     print("indices",len(response))
+    wiki_docs = {}
+    with open("wqa_colbert.json","w") as f:
+        json.dump(response,f)
+    for index, key in enumerate(list(response.keys())):
+        wiki_docs[key] = []
+        for id in list(response[key].keys()):
+            corpus_id = int(id)
+            wiki_docs[key].append(corpus[corpus_id].text())
+    with open("wqa_colbert_docs.json","w") as f:
+        json.dump(wiki_docs,f)
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))
