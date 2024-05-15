@@ -18,7 +18,7 @@ Before running the above script make sure you have configured the correct paths 
 
 Example: 
 wikimultihopqa = /home/bcqa/BCQA/2wikimultihopQA <br />
-wikimultihopqa-corpus = /home/bcqa/BCQAwiki_musique_corpus.json <br />
+wikimultihopqa-corpus = /home/bcqa/BCQA/wiki_musique_corpus.json <br />
 
 
 ## Coding Practices
