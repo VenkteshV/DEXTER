@@ -3,6 +3,24 @@
 BCQA is a benchmark for a wide range of complex Qa tasks. It also aims to provide a easy to use framework for evaluating retrieval and reasoning approaches for answering complex multi-hop questions.
 
 
+# Setup
+1) Clone the repo <br />
+2) Create a conda environment conda create -n bcqa  <br />
+3) pip install -e .<br />
+
+# Running Evaluation
+The evaluation scripts for retreival and LLMs are in the evaluation folder 
+
+For instance to run dpr retreival for Wikimultihopqa run <br/>
+python3 evaluation/wikimultihop/run_dpr_inference.py <br />
+
+Before running the above script make sure you have configured the correct paths for the data and corpus files in evaluation/config.ini <br />
+
+Example: 
+wikimultihopqa = /home/bcqa/BCQA/2wikimultihopQA <br />
+wikimultihopqa-corpus = /home/bcqa/BCQA/wiki_musique_corpus.json <br />
+
+
 ## Coding Practices
 
 ### Auto-formatting code
