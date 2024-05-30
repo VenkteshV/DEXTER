@@ -1,5 +1,5 @@
 import unittest
-from constants import Split
+from config.constants import Split
 from data.datastructures.dataset import DprDataset
 from data.datastructures.sample import Sample
 from data.loaders.DprDataLoader import DprDataLoader

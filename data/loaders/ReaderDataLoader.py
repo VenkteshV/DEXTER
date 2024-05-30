@@ -3,7 +3,7 @@ import configparser
 import json
 
 import tqdm
-from constants import Split
+from config.constants import Split
 from data.datastructures.dataset import ReaderDataset
 from data.loaders.BaseDataLoader import PassageDataLoader
 from data.loaders.DataLoaderFactory import DataLoaderFactory

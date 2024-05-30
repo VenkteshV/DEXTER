@@ -2,7 +2,7 @@ import json
 import numpy as np
 import random
 import uuid
-from constants import Split
+from config.constants import Split
 from data.datastructures.answer import AmbigNQAnswer
 from data.datastructures.dataset import DprDataset
 from data.datastructures.question import Question

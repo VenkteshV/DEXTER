@@ -1,6 +1,6 @@
 import unittest
 
-from constants import Split
+from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
 
 

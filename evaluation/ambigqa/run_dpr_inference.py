@@ -2,7 +2,7 @@ import json
 from data.loaders.RetrieverDataset import RetrieverDataset
 from methods.ir.dense.dpr.models.dpr_sentence_transformers_inference import DprSentSearch
 from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
+from config.constants import Split
 from metrics.SimilarityMatch import CosineSimilarity as CosScore
 
 from metrics.retrieval.RetrievalMetrics import RetrievalMetrics

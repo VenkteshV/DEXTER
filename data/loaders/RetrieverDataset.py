@@ -1,7 +1,7 @@
 import configparser
 from typing import Dict, List
 
-from constants import Split
+from config.constants import Split
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
 from data.loaders.BaseDataLoader import PassageDataLoader

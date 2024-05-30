@@ -1,5 +1,5 @@
 import unittest
-from constants import Split
+from config.constants import Split
 from data.datastructures.dataset import DprDataset, QADataset
 from data.datastructures.evidence import Evidence
 from data.datastructures.sample import AmbigNQSample, Sample

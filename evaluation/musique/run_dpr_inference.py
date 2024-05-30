@@ -2,7 +2,7 @@ import json
 from data.loaders.RetrieverDataset import RetrieverDataset
 from methods.ir.dense.dpr.models.dpr_sentence_transformers_inference import DprSentSearch
 from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
+from config.constants import Split
 from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
@@ -11,6 +11,8 @@ from data.datastructures.hyperparameters.dpr import DenseHyperParams
 if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="facebook-dpr-question_encoder-multiset-base",
                                      document_encoder_path="facebook-dpr-ctx_encoder-multiset-base",
+                                      convert_to_tensor=False,
+                                     convert_to_numpy=True,
                                      ann_search="faiss_search",show_progress_bar=True)
 
     loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)

@@ -2,7 +2,7 @@ import json
 from retriever.Contriever import Contriever
 from data.loaders.RetrieverDataset import RetrieverDataset
 from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
+from config.constants import Split
 from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 from metrics.SimilarityMatch import CosineSimilarity as CosScore
 from retriever.sparse.bm25 import BM25Search

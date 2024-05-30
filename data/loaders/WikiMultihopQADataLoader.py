@@ -2,7 +2,7 @@ import json
 import os
 import tqdm
 from typing import List
-from constants import Split
+from config.constants import Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence

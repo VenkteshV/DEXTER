@@ -1,4 +1,4 @@
-from constants import Dataset, Split
+from config.constants import Dataset, Split
 from data.loaders.AmbigQADataLoader import AmbigQADataLoader
 from data.loaders.FinQADataLoader import FinQADataLoader
 from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader

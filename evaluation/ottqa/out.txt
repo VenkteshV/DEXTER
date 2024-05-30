@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/venky/venky_bcqa/BCQA/evaluation/ottqa/run_tctcolbert_inference.py", line 17, in <module>
+    loader = RetrieverDataset("ottqa","ottqa-corpus","evaluation/config.ini",Split.DEV)
+  File "/home/venky/venky_bcqa/BCQA/data/loaders/RetrieverDataset.py", line 23, in __init__
+    self.passage_dataloader = PassageDataLoader(passage_dataset,None,self.tokenizer_name,config_path)
+  File "/home/venky/venky_bcqa/BCQA/data/loaders/BaseDataLoader.py", line 125, in __init__
+    self._load_data()
+  File "/home/venky/venky_bcqa/BCQA/data/loaders/BaseDataLoader.py", line 136, in _load_data
+    with open(self.data_path,'r') as fp:
+FileNotFoundError: [Errno 2] No such file or directory: 'tests/corpus_utils/dataset/ottqa/ottqa_corpus.json'

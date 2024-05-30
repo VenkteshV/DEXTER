@@ -1,6 +1,6 @@
 import json
 import os
-from constants import Split
+from config.constants import Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence, TableEvidence
@@ -15,6 +15,7 @@ class FinQADataLoader(GenericDataLoader):
         super().__init__(dataset, tokenizer, config_path, split, batch_size)
 
     def load_raw_dataset(self, split=Split.TRAIN):
+        print("split",split)
         dataset = self.load_json(split)
         for data in dataset:
             question = Question(data["qa"]["question"],idx=data["id"])

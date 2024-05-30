@@ -1,4 +1,4 @@
-from constants import Split
+from config.constants import Split
 from data.datastructures.answer import AmbigNQAnswer, Answer
 from data.datastructures.question import Question
 from data.datastructures.evidence import Evidence

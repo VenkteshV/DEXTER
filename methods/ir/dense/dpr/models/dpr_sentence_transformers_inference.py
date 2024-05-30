@@ -32,8 +32,9 @@ class DprSentSearch():
         self.logger = logging.getLogger(__name__)
 
     def get_passage_embeddings(self, passages:List[str] = None):
-        print("self.args.show_progress_bar",self.args.show_progress_bar)
-        return self.document_encoder.encode(passages,convert_to_tensor=self.args.convert_to_tensor,
+        #print("self.args.show_progress_bar",self.args.show_progress_bar)
+        return self.document_encoder.encode(passages, convert_to_tensor=self.args.convert_to_tensor,
+        convert_to_numpy=self.args.convert_to_numpy,
         show_progress_bar=self.args.show_progress_bar, batch_size=self.config.batch_size)
 
     def get_ann_algo(self, emb_dim, num_trees: int = None, metric: str = None):
@@ -51,7 +52,7 @@ class DprSentSearch():
 
         passages = [self.documents[idx]+"[SEP]"+self.titles[idx]
                          for idx in self.index_mapping]
-        
+        #print("passages",len(passages))
         index_exists = self.ann_algo.load_index_if_available()
         ##TODO: Uncomment below for index usage
         #index_exists = False

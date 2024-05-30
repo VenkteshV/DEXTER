@@ -9,7 +9,7 @@ import zipfile
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from tqdm import tqdm
 
-from constants import DataTypes, Separators, Split
+from config.constants import DataTypes, Separators, Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import PassageDataset, QADataset
 from data.datastructures.evidence import Evidence, TableEvidence

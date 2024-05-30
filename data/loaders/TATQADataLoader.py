@@ -1,13 +1,13 @@
 import json
 import os
-from constants import Split
+from config.constants import Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence, TableEvidence
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample
 from data.loaders.BaseDataLoader import GenericDataLoader
-from constants import DataTypes
+from config.constants import DataTypes
 
 
 class TATQADataLoader(GenericDataLoader):

@@ -1,7 +1,7 @@
 import openai
+from openai import OpenAI
 
-
-openai.api_key = ""
+client = OpenAI(api_key="")
 
 class OpenAIEngine:
     def __init__(self, data,model_name: str, temperature: int, top_n: int):
@@ -15,7 +15,7 @@ class OpenAIEngine:
         Args:
             prompt (_type_): instruction with possibly in-context samples
         """        
-        response = openai.Completion.create(
+        response = client.Completion.create(
             model="text-davinci-003",
             prompt="""You are a assistant that gives an answer along with the derivation of rationale in format Rationale: Answer:  to arrive at solution for questions mandatorily using information from both given table and text. In table columns are separated by | and rows by \n (newline). If you dont know the answer output UNKNOWN: \n
                       give best answer with accurate scale and precision for Question: """ + row["question"]+",Table: "+row["table"]+ "Text: "+row["text"]+"Output in format Rationale:, Answer:",
@@ -34,7 +34,7 @@ class OpenAIEngine:
             user_prompt (str): The user prompt with possibly in context samples
             system_prompt (str): system prompt that designates the responsibility of the system
         """        
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role":"system","content":system_prompt } ,
     {"role":"user","content": user_prompt,
@@ -46,4 +46,4 @@ class OpenAIEngine:
             frequency_penalty=0.8,
             presence_penalty=0.6,
             )
-        return response['choices'][0]['text']
+        return response.choices[0].message.content

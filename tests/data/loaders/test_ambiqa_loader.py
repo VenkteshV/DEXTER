@@ -1,6 +1,6 @@
 import unittest
 
-from constants import Split
+from config.constants import Split
 from data.datastructures.dataset import QADataset
 from data.datastructures.sample import AmbigNQSample
 from data.loaders.AmbigQADataLoader import AmbigQADataLoader

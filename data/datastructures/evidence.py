@@ -2,7 +2,7 @@ from typing import List
 
 import pandas as pd
 
-from constants import Separators
+from config.constants import Separators
 
 
 class Evidence:
