@@ -62,7 +62,7 @@ class DprSentSearch():
         else:
             passage_vectors = self.get_passage_embeddings(passages)
             assert len(passage_vectors)==len(self.index_mapping)
-            self.ann_algo.create_index(passage_vectors.numpy())
+            self.ann_algo.create_index(passage_vectors)
 
     def retrieve_in_chunks(self,
                corpus: List[Evidence], 

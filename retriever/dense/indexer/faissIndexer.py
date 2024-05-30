@@ -17,7 +17,7 @@ class FaissSearch:
 
     def get_top_n_neighbours(self,query_vector: Tensor, top_k: int)->Dict:
         print("query_vector",query_vector.shape)
-        query_vector = query_vector.numpy()
+        query_vector = query_vector
         distances, indices = self.ann.search(query_vector,top_k)
         assert indices.shape == distances.shape == (query_vector.shape[0],top_k)
         indices = indices.tolist()
