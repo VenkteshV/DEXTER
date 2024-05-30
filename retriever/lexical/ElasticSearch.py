@@ -190,7 +190,7 @@ class ElasticSearch(object):
 
         result = []
         for resp in res["responses"]:
-            print("resp",resp)
+            #print("resp",resp)
             responses = resp["hits"]["hits"][skip:]
             
             hits = []

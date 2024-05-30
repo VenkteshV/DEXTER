@@ -10,9 +10,7 @@ from llms.llama_engine import LlamaEngine
 from llms.openai_engine import OpenAIEngine
 
 logger = logging.getLogger()
-
-
-from data.datastructures import LLmConstants
+from config import LLmConstants
 
 class LLMEngineOrchestrator:
     @staticmethod

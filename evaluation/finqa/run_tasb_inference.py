@@ -1,7 +1,6 @@
 
 from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
-
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 from retriever.dense.DenseFullSearch import DenseFullSearch
 from utils.metrics.SimilarityMatch import DotScore

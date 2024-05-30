@@ -1,10 +1,6 @@
-import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.dense.Contriever import Contriever
-from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
 from config.constants import Split
 from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
 from retriever.lexical.bm25 import BM25Search
 
 

@@ -27,6 +27,7 @@ class FinQADataLoader(GenericDataLoader):
         super().__init__(dataset, tokenizer, config_path, split, batch_size)
 
     def load_raw_dataset(self, split=Split.TRAIN):
+        print("split",split)
         dataset = self.load_json(split)
         for data in dataset:
             question = Question(data["qa"]["question"],idx=data["id"])

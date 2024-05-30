@@ -9,6 +9,8 @@ from data.datastructures.hyperparameters.dpr import DenseHyperParams
 if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="facebook-dpr-question_encoder-multiset-base",
                                      document_encoder_path="facebook-dpr-ctx_encoder-multiset-base",
+                                      convert_to_tensor=False,
+                                     convert_to_numpy=True,
                                      ann_search="faiss_search",show_progress_bar=True)
 
     loader = RetrieverDataset("wikimultihopqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)

@@ -7,6 +7,7 @@ from data.datastructures.question import Question
 from data.datastructures.sample import Sample
 from data.loaders.BaseDataLoader import GenericDataLoader
 from config.constants import DataTypes
+from config.constants import DataTypes
 
 
 class TATQADataLoader(GenericDataLoader):

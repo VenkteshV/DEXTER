@@ -14,7 +14,7 @@ if __name__ == "__main__":
                                "evaluation/config.ini", Split.DEV)
     queries, qrels, corpus = loader.qrels()
     print("queries",len(queries),len(qrels),len(corpus),queries[0])
-    bm25_search = BM25Search(index_name="wikimusique",initialize=False)
+    bm25_search = BM25Search(index_name="wikimusique",initialize=True)
 
     ## wikimultihop
     

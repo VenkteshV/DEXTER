@@ -1,7 +1,5 @@
-import json
 from retriever.sparse.SPLADE import SPLADE
 from data.loaders.RetrieverDataset import RetrieverDataset
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
 from config.constants import Split
 from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore

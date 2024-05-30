@@ -10,8 +10,7 @@ from retriever.dense.indexer.faissIndexer import FaissSearch
 
 logger = logging.getLogger()
 
-
-from data.datastructures import AnnConstants
+from config import AnnConstants
 
 class AnnSearch:
     @staticmethod
