@@ -1,9 +1,7 @@
-import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from methods.ir.dense.dpr.models.dpr_sentence_transformers_inference import DprSentSearch
-from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from retriever.dense.DprSentSearch import DprSentSearch
+from config.constants import Split
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
@@ -11,7 +9,7 @@ from data.datastructures.hyperparameters.dpr import DenseHyperParams
 if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="facebook-dpr-question_encoder-multiset-base",
                                      document_encoder_path="facebook-dpr-ctx_encoder-multiset-base",
-                                     ann_search="faiss_search",show_progress_bar=True)
+                                     ann_search="faiss_search",show_progress_bar=True,batch_size=16)
 
     loader = RetrieverDataset("tatqa","tatqa-corpus","evaluation/config.ini",Split.DEV)
     queries, qrels, corpus = loader.qrels()

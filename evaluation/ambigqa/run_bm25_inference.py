@@ -1,17 +1,12 @@
-import json
-from retriever.Contriever import Contriever
 from data.loaders.RetrieverDataset import RetrieverDataset
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
-from retriever.sparse.bm25 import BM25Search
+from config.constants import Split
+from retriever.lexical.bm25 import BM25Search
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":
 
-   # config = config_instance.get_all_params()
-    corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
+    # config = config_instance.get_all_params()
 
     loader = RetrieverDataset("ambignq","ambignq-corpus",
                                "evaluation/config.ini", Split.DEV,tokenizer=None)

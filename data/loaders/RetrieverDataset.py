@@ -1,7 +1,7 @@
 import configparser
 from typing import Dict, List
 
-from constants import Split
+from config.constants import Split
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
 from data.loaders.BaseDataLoader import PassageDataLoader
@@ -11,6 +11,15 @@ from data.loaders.Tokenizer import Tokenizer
 
 
 class RetrieverDataset:
+    '''Dataset class to load the data of the corresponding dataset provided for the evaluation of retrieval.
+    Arguments
+    dataset (str): alias of dataset
+    passage_dataset (str): alias of corpus
+    config_path (str) : path to the configuration file containing various parameters
+    split (Split) : Split of the dataset to be loaded
+    batch_size (int) : batch size to process the dataset.
+     tokenzier (str) : name of the tokenizer model. Set tokenizer as None, if only samples to be loaded but not tokenized and stored. This can help save time if only the raw dataset is needed.
+    '''
     def __init__(self, dataset:str,passage_dataset:str,config_path,split:Split, batch_size=32,tokenizer="bert-base-uncased"):
         self.split = split
         self.config = configparser.ConfigParser()

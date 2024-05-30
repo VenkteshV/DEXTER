@@ -4,3 +4,5 @@ __pycache__/
 /tests/corpus_utils/dataset/*
 /indices/*
 evaluation/ottqa/results
+experiments/
+indices/

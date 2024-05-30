@@ -1,3 +1,7 @@
+"""
+This file holds the data loader classes for various stages in Complex Question Answering.
+"""
+
 import configparser
 import copy
 import gzip
@@ -9,7 +13,7 @@ import zipfile
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from tqdm import tqdm
 
-from constants import DataTypes, Separators, Split
+from config.constants import DataTypes, Separators, Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import PassageDataset, QADataset
 from data.datastructures.evidence import Evidence, TableEvidence
@@ -19,6 +23,16 @@ from data.loaders.Tokenizer import Tokenizer
 
 
 class GenericDataLoader(DataLoader):
+    """
+    Generic dataloader class to load raw datasets containing question and anwer pairs.
+
+    Arguments:
+    dataset (str): string containing the dataset alias
+    tokenzier (str) : name of the tokenizer model.  Set tokenizer as None, if only samples to be loaded but not tokenized and stored. This can help save time if only the raw dataset is needed.
+    config_path (str) : path to the configuration file containing various parameters
+    split (Split) : Split of the dataset to be loaded
+    prefix (str) : prefix string to concatenate question and answers with.
+    """
     def __init__(
         self,
         dataset: str,
@@ -36,7 +50,10 @@ class GenericDataLoader(DataLoader):
         self.is_training = split == Split.TRAIN
         print(self.config["Data-Path"].keys())
 
+        #Loads the poath to the raw dataset
         datapath = self.config["Data-Path"][dataset]
+
+        #loads the path of pre tokenized data if saved before already.
         tokenized_path = f"{dataset}_{tokenizer}_tokenized"
         self.prefix = prefix if prefix else ""
         self.tokenized_path = (
@@ -55,6 +72,7 @@ class GenericDataLoader(DataLoader):
         if(self.tokenizer_name):
             self.tokenizer = Tokenizer(self.tokenizer_name)
             self.dataset = self.load_tokenized()
+
             if self.is_training:
                 sampler = RandomSampler(self.dataset)
             else:
@@ -76,6 +94,7 @@ class GenericDataLoader(DataLoader):
         return dataset
 
     def load_tokenized(self):
+        '''Loads the tokenized QA Dataset consisting of question answer samples'''
         if self.tokenized_path and os.path.exists(self.tokenized_path):
             self.logger.info("Loading DPR data from {}".format(self.tokenized_path))
             with open(self.tokenized_path, "r") as f:
@@ -86,12 +105,14 @@ class GenericDataLoader(DataLoader):
         return QADataset(ip_ids, ip_attention, op_ids, op_attention, self.is_training)
 
     def load_raw_dataset(self, split=Split.TRAIN):
+        '''Loads the raw question answer pairs and creates samples and stores as list'''
         dataset = self.load_json(split)
         for data in dataset:
             self.raw_data.append(
                 Sample(data["id"], Question(data["question"]), Answer(data["answer"])))
 
     def tokenize_questions(self, MAX_LENGTH=32):
+        '''Loads the questions in the dataset and returns the input ids and attention masks'''
         op = self.tokenizer.tokenize(
             [self.tokenizer.prefix+data.question.text() for data in self.raw_data],
             padding="max_length",
@@ -101,15 +122,26 @@ class GenericDataLoader(DataLoader):
         return op["input_ids"], op["attention_mask"]
     
     def tokenize_evidences(self):
+        '''Loads the evidence passages associated to the correposding questions of the datase and returns the input ids and attention masks'''
         op = self.tokenizer.tokenize([data.evidences.text() for data in self.raw_data], padding=True, truncation=True,
                                      return_tensors="pt")
         return op['input_ids'], op['attention_mask']
         
 
     def tokenize_answers(self):
+        '''Loads the answers associated to the correposding questions of the datase and returns the input ids and attention masks'''
         return self.tokenizer.tokenize([self.tokenizer.prefix+data.answer.text() for data in self.raw_data])
 
 class PassageDataLoader(DataLoader):
+    """
+    Dataloader class to load the full corpus cotaining all passages.
+
+    Arguments:
+    dataset (str): string containing the dataset alias
+    subset_ids List : list of passage ids to include from full corpus, all loaded if None 
+    config_path (str) : path to the configuration file containing various parameters
+    tokenzier (str) : name of the tokenizer model
+    """
     def __init__(self,
         dataset: str,
         subset_ids:List,
@@ -138,14 +170,14 @@ class PassageDataLoader(DataLoader):
                 passages = {}
                 titles = {}
                 types = {}
-                for id in tqdm(db.keys(),total=len(db),desc="Loading passages"):
-                    if "text" in db[id].keys():
-                        passages[id] = db[id]["text"]
+                for idx in tqdm(db.keys(),total=len(db),desc="Loading passages"):
+                    if "text" in db[idx].keys():
+                        passages[idx] = db[idx]["text"]
                     else:
-                        passages[id] = db[id]["passage"]
-                    titles[id] = db[id]["title"] if db[id]["title"] else ""
-                    if("type" in db[id].keys()):
-                        types[id] = db[id]["type"]
+                        passages[idx] = db[idx]["passage"]
+                    titles[idx] = db[idx]["title"] if db[idx]["title"] else ""
+                    if("type" in db[idx].keys()):
+                        types[idx] = db[idx]["type"]
         else:
             passages,titles = self.load_passage_db(self.data_path,copy.copy(self.subset_ids))
         subset_ids = self.subset_ids

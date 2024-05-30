@@ -1,10 +1,10 @@
 import unittest
 
-from methods.llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from llms.flant5_engine import FlanT5Engine
+from llms.llama_engine import LlamaEngine
+from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from llms.openai_engine import OpenAIEngine
 
-from methods.llms.flant5_engine import FlanT5Engine
-from methods.llms.openai_engine import OpenAIEngine
-from methods.llms.llama_engine import LlamaEngine
 
 class MyTestCase(unittest.TestCase):
     def test_loader(self):

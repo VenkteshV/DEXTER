@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.search import searcher
+from SearchAPI.app.api.search import searcher
 
 app = FastAPI()
 

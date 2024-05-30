@@ -1,11 +1,8 @@
 import unittest
-from constants import Split
-from data.datastructures.dataset import DprDataset, QADataset
+from config.constants import Split
 from data.datastructures.evidence import Evidence
-from data.datastructures.sample import AmbigNQSample, Sample
-from data.loaders import AmbigQADataLoader
+from data.datastructures.sample import Sample
 from data.loaders.DataLoaderFactory import DataLoaderFactory
-from data.loaders.FinQADataLoader import FinQADataLoader
 from data.loaders.Tokenizer import Tokenizer
 
 

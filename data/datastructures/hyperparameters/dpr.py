@@ -1,4 +1,5 @@
-from typing import List
+'''This file contains the hyperparameters to setup the Dense Passage Retriever'''
+
 from data.datastructures.hyperparameters.base import BaseHyperParameters
 
 

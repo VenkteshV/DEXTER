@@ -2,16 +2,16 @@ import json
 import numpy as np
 import random
 import uuid
-from constants import Split
+from config.constants import Split
 from data.datastructures.answer import AmbigNQAnswer
 from data.datastructures.dataset import DprDataset
 from data.datastructures.question import Question
 from data.datastructures.evidence import Evidence
 
-from data.datastructures.sample import Sample, AmbigNQSample
-from data.loaders.Tokenizer import Tokenizer
+
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
+from data.datastructures.sample import Sample
 from data.loaders.BaseDataLoader import GenericDataLoader
 import logging
 
@@ -33,10 +33,9 @@ class DprDataLoader(GenericDataLoader):
     def load_dataset(self, config: DenseHyperParams, split=Split.TRAIN, shuffle: bool = False):
         dataset = self.load_json(split)
         for data in dataset:
-            samples = []
             _id = data['id'] if "id" in data.keys() else uuid.uuid4()
             question = Question(data["question"], None)
-            sample = {}
+
             evidences = {}
 
             evidences["positives"] = [Evidence(document["title"] + "" + document["text"], document["passage_id"]) for

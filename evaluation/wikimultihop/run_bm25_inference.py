@@ -1,16 +1,16 @@
 import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.Contriever import Contriever
+from retriever.dense.Contriever import Contriever
 from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
-from retriever.sparse.bm25 import BM25Search
+from config.constants import Split
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
+from retriever.lexical.bm25 import BM25Search
 
 
 if __name__ == "__main__":
 
-   # config = config_instance.get_all_params()
+    # config = config_instance.get_all_params()
 
     loader = RetrieverDataset("wikimultihopqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
 

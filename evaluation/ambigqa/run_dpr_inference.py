@@ -1,13 +1,13 @@
-import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from methods.ir.dense.dpr.models.dpr_sentence_transformers_inference import DprSentSearch
-from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
 
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+
+from config.constants import Split
+
 
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from retriever.dense.DprSentSearch import DprSentSearch
+from utils.metrics.SimilarityMatch import CosineSimilarity
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":
@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     dpr_sent_search.create_index(corpus)
 
-    similarity_measure = CosScore()
+    similarity_measure = CosineSimilarity()
     response = dpr_sent_search.retrieve_in_chunks(corpus,queries,100,
     similarity_measure,chunk=True,chunksize=400000)
 

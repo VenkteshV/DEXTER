@@ -1,8 +1,8 @@
-from constants import Split
+from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
-from metrics.SimilarityMatch import CosineSimilarity
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from retriever.ANCE import ANCE
+from retriever.dense.ANCE import ANCE
+from utils.metrics.SimilarityMatch import CosineSimilarity
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 if __name__ == "__main__":
     loader = RetrieverDataset("finqa","finqa-corpus","evaluation/config.ini",Split.DEV)

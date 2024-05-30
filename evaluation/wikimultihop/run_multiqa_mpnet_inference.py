@@ -1,12 +1,10 @@
 #multi-qa-mpnet-base-cos-v1
 
-import json
-from retriever.DenseFullSearch import DenseFullSearch
-from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
+from retriever.dense.DenseFullSearch import DenseFullSearch
+from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 
@@ -15,7 +13,7 @@ if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="multi-qa-mpnet-base-cos-v1",
                                      document_encoder_path="multi-qa-mpnet-base-cos-v1"
                                      ,batch_size=32)
-   # config = config_instance.get_all_params()
+    # config = config_instance.get_all_params()
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
     loader = RetrieverDataset("wikimultihopqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)

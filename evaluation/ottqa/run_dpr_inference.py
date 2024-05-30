@@ -1,9 +1,8 @@
 import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from methods.ir.dense.dpr.models.dpr_sentence_transformers_inference import DprSentSearch
-from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from retriever.dense.DprSentSearch import DprSentSearch
+from config.constants import Split
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
@@ -20,7 +19,7 @@ if __name__ == "__main__":
 
     dpr_sent_search.create_index(corpus)
     response = dpr_sent_search.retrieve(
-        queries, 100,chunk=True,chunksize=150000)
+        queries, 100,chunk=True,chunksize=50000)
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
     res = metrics.evaluate_retrieval(qrels=qrels,results=response)

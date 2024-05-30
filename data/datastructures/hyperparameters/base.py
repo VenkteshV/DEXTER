@@ -1,5 +1,6 @@
+'''This file contains the base hyperparameters for training downstream models.
+Extend from this class to build custom hyperparameter class'''
 
-import time
 import random
 import numpy as np
 import torch
@@ -9,7 +10,7 @@ class BaseHyperParameters:
         self.adam_epsilon = 1e-8
         self.batch_size=16
         self.warmup =0.2 
-    def set_seed(self, seed=None):
+    def set_seed(self, seed:int=None):
         if seed is None:
             seed = self.seed
         random.seed(seed)

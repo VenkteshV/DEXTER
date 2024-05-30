@@ -1,11 +1,11 @@
-import json
+
 from retriever.sparse.SPLADE import SPLADE
 from data.loaders.RetrieverDataset import RetrieverDataset
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
+
+from config.constants import Split
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from utils.metrics.SimilarityMatch import CosineSimilarity
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":
@@ -13,20 +13,14 @@ if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="naver/splade_v2_max",
                                      document_encoder_path="naver/splade_v2_max"
                                      ,batch_size=4)
-   # config = config_instance.get_all_params()
-    corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
+
 
     loader = RetrieverDataset("finqa","finqa-corpus","evaluation/config.ini",Split.DEV)
     queries, qrels, corpus = loader.qrels()
     print("queries",len(queries),len(qrels),len(corpus),queries[0])
     tasb_search = SPLADE(config_instance)
 
-    ## wikimultihop
-
-    # with open("/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json") as f:
-    #     corpus = json.load(f)
-
-    similarity_measure = CosScore()
+    similarity_measure = CosineSimilarity()
     response = tasb_search.retrieve(corpus,queries,100,similarity_measure)
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
