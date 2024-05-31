@@ -1,8 +1,8 @@
-from retriever.ColBERT.baleen.condenser.condense import Condenser
-from retriever.ColBERT.baleen.hop_searcher import HopSearcher
-from retriever.ColBERT.baleen.engine import Baleen
-from .ColBERT.colbert import Indexer
-from .ColBERT.colbert.infra import Run, RunConfig, ColBERTConfig
+from retriever.dense.ColBERT.baleen.condenser.condense import Condenser
+from retriever.dense.ColBERT.baleen.hop_searcher import HopSearcher
+from retriever.dense.ColBERT.baleen.engine import Baleen
+from retriever.dense.ColBERT.colbert import Indexer
+from retriever.dense.ColBERT.colbert.infra import Run, RunConfig, ColBERTConfig
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
 import os

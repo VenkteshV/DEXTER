@@ -1,6 +1,6 @@
 import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.ColBERT.colbert.infra.config.config import ColBERTConfig
+from retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
 from config.constants import Split
 from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 from utils.metrics.SimilarityMatch import DotScore

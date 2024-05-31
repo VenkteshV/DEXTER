@@ -1,7 +1,7 @@
 import json
 from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.ColBERT.colbert.infra.config.config import ColBERTConfig
+from retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
 from retriever.dense.TCTColBERT import TCTColBERT
 import sys
 

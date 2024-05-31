@@ -1,13 +1,17 @@
-from .ColBERT.colbert.infra.config.config import ColBERTConfig, RunConfig
-from .ColBERT.colbert.infra.run import Run
-from .ColBERT.colbert import Indexer, Searcher
 
+
+from retriever.dense.ColBERT.colbert.infra.run import Run
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
 import logging
 import tqdm
 import heapq
 from typing import List,Dict
+
+from retriever.dense.ColBERT.build.lib.colbert.indexer import Indexer
+from retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig, RunConfig
+from retriever.dense.ColBERT.colbert.searcher import Searcher
+
 
 
 class TCTColBERT():
