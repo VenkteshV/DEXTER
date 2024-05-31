@@ -1,11 +1,16 @@
 from typing import List
 
 import pandas as pd
-
-from constants import Separators
-
+from config.constants import Separators
 
 class Evidence:
+    """ Data class to hold evidence/context for Question Answering
+
+    Args:
+        text : text of evidence passage
+        title : title of evidence passage
+        idx : index of evidence passage
+    """
     def __init__(self, text: str, idx=None, title: str = None):
         self._text = text
         self._idx = idx
@@ -22,7 +27,16 @@ class Evidence:
 
 
 class TableEvidence(Evidence):
-    def __init__(self, table: List,columns:List, idx=None, title: str = None):
+
+    """ Data class to hold evidence/context for Question Answering in the format of a 2D table
+
+    Args:
+        table : 2D table of texts
+        title: title of the evidence table
+        columns : column names of the table
+        idx : index of evidence table
+    """
+    def __init__(self, table: List[List],columns:List, idx=None, title: str = None):
         self.table = table
         self.columns = columns
         super().__init__(self.convert_to_text(), idx, title)

@@ -1,14 +1,12 @@
 import json
+from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.ColBERT.colbert.infra.config.config import ColBERTConfig
-from retriever.DenseFullSearch import DenseFullSearch
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import DotScore
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
-from retriever.TCTColBERT import TCTColBERT
+from retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
+from retriever.dense.TCTColBERT import TCTColBERT
 import sys
+
+from utils.metrics.SimilarityMatch import DotScore
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 sys.path.insert(0, 'ColBERT/')
 
 if __name__ == "__main__":

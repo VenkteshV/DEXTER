@@ -1,7 +1,7 @@
 import json
 import os
 import tqdm
-from constants import Split
+from config.constants import Split
 from data.datastructures.answer import Answer
 from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence
@@ -11,6 +11,17 @@ from data.loaders.BaseDataLoader import GenericDataLoader
 
 
 class StrategyQADataLoader(GenericDataLoader):
+    '''Data loader class to load Datset from raw StrategyQA dataset.
+    StrategyQA dataset consists of a questions each of which have a single answer and evidences.
+    
+    Arguments:
+    dataset (str): string containing the dataset alias
+    tokenzier (str) : name of the tokenizer model. Set tokenizer as None, if only samples to be loaded but not tokenized and stored. This can help save time if only the raw dataset is needed.
+    config_path (str) : path to the configuration file containing various parameters
+    split (Split) : Split of the dataset to be loaded
+    batch_size (int) : batch size to process the dataset.
+    corpus Dict[str,Evidence]: corpus containing all needed passages.    
+    '''
     def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
                  batch_size=None, corpus=None):
         self.corpus = corpus

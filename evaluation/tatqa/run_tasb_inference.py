@@ -1,10 +1,8 @@
-import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.DenseFullSearch import DenseFullSearch
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import DotScore
+from retriever.dense.DenseFullSearch import DenseFullSearch
+from config.constants import Split
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from utils.metrics.SimilarityMatch import DotScore
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 

@@ -1,11 +1,11 @@
-import json
-from retriever.DenseFullSearch import DenseFullSearch
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
+
+from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import DotScore
+
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from retriever.dense.DenseFullSearch import DenseFullSearch
+from utils.metrics.SimilarityMatch import DotScore
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":
@@ -13,7 +13,7 @@ if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="msmarco-distilbert-base-tas-b",
                                      document_encoder_path="msmarco-distilbert-base-tas-b"
                                      ,batch_size=32, show_progress_bar=True)
-   # config = config_instance.get_all_params()
+
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
     loader = RetrieverDataset("ambignq","ambignq-corpus",
@@ -22,10 +22,6 @@ if __name__ == "__main__":
     print("queries",len(queries),len(qrels),len(corpus),queries[0])
     tasb_search = DenseFullSearch(config_instance)
 
-    ## wikimultihop
-
-    # with open("/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json") as f:
-    #     corpus = json.load(f)
 
     similarity_measure = DotScore()
     response = tasb_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=400000)

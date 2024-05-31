@@ -1,7 +1,8 @@
-from typing import List,Any
-from fastapi import Header, APIRouter
-from app.api.models import Query, Document
-from app.api.get_document import  get_document_response
+from fastapi import APIRouter
+
+from SearchAPI.app.api.get_document import get_document_response
+from SearchAPI.app.api.models import Document, Query
+
 
 
 searcher  = APIRouter()

@@ -1,0 +1,4 @@
+
+[submodule "retriever/dense/ColBERT"]
+	path = retriever/dense/ColBERT
+	url = https://github.com/VenkteshV/ColBERT.git

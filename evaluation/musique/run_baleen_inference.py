@@ -1,13 +1,10 @@
-import json
+from config.constants import Split
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.ColBERT.colbert.infra.config.config import ColBERTConfig
-from retriever.DenseFullSearch import DenseFullSearch
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import DotScore
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
-from retriever.Baleen import Baleen
+from retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
+
+from utils.metrics.SimilarityMatch import DotScore
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from retriever.dense.Baleen import BaleenRetriever
 
 
 if __name__ == "__main__":
@@ -15,7 +12,7 @@ if __name__ == "__main__":
 
     loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
     queries, qrels, corpus = loader.qrels()
-    tasb_search = Baleen(config_instance,checkpoint="colbert-ir/colbertv2.0")
+    tasb_search = BaleenRetriever(config_instance,checkpoint="colbert-ir/colbertv2.0")
 
     ## wikimultihop
 

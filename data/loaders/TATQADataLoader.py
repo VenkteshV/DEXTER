@@ -1,16 +1,28 @@
 import json
 import os
-from constants import Split
-from data.datastructures.answer import Answer
+from config.constants import Split
 from data.datastructures.dataset import DprDataset
 from data.datastructures.evidence import Evidence, TableEvidence
 from data.datastructures.question import Question
 from data.datastructures.sample import Sample
 from data.loaders.BaseDataLoader import GenericDataLoader
-from constants import DataTypes
+from config.constants import DataTypes
+from config.constants import DataTypes
 
 
 class TATQADataLoader(GenericDataLoader):
+    '''Data loader class to load Datset from raw TATQA dataset.
+    TATQA dataset consists of a questions each of which have a single answer and variopus table and text evidences.
+    
+    Arguments:
+    dataset (str): string containing the dataset alias
+    tokenzier (str) : name of the tokenizer model. Set tokenizer as None, if only samples to be loaded but not tokenized and stored. This can help save time if only the raw dataset is needed.
+    config_path (str) : path to the configuration file containing various parameters
+    split (Split) : Split of the dataset to be loaded
+    batch_size (int) : batch size to process the dataset.
+    corpus Dict[str,Evidence]: corpus containing all needed passages.    
+    '''
+    
     def __init__(self, dataset: str, tokenizer="bert-base-uncased", config_path='test_config.ini', split=Split.TRAIN,
                  batch_size=None, corpus=None):
         super().__init__(dataset, tokenizer, config_path, split, batch_size)

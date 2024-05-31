@@ -1,4 +1,4 @@
-from constants import Dataset, Split
+from config.constants import Dataset, Split
 from data.loaders.AmbigQADataLoader import AmbigQADataLoader
 from data.loaders.FinQADataLoader import FinQADataLoader
 from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
@@ -11,8 +11,8 @@ from data.loaders.StrategyQADataLoader import StrategyQADataLoader
 
 
 class DataLoaderFactory:
-    def __int__(self):
-        pass
+    ''' Data Loader factory to map dataset alias to corresponding Data loader class'''
+
 
     def create_dataloader(
         self,

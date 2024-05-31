@@ -1,13 +1,12 @@
-import os
 from data.loaders.RetrieverDataset import RetrieverDataset
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from retriever.sparse.bm25 import BM25Search
+from config.constants import Split
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from retriever.lexical.bm25 import BM25Search
 
 
 if __name__ == "__main__":
 
-   # config = config_instance.get_all_params()
+    # config = config_instance.get_all_params()
 
     loader = RetrieverDataset("tatqa","tatqa-corpus","evaluation/config.ini",Split.DEV)
 

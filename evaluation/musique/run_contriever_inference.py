@@ -1,11 +1,10 @@
-import json
-from retriever.Contriever import Contriever
+
 from data.loaders.RetrieverDataset import RetrieverDataset
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
+from config.constants import Split
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from retriever.dense.Contriever import Contriever
+from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":
@@ -13,7 +12,7 @@ if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="facebook/contriever",
                                      document_encoder_path="facebook/contriever"
                                      ,batch_size=16)
-   # config = config_instance.get_all_params()
+    # config = config_instance.get_all_params()
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
     loader = RetrieverDataset("musiqueqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)

@@ -1,14 +1,13 @@
 from data.loaders.RetrieverDataset import RetrieverDataset
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from retriever.sparse.bm25 import BM25Search
-
+from config.constants import Split
+from retriever.lexical.bm25 import BM25Search
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 if __name__ == "__main__":
 
-   # config = config_instance.get_all_params()
+    # config = config_instance.get_all_params()
 
-    loader = RetrieverDataset("finqa","finqa-corpus","tests/retriever/test_config.ini",Split.DEV)
+    loader = RetrieverDataset("finqa","finqa-corpus","tests/retriever/test_config.ini",Split.DEV,tokenizer=None)
 
     queries, qrels, corpus = loader.qrels()
 

@@ -1,6 +1,7 @@
 # BCQA (Benchmarking Complex QA)
 
-BCQA is a benchmark for a wide range of complex Qa tasks. It also aims to provide a easy to use framework for evaluating retrieval and reasoning approaches for answering complex multi-hop questions.
+Answering complex questions is a difficult task that requires knowledge retrieval. 
+To address this, we propose our easy to use and  extensible benchmark composing diverse complex QA tasks and provide a toolkit to evaluate zero-shot retrieval capabilities of state-of-the-art dense and sparse retrieval models in an open-domain setting. Additionally, since context-based reasoning is key to complex QA tasks, we extend our toolkit with various LLM engines. Both the above components together allow our users to evaluate the various components in the Retrieval Augmented Generation pipeline.
 
 
 # Setup
@@ -8,55 +9,192 @@ BCQA is a benchmark for a wide range of complex Qa tasks. It also aims to provid
 2) Create a conda environment conda create -n bcqa  <br />
 3) pip install -e .<br />
 
+# Datasets
+
+|  Dataset Name  |  Dataset alias |                  Homepage                 |                Characteristics               | #Questions | Corpus Size |
+|:--------------:|:--------------:|:-----------------------------------------:|:--------------------------------------------:|:----------:|:-----------:|
+| MusiqueQA      | musiqueqa      | [Link](https://github.com/StonyBrookNLP/musique)  | Connected multi-hop reasoning                |            | 570k        |
+| WikiMultiHopQA | wikimultihopqa | [Link](https://github.com/Alab-NII/2wikimultihop) | Comparative multi-hop reasoning              | 190k       | 570k        |
+| StrategyQA     | strategyqa     | [Link](https://allenai.org/data/strategyqa)       | Multi-hop reasoning, Implicit Reasoning      | 2.7k       | 26.6M       |
+| AmbigQA        | ambignq        | [Link](https://nlp.cs.washington.edu/ambigqa/)    | Ambiguous Questions                          | 12k        | 24.3M       |
+| OTT-QA         | ottqa          | [Link](https://ott-qa.github.io/)                 | Table and Text multi-hop reasoning           | 2.1k       | 6.5M        |
+| TAT-QA         | tatqa          | [Link](https://nextplusplus.github.io/TAT-QA/)    | Financial Table and Text multi-hop reasoning | 2.9k       | 7000        |
+| FinQA          | finqa          | [Link](https://github.com/czyssrs/FinQA)          | Financial Table and Text multi-hop reasoning | 8k         | 24.8k       |
+
+
+# Retrievers
+|    Name    | Paradigm | More |
+|:----------:|:--------:|:----:|
+| BM25       | Lexical  | [Link](https://www.staff.city.ac.uk/~sbrp622/papers/foundations_bm25_review.pdf) |
+| SPLADE     | Sparse   | [Link](https://github.com/naver/splade) |
+| DPR        | Dense    | [Link](https://github.com/facebookresearch/DPR) |
+| ANCE       | Dense    | [Link](https://github.com/microsoft/ANCE) |
+| tas-b      | Dense    | [Link](https://github.com/sebastian-hofstaetter/tas-balanced-dense-retrieval) |
+| MPNet      | Dense    | [Link](https://github.com/microsoft/MPNet) |
+| Contriever | Dense    | [Link](https://github.com/facebookresearch/contriever) |
+| ColBERTv2  | Dense    | [Link](https://github.com/stanford-futuredata/ColBERT) |
+
+# LLM Engines
+
+
+
+
+# Project Structure
+- data
+    - datastructures: Basic data classes for question, answer and others needed in the pipeline.
+    - dataloaders: Loaders that take raw json/zip file data and convert them to the format needed in the pipeline
+- retriever: Retrievers that take the data loaders and perform retrieval to produce results.
+    - dense : dense retrievers like ColBERTv2,ANCE, Contriever, MpNet, DPR and Tas-B
+    - lexical: lexical retrievers like BM25
+    - sparse: Sparse retrievers like SPLADE
+- llms: LLM engines
+- SearchAPI:
+- SearchUI: 
+- config: Configuration files with constants and initialization.
+- tests: test cases for the above components
+- utils: utilities needed in the pipeline like retrieval accuracy calculation and matching.
+
 # Running Evaluation
-The evaluation scripts for retreival and LLMs are in the evaluation folder 
-
-For instance to run dpr retreival for Wikimultihopqa run <br/>
-python3 evaluation/wikimultihop/run_dpr_inference.py <br />
-
-Before running the above script make sure you have configured the correct paths for the data and corpus files in evaluation/config.ini <br />
-
-Example: 
-wikimultihopqa = /home/bcqa/BCQA/2wikimultihopQA <br />
-wikimultihopqa-corpus = /home/bcqa/BCQA/wiki_musique_corpus.json <br />
-
-
-## Coding Practices
-
-### Auto-formatting code
-1. Install `black`: ```pip install black``` or ```conda install black```
-2. In your IDE: Enable formatting on save.
-3. Install `isort`: ```pip install isort``` or ```conda install isort```
-4. In your IDE: Enable sorting import on save.
-
-In VS Code, you can do this using the following config:
-```json
-{
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true
-    }
-}
-```
-
-### Type hints
-Use [type hints](https://docs.python.org/3/library/typing.html) for __everything__! No exceptions.
-
-### Docstrings
-Write a docstring for __every__ function (except the main function). We use the [Google format](https://github.com/NilsJPWerner/autoDocstring/blob/HEAD/docs/google.md). In VS Code, you can use [autoDocstring](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring).
-
-### Example
+Below is an example script demonstrating how to load a dataset from our benchmark (ambignq here), feed it into one of our retrievers(ANCE here), and evaluate the retrieval quality against the relevance labels provided by the dataset.
 ```python
-def sum(a: float, b: float) -> float:
-    """Compute the sum of a and b.
+from config.constants import Split
+from data.loaders.RetrieverDataset import RetrieverDataset
+from retriever.dense.ANCE import ANCE
+from utils.metrics.SimilarityMatch import CosineSimilarity
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
-    Args:
-        a (float): First number.
-        b (float): Second number.
-    
-    Returns:
-        float: The sum of a and b.
-    """
+if __name__ == "__main__":
+    # Ensure in config.ini the path to the raw data files are linked under [Data-Path]
+    # ambignq = '<path to the data file>
+    # ambignq-corpus = '<path to the corpus file>'
 
-    return a + b
+    # You can set the split to one of Split.DEV, Split.TEST or Split.TRAIN
+    # Setting tokenizer=None only loads only the raw data processed into our standard data classes, if tokenizer is set, the data is also tokenized and stored in the loader.
+    loader = RetrieverDataset("ambignq","ambignq-corpus",
+                               "config.ini", Split.DEV,tokenizer=None)
+
+    # Initialize your retriever configuration
+    config_instance = DenseHyperParams(query_encoder_path="facebook/contriever",
+                                     document_encoder_path="facebook/contriever"
+                                     ,batch_size=32,show_progress_bar=True)
+
+    # From data loader loads list of queries, corpus and relevance labels.
+    queries, qrels, corpus = loader.qrels()
+
+    #Perform Retrieval
+    contrvr_search = Contriever(config_instance)   
+    similarity_measure = CosineSimilarity()
+    response = contrvr_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=400000)
+
+
+    #Evaluate retrieval metrics
+    metrics = RetrievalMetrics(k_values=[1,10,100])
+    print(metrics.evaluate_retrieval(qrels=qrels,results=response))
 ```
+
+# Building your own custom dataset
+
+You can quickly build your own dataset in three steps:
+
+### 1) Loading the question, answer and evidence records
+
+The base data loader by default takes a json file of the format
+
+```
+[{'id':'..','question':'..','answer':'..'}]
+```
+Each of the train, test and val splits should under their own json files named under your dir
+- /dir_path/train.json
+- /dir_path/test.json
+- /dir_path/validation.json
+  
+If you want to create your custom loader:
+Within the directory data/dataloaders, Create your Dataloader by extending from BaseDataLoader
+```python
+
+class MyDataLoader(BaseDataLoader):
+    def load_raw_dataset(self,split):
+        dataset = self.load_json(split)
+        
+        records =  '''your code to transform the elements in json to List[Sample(idx:str,question:Question,answer:Answer,evidence:Evidence)]'''
+        # If needed you can also extend from Question,Answer and Evidence dataclasses to form your own types
+        self.raw_data = records
+    def load_tokenized(self):
+        ''' If required overwrite this function to build custom tkenization method of your dataset '''
+
+```
+
+Under config.ini:
+```
+my-dataset = 'dir_path'
+```
+### 1) Loading the corpus
+To load your own corpus you can provide a json file of the standard format:
+```
+{"idx":{"text":"...","title":"..",'type":"table/text"}}
+```
+
+Under config.ini add:
+```
+my-dataset-corpus = '< path to the json file of above format >'
+```
+### 3) Add your dataset alias to constants
+
+Within config.constants:
+```python
+class Dataset:
+    AMBIGQA = "ambignq"
+    WIKIMULTIHOPQA = "wikimultihopqa"
+    ...
+    MY_DATASET = "my-dataset"
+```
+
+and within data/loader/DataLoaderFactory.py:
+
+```python
+   def create_dataloader(
+...
+        if Dataset.AMBIGQA in dataloader_name:
+            loader = AmbigQADataLoader
+        elif Dataset.FINQA in dataloader_name:
+            loader = FinQADataLoader
+        ..
+        elif Dataset.MY_DATASET in dataloader_name:
+            loader = MyDataLoader
+    
+```
+
+
+Your dataset is now ready to be loaded and used.
+
+a) You can load the dataloader as:
+```python
+loader_factory = DataLoaderFactory()
+loader = loader_factory.create_dataloader("my-dataset", config_path="config.ini", split=Split.DEV, batch_size=10)
+```
+
+b) You can load the corpus as:
+```python
+loader = PassageDataLoader(dataset="my-dataset-corpus",subset_ids=None,config_path="config.ini",tokenizer=None)
+```
+
+c) You can load RetrieverDataset as:
+```python
+loader = RetrieverDataset("my-dataset","my-dataset-corpus",
+                               "config.ini", Split.DEV,tokenizer=None)
+```
+
+
+# Bulding your own retrievers
+
+To build your own retriever you can extend from the class bcqa/retriever/BaseRetriever.py and use it in your evaluation script.
+
+# Citing & Authors
+
+
+
+
+
+
+
+             

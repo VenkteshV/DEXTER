@@ -6,8 +6,8 @@ class Tokenizer:
         self.prefix = prefix if prefix else ""
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer)
 
-    def tokenize(self, input, **kwargs):
-        return self.tokenizer(input, **kwargs)
+    def tokenize(self, input_txt:str, **kwargs):
+        return self.tokenizer(input_txt, **kwargs)
 
     def decode(self, idx):
         return self.tokenizer.decode(idx,

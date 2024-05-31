@@ -1,13 +1,15 @@
 #multi-qa-mpnet-base-cos-v1
 
-import json
-from retriever.DenseFullSearch import DenseFullSearch
-from data.loaders.MusiqueQaDataLoader import MusiqueQADataLoader
+
 from data.loaders.RetrieverDataset import RetrieverDataset
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
+from config.constants import Split
+
+
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from retriever.dense.DenseFullSearch import DenseFullSearch
+from torch.nn.modules.distance import CosineSimilarity
+
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":
@@ -15,7 +17,7 @@ if __name__ == "__main__":
     config_instance = DenseHyperParams(query_encoder_path="multi-qa-mpnet-base-cos-v1",
                                      document_encoder_path="multi-qa-mpnet-base-cos-v1"
                                      ,batch_size=32, show_progress_bar=True)
-   # config = config_instance.get_all_params()
+
     corpus_path = "/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json"
 
     loader = RetrieverDataset("ambignq","ambignq-corpus",
@@ -29,7 +31,7 @@ if __name__ == "__main__":
     # with open("/raid_data-lv/venktesh/BCQA/wiki_musique_corpus.json") as f:
     #     corpus = json.load(f)
 
-    similarity_measure = CosScore()
+    similarity_measure = CosineSimilarity()
     response = tasb_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=200000)
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])

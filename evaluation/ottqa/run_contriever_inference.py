@@ -1,11 +1,9 @@
 import json
 from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.Contriever import Contriever
-from retriever.HfRetriever import HfRetriever
-from data.loaders.WikiMultihopQADataLoader import WikiMultihopQADataLoader
-from constants import Split
-from metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from metrics.SimilarityMatch import CosineSimilarity as CosScore
+from retriever.dense.Contriever import Contriever
+from config.constants import Split
+from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 
@@ -25,7 +23,9 @@ if __name__ == "__main__":
     #     corpus = json.load(f)
 
     similarity_measure = CosScore()
-    response = tasb_search.retrieve(corpus,queries,100,similarity_measure)
+    response = tasb_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=5000)
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
-    print(metrics.evaluate_retrieval(qrels=qrels,results=response))
+    res =metrics.evaluate_retrieval(qrels=qrels,results=response)
+    with open("evaluation/ottqa/results/ottqa_contrvr.json","w+") as fp:
+        json.dump(res,fp)

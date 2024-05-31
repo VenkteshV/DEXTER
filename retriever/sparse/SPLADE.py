@@ -5,17 +5,17 @@ import heapq
 from numpy import ndarray
 from torch import Tensor
 import os
-from metrics.SimilarityMatch import SimilarityMetric
+
 from tqdm.autonotebook import trange
 from data.datastructures.hyperparameters.dpr import DenseHyperParams
 from transformers import AutoModelForMaskedLM, AutoTokenizer
 from sentence_transformers.util import batch_to_device
-import time
 from typing import List, Dict, Tuple, Any, Union
 import joblib
 from retriever.BaseRetriever import BaseRetriver
 from data.datastructures.evidence import Evidence
 from data.datastructures.question import Question
+from utils.metrics.SimilarityMatch import SimilarityMetric
 
 logger = logging.getLogger(__name__)
 
@@ -129,6 +129,7 @@ class SPLADE(BaseRetriver):
         else:
             corpus_embeddings = self.encode_corpus(corpus)
             joblib.dump(corpus_embeddings,"indices/corpus/index")
+        
 
         # Compute similarites using either cosine-similarity or dot product
         cos_scores = score_function.evaluate(query_embeddings,corpus_embeddings)
@@ -139,8 +140,8 @@ class SPLADE(BaseRetriver):
         response = {}
         for idx, q in enumerate(queries):
             response[q.id()] = {}
-            for index, id in enumerate(cos_scores_top_k_idx[idx]):
-                response[q.id()][corpus[id].id()] = float(cos_scores_top_k_values[idx][index])
+            for index, c_idx in enumerate(cos_scores_top_k_idx[idx]):
+                response[q.id()][corpus[c_idx].id()] = float(cos_scores_top_k_values[idx][index])
         return response
                 
 # Chunks of this code has been taken from: https://github.com/naver/splade/blob/main/beir_evaluation/models.py
