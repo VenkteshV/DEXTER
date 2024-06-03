@@ -1,9 +1,9 @@
 
-from data.loaders.RetrieverDataset import RetrieverDataset
-from config.constants import Split
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
-from retriever.dense.DprSentSearch import DprSentSearch
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.config.constants import Split
+from dexter.data.datastructures.hyperparameters.dpr import DenseHyperParams
+from dexter.retriever.dense.DprSentSearch import DprSentSearch
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":

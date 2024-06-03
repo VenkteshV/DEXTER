@@ -2,8 +2,8 @@ from llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
 
-from config.constants import Split
-from data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
 
 
 if __name__=="__main__":

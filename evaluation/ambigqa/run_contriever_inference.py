@@ -1,10 +1,10 @@
-from data.loaders.RetrieverDataset import RetrieverDataset
-from config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.config.constants import Split
 
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
-from retriever.dense.Contriever import Contriever
-from utils.metrics.SimilarityMatch import CosineSimilarity
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.data.datastructures.hyperparameters.dpr import DenseHyperParams
+from dexter.retriever.dense.Contriever import Contriever
+from dexter.utils.metrics.SimilarityMatch import CosineSimilarity
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":

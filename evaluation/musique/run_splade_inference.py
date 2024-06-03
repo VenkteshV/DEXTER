@@ -1,11 +1,11 @@
 
-from retriever.sparse.SPLADE import SPLADE
-from data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.retriever.sparse.SPLADE import SPLADE
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
 
-from config.constants import Split
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from dexter.config.constants import Split
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
+from dexter.data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 
 if __name__ == "__main__":

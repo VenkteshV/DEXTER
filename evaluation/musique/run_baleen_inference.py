@@ -1,10 +1,10 @@
-from config.constants import Split
-from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
+from dexter.config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
 
-from utils.metrics.SimilarityMatch import DotScore
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from retriever.dense.Baleen import BaleenRetriever
+from dexter.utils.metrics.SimilarityMatch import DotScore
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.retriever.dense.Baleen import BaleenRetriever
 
 
 if __name__ == "__main__":

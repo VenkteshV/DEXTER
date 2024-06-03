@@ -1,8 +1,8 @@
 from llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
-from config.constants import Split
-from data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
 if __name__=="__main__":
         config_instance = LLMEngineOrchestrator()
         llm_instance = config_instance.get_llm_engine(data="",llm_class="openai",model_name="gpt-3.5-turbo")

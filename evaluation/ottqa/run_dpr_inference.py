@@ -1,10 +1,10 @@
 import json
-from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.dense.DprSentSearch import DprSentSearch
-from config.constants import Split
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.retriever.dense.DprSentSearch import DprSentSearch
+from dexter.config.constants import Split
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from dexter.data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 
 if __name__ == "__main__":

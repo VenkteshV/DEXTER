@@ -1,9 +1,9 @@
-from retriever.dense.DenseFullSearch import DenseFullSearch
-from config.constants import Split
-from data.loaders.RetrieverDataset import RetrieverDataset
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.retriever.dense.DenseFullSearch import DenseFullSearch
+from dexter.config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 from utils.metrics.SimilarityMatch import DotScore
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from dexter.data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 
 if __name__ == "__main__":

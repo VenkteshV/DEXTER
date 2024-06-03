@@ -6,3 +6,10 @@ __pycache__/
 evaluation/ottqa/results
 experiments/
 indices/
+*.tsv
+dexter.egg-info/
+TATQA_colbert_docs.json
+ambigqa/
+tatqa/
+ootqa/
+dist/

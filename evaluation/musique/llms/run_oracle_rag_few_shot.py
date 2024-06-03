@@ -2,9 +2,9 @@ from llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from config.constants import Split
+from dexter.config.constants import Split
 from sentence_transformers import SentenceTransformer
-from data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
 from torch import Tensor
 from typing import List,Dict
 def get_top_k_similar_instances(

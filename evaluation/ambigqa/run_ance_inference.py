@@ -1,8 +1,8 @@
-from config.constants import Split
-from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.dense.ANCE import ANCE
-from utils.metrics.SimilarityMatch import CosineSimilarity
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.retriever.dense.ANCE import ANCE
+from dexter.utils.metrics.SimilarityMatch import CosineSimilarity
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 if __name__ == "__main__":
 

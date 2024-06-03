@@ -1,9 +1,9 @@
-from config.constants import Split
-from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
-from retriever.dense.TCTColBERT import TCTColBERT
-from utils.metrics.SimilarityMatch import DotScore
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.retriever.dense.ColBERT.colbert.infra.config.config import ColBERTConfig
+from dexter.retriever.dense.TCTColBERT import TCTColBERT
+from dexter.utils.metrics.SimilarityMatch import DotScore
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":

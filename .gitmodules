@@ -1,4 +1,4 @@
 
-[submodule "retriever/dense/ColBERT"]
-	path = retriever/dense/ColBERT
+[submodule "dexter/retriever/dense/ColBERT"]
+	path = dexter/retriever/dense/ColBERT
 	url = https://github.com/VenkteshV/ColBERT.git

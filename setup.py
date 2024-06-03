@@ -8,8 +8,8 @@ optional_packages = {
 }
 
 setup(
-    name="bcqa",
-    version="2.0.0",
+    name="dexter-cqa",
+    version="1.0.1",
     author="Venktesh V, Deepali Prabhu",
     author_email="venkyviswa12@gmail.com",
     description="A Benchmark for Complex Heterogeneous Question answering",
@@ -31,15 +31,16 @@ setup(
         'transformers==4.30.0',
         'protobuf',
         'openai',
+        "annoy",
         'pytrec_eval'
     ],
     extras_require = optional_packages,
     classifiers=[
-        "Development Status :: Beta",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3.8",
         "Topic :: Scientific/Engineering :: Artificial Intelligence"
     ],
-    keywords="Information Retrieval Transformer Networks BERT PyTorch Question Answering IR NLP deep learning"
+    keywords="Information Retrieval Transformer Networks Complex Question Answering BERT PyTorch Question Answering IR NLP deep learning"
 )

@@ -1,0 +1,17 @@
+sentence-transformers
+pytrec_eval
+faiss_cpu
+elasticsearch==7.9.1
+data
+toml
+zope.interface
+transformers==4.30.0
+protobuf
+openai
+annoy
+pytrec_eval
+
+[tf]
+tensorflow>=2.2.0
+tensorflow-text
+tensorflow-hub

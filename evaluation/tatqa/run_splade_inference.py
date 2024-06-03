@@ -1,9 +1,9 @@
-from retriever.sparse.SPLADE import SPLADE
-from data.loaders.RetrieverDataset import RetrieverDataset
-from config.constants import Split
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-from utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
+from dexter.retriever.sparse.SPLADE import SPLADE
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.config.constants import Split
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.utils.metrics.SimilarityMatch import CosineSimilarity as CosScore
+from dexter.data.datastructures.hyperparameters.dpr import DenseHyperParams
 
 
 if __name__ == "__main__":
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     #     corpus = json.load(f)
 
     similarity_measure = CosScore()
-    response = tasb_search.retrieve(corpus,queries,100,similarity_measure)
+    response = tasb_search.retrieve(corpus,queries,100,similarity_measure,"tatqa")
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))

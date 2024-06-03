@@ -1,9 +1,9 @@
 
-from data.loaders.RetrieverDataset import RetrieverDataset
-from config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.config.constants import Split
 
-from retriever.lexical.bm25 import BM25Search
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.retriever.lexical.bm25 import BM25Search
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":

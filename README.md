@@ -4,11 +4,13 @@ Answering complex questions is a difficult task that requires knowledge retrieva
 To address this, we propose our easy to use and  extensible benchmark composing diverse complex QA tasks and provide a toolkit to evaluate zero-shot retrieval capabilities of state-of-the-art dense and sparse retrieval models in an open-domain setting. Additionally, since context-based reasoning is key to complex QA tasks, we extend our toolkit with various LLM engines. Both the above components together allow our users to evaluate the various components in the Retrieval Augmented Generation pipeline.
 
 
-# Setup
+# Setup (from source)
 1) Clone the repo <br />
 2) Create a conda environment conda create -n bcqa  <br />
 3) pip install -e .<br />
 
+# From pip
+pip install dexter-cqa
 # Datasets
 
 |  Dataset Name  |  Dataset alias |                  Homepage                 |                Characteristics               | #Questions | Corpus Size |
@@ -57,11 +59,11 @@ To address this, we propose our easy to use and  extensible benchmark composing 
 # Running Evaluation
 Below is an example script demonstrating how to load a dataset from our benchmark (ambignq here), feed it into one of our retrievers(ANCE here), and evaluate the retrieval quality against the relevance labels provided by the dataset.
 ```python
-from config.constants import Split
-from data.loaders.RetrieverDataset import RetrieverDataset
-from retriever.dense.ANCE import ANCE
-from utils.metrics.SimilarityMatch import CosineSimilarity
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.config.constants import Split
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.retriever.dense.ANCE import ANCE
+from dexter.utils.metrics.SimilarityMatch import CosineSimilarity
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 if __name__ == "__main__":
     # Ensure in config.ini the path to the raw data files are linked under [Data-Path]

@@ -1,11 +1,11 @@
 
-from retriever.sparse.SPLADE import SPLADE
-from data.loaders.RetrieverDataset import RetrieverDataset
+from dexter.retriever.sparse.SPLADE import SPLADE
+from dexter.data.loaders.RetrieverDataset import RetrieverDataset
 
-from config.constants import Split
-from data.datastructures.hyperparameters.dpr import DenseHyperParams
-from utils.metrics.SimilarityMatch import CosineSimilarity
-from utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
+from dexter.config.constants import Split
+from dexter.data.datastructures.hyperparameters.dpr import DenseHyperParams
+from dexter.utils.metrics.SimilarityMatch import CosineSimilarity
+from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 
 if __name__ == "__main__":
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     tasb_search = SPLADE(config_instance)
 
     similarity_measure = CosineSimilarity()
-    response = tasb_search.retrieve(corpus,queries,100,similarity_measure)
+    response = tasb_search.retrieve(corpus,queries,100,similarity_measure,data_name="finqa")
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))
