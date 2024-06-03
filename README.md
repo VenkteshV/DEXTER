@@ -3,7 +3,7 @@
 Answering complex questions is a difficult task that requires knowledge retrieval. 
 To address this, we propose our easy to use and  extensible benchmark composing diverse complex QA tasks and provide a toolkit to evaluate zero-shot retrieval capabilities of state-of-the-art dense and sparse retrieval models in an open-domain setting. Additionally, since context-based reasoning is key to complex QA tasks, we extend our toolkit with various LLM engines. Both the above components together allow our users to evaluate the various components in the Retrieval Augmented Generation pipeline.
 
-For some components in retrieval we draw inspiration from BEIR (https://github.com/beir-cellar/beir)
+For components in retrieval we draw inspiration from BEIR (https://github.com/beir-cellar/beir) and reuse parts of implementation. We thank the authors for open-sourcing their code.
 
 
 # Setup (from source)
