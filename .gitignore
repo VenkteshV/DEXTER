@@ -13,3 +13,4 @@ ambigqa/
 tatqa/
 ootqa/
 dist/
+dexter/tests/corpus_utils/dataset/finqa/
