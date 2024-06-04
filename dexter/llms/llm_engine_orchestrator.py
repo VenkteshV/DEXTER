@@ -7,6 +7,7 @@ import logging
 
 from dexter.llms.flant5_engine import FlanT5Engine
 from dexter.llms.llama_engine import LlamaEngine
+from dexter.llms.mistral_engine import MistralEngine
 from dexter.llms.openai_engine import OpenAIEngine
 
 logger = logging.getLogger()
@@ -21,7 +22,9 @@ class LLMEngineOrchestrator:
         elif llm_class.lower() == LLmConstants.OPENAI.lower():
             return OpenAIEngine(data,model_name,temperature,top_n)
         elif llm_class.lower() == LLmConstants.LLAMA.lower():
-            return LlamaEngine(data,model_name,temperature,top_n)
+            return LlamaEngine(data, model_name, temperature, top_n)
+        elif llm_class.lower() == LLmConstants.MISTRAL.lower():
+            return MistralEngine(data,model_name,temperature,top_n)
         else:
             classname = llm_class
             if classname not in globals():

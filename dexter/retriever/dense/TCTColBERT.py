@@ -38,7 +38,7 @@ class TCTColBERT():
             query_ids = [query.id() for query in queries]
             result_heaps = {qid: [] for qid in query_ids}  # Keep only the top-k docs for each query
             self.results = {qid: {} for qid in query_ids}
-            with Run().context(RunConfig(nranks=2, experiment="colbert")):
+            with Run().context(RunConfig(nranks=2, experiment="default")):
                 batches = range(0, len(corpus), chunksize)
                 print(batches)
                 for batch_num, corpus_start_idx in enumerate(batches):
