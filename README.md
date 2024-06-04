@@ -1,5 +1,6 @@
-![alt text](dexter.png)
-
+<p align="center">
+  <img src="dexter.png" />
+</p>
 # DEXTER (Benchmarking Complex QA)
 
 Answering complex questions is a difficult task that requires knowledge retrieval. 
