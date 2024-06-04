@@ -26,7 +26,7 @@ pip install dexter-cqa
 
 |  Dataset Name  |  Dataset alias |                  Homepage                 |                Characteristics               | #Questions | Corpus Size |
 |:--------------:|:--------------:|:-----------------------------------------:|:--------------------------------------------:|:----------:|:-----------:|
-| MusiqueQA      | musiqueqa      | [Link](https://github.com/StonyBrookNLP/musique)  | Connected multi-hop reasoning                |            | 570k        |
+| MusiqueQA      | musiqueqa (2-hop only)      | [Link](https://github.com/StonyBrookNLP/musique)  | Connected multi-hop reasoning   | 16.8k       | 570k       |
 | WikiMultiHopQA | wikimultihopqa | [Link](https://github.com/Alab-NII/2wikimultihop) | Comparative multi-hop reasoning              | 190k       | 570k        |
 | StrategyQA     | strategyqa     | [Link](https://allenai.org/data/strategyqa)       | Multi-hop reasoning, Implicit Reasoning      | 2.7k       | 26.6M       |
 | AmbigQA        | ambignq        | [Link](https://nlp.cs.washington.edu/ambigqa/)    | Ambiguous Questions                          | 12k        | 24.3M       |
