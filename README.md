@@ -1,3 +1,5 @@
+![alt text](Image.jpeg)
+
 # DEXTER (Benchmarking Complex QA)
 
 Answering complex questions is a difficult task that requires knowledge retrieval. 
