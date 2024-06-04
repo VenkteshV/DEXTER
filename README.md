@@ -3,8 +3,10 @@
 </p>
 
 <p align="center">
-  <img src="bcqa_neurips.001.png" />
+  <img src="bcqa_neurips.001.jpeg" />
 </p>
+
+
 # DEXTER (Benchmarking Complex QA)
 
 Answering complex questions is a difficult task that requires knowledge retrieval. 
