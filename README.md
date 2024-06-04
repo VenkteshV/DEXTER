@@ -1,4 +1,4 @@
-![alt text](Image.jpeg)
+![alt text](dexter.png)
 
 # DEXTER (Benchmarking Complex QA)
 
