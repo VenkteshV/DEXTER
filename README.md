@@ -203,7 +203,7 @@ loader = RetrieverDataset("my-dataset","my-dataset-corpus",
 To build your own retriever you can extend from the class bcqa/retriever/BaseRetriever.py and use it in your evaluation script.
 
 # Citing & Authors
-We thank the following collaborators,
+We thank the following collaborators: <br />
 <b> venktesh Viswanathan </b> <br />
 <b> Deepali Prabhu </b> <br />
 <b> Avishek Anand </b> <br />
