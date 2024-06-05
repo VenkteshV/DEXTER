@@ -49,6 +49,9 @@ pip install dexter-cqa
 | Contriever | Dense    | [Link](https://github.com/facebookresearch/contriever) |
 | ColBERTv2  | Late-Interaction    | [Link](https://github.com/stanford-futuredata/ColBERT) |
 
+# Retrieving over large corpus collections
+Since some of the datasets have corpus collection with large sizes (millions), we also support chunking of corpus when doing retrieval. To avoid storing docs in memory inspired by the issue https://github.com/beir-cellar/beir/pull/117 we maintain a list of top-k docs with scores when computing scores chunkwise using heapq.
+
 # LLM Engines
 
 
