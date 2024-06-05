@@ -61,8 +61,6 @@ pip install dexter-cqa
     - lexical: lexical retrievers like BM25
     - sparse: Sparse retrievers like SPLADE
 - llms: LLM engines
-- SearchAPI:
-- SearchUI: 
 - config: Configuration files with constants and initialization.
 - tests: test cases for the above components
 - utils: utilities needed in the pipeline like retrieval accuracy calculation and matching.
