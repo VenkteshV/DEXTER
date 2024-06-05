@@ -34,7 +34,7 @@ pip install dexter-cqa
 | TAT-QA         | tatqa          | [Link](https://nextplusplus.github.io/TAT-QA/)    | Financial Table and Text multi-hop reasoning | 2.9k       | 7000        |
 | FinQA          | finqa          | [Link](https://github.com/czyssrs/FinQA)          | Financial Table and Text multi-hop reasoning | 8k         | 24.8k       |
 
-
+All datasets can be foudn at one place at [Datasets](https://gitlab.tudelft.nl/venkteshviswan/bcqa_data)
 # Retrievers
 |    Name    | Paradigm | More |
 |:----------:|:--------:|:----:|
