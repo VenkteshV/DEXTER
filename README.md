@@ -15,7 +15,7 @@ To address this, we propose our easy to use and  extensible benchmark composing 
 For components in retrieval we draw inspiration from BEIR (https://github.com/beir-cellar/beir) and reuse some parts of implementation with modification suited to our setup. We thank the authors for open-sourcing their code.
 
 # Colab notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1UOZ_JuDcWGKvwcPs4ygCEoGCUUgC1PUs?usp=sharing]
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1UOZ_JuDcWGKvwcPs4ygCEoGCUUgC1PUs?usp=sharing)
 
 # Setup (from source)
 1) Clone the repo <br />
