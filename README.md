@@ -47,7 +47,7 @@ pip install dexter-cqa
 | tas-b      | Dense    | [Link](https://github.com/sebastian-hofstaetter/tas-balanced-dense-retrieval) |
 | MPNet      | Dense    | [Link](https://github.com/microsoft/MPNet) |
 | Contriever | Dense    | [Link](https://github.com/facebookresearch/contriever) |
-| ColBERTv2  | Dense    | [Link](https://github.com/stanford-futuredata/ColBERT) |
+| ColBERTv2  | Late-Interaction    | [Link](https://github.com/stanford-futuredata/ColBERT) |
 
 # LLM Engines
 
