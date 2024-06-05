@@ -60,7 +60,7 @@ pip install dexter-cqa
     - dense : dense retrievers like ColBERTv2,ANCE, Contriever, MpNet, DPR and Tas-B
     - lexical: lexical retrievers like BM25
     - sparse: Sparse retrievers like SPLADE
-- llms: LLM engines
+- llms: LLM engine orchestrator and implementation for inference using LLama2, Mistral, OpenAI models and Flan-T5 ( more models to come soon.)
 - config: Configuration files with constants and initialization.
 - tests: test cases for the above components
 - utils: utilities needed in the pipeline like retrieval accuracy calculation and matching.
