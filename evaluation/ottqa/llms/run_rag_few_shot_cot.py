@@ -1,4 +1,4 @@
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
 from dexter.config.constants import Split
@@ -29,8 +29,8 @@ if __name__=="__main__":
                         continue
                 else:
                         ids.append(row.question.id())
-                top_3 = " ".join(evidence[row.question.id()][0:25])
-                #print(evidence_text)
+                top_3 = " ".join(evidence[row.question.id()][0:5])
+                print("top_3***********",len(evidence[row.question.id()][0:5]))
                 try:
                         user_prompt = """
  Read the following text and table, and then answer a question
@@ -93,7 +93,7 @@ Rationale: The ending allowance balance in 2005 is 47. The ending allowance bala
                 #         mismatches+=1
                 #         continue
                 except:
-                        top_3 = " ".join(evidence[row.question.id()][0:10])
+                        top_3 = " ".join(evidence[row.question.id()][0:5])
 
                         user_prompt = """
  Read the following text and table, and then answer a question
@@ -203,6 +203,6 @@ Rationale: The ending allowance balance in 2005 is 47. The ending allowance bala
                 print("EM", matches/(matches+mismatches))
                 print(final_questions)
                 evidences = []
-                final_questions.to_csv("chatgpt_ottqa_rag_few_shot_cot.tsv",sep="\t",index=False)
+                final_questions.to_csv("chatgpt_ottqa_rag_few_shot_cot_5.tsv",sep="\t",index=False)
 
 

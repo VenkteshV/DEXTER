@@ -1,9 +1,9 @@
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from llms.openai_engine import OpenAIEngine
+from dexter.llms.openai_engine import OpenAIEngine
 from dexter.config.constants import Split
 from sentence_transformers import SentenceTransformer
 from dexter.data.loaders.RetrieverDataset import RetrieverDataset

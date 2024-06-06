@@ -1,9 +1,9 @@
 import unittest
 
-from llms.flant5_engine import FlanT5Engine
-from llms.llama_engine import LlamaEngine
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
-from llms.openai_engine import OpenAIEngine
+from dexter.llms.flant5_engine import FlanT5Engine
+from dexter.llms.llama_engine import LlamaEngine
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.openai_engine import OpenAIEngine
 
 
 class MyTestCase(unittest.TestCase):

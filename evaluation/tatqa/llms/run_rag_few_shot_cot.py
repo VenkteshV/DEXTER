@@ -1,4 +1,4 @@
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
 
@@ -26,7 +26,7 @@ if __name__=="__main__":
                         continue
                 else:
                         ids.append(row.question.id())
-                top_3 = " ".join(evidence[row.question.id()][0:10])
+                top_3 = " ".join(evidence[row.question.id()][0:5])
                 user_prompt = """                Read the following text and table, and then answer a question
 Text: during the year ended march 31 , 2012 , the company has recorded $ 3.3 million in stock-based compensation expense for equity awards in which the prescribed performance milestones have been achieved or are probable of being achieved .
 Table: - | number of shares ( in thousands ) | weighted average grant date fair value ( per share )
@@ -138,6 +138,6 @@ Rationale: The ending allowance balance in 2005 is 47. The ending allowance bala
                 final_questions = pd.DataFrame(question_df)
                 print("EM", matches/(matches+mismatches))
                 print(final_questions)
-                final_questions.to_csv("chatgpt_tatqa_rag_10_few_shot_cot.tsv",sep="\t",index=False)
+                final_questions.to_csv("chatgpt_tatqa_rag_5_few_shot_cot.tsv",sep="\t",index=False)
 
 

@@ -1,8 +1,0 @@
-README.md
-setup.cfg
-setup.py
-bcqa.egg-info/PKG-INFO
-bcqa.egg-info/SOURCES.txt
-bcqa.egg-info/dependency_links.txt
-bcqa.egg-info/requires.txt
-bcqa.egg-info/top_level.txt

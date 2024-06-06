@@ -1,7 +1,7 @@
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
-from llms.openai_engine import OpenAIEngine
+from dexter.llms.openai_engine import OpenAIEngine
 from dexter.config.constants import Split
 from dexter.data.loaders.RetrieverDataset import RetrieverDataset
 

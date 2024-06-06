@@ -33,5 +33,12 @@ if __name__ == "__main__":
     #print(response)
     print("indices",len(response))
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))
-    with open("ambigqa_colbert.json","w") as f:
-        json.dump(response,f)
+    ambigqa_docs = {}
+
+    for index, key in enumerate(list(response.keys())):
+        ambigqa_docs[key] = []
+        for id in list(response[key].keys()):
+            corpus_id = int(id)
+            ambigqa_docs[key].append(corpus[corpus_id].text())
+    with open("ambigqa_colbert_docs.json","w") as f:
+        json.dump(ambigqa_docs,f)

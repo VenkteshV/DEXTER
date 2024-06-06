@@ -8,7 +8,6 @@ class LlamaEngine:
         self.model_name = model_name
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForCausalLM.from_pretrained(model_name)
-        self.model.cuda()
         self.temperature = temperature
         self.data = data
         self.top_n = top_n

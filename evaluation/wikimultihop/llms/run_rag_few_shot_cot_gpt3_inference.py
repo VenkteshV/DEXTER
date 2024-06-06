@@ -1,4 +1,4 @@
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
 
@@ -26,7 +26,7 @@ if __name__=="__main__":
                         continue
                 else:
                         ids.append(row.question.id())
-                top_3 = " ".join(evidence[row.question.id()][0:10])
+                top_3 = " ".join(evidence[row.question.id()][0:5])
                 user_prompt = """[Question]: When does monsoon season end in the state the area code 575 is located?
 [Answer]: The area code 575 is located in New Mexico. Monsoon season in New Mexico typically ends in mid-September. So the
 [Final Answer]: mid-September.
@@ -72,6 +72,6 @@ Packers.
                 final_questions = pd.DataFrame(question_df)
                 print("EM", matches/(matches+mismatches))
                 print(final_questions)
-                final_questions.to_csv("chatgpt_wqa_rag_10.tsv",sep="\t",index=False)
+                final_questions.to_csv("chatgpt_wqa_rag_5.tsv",sep="\t",index=False)
 
 

@@ -1,4 +1,4 @@
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
 
@@ -28,7 +28,7 @@ if __name__=="__main__":
                         continue
                 else:
                         ids.append(row.question.id())
-                top_3 = " ".join(evidence[row.question.id()][0:10])
+                top_3 = " ".join(evidence[row.question.id()][0:5])
 
                 user_prompt = """[Original Question]: Are any animals in Chinese calendar Chordata?
                                       [Rationale]:The chinese zodiac based on the Chinese calendar has a number of animals including dogs and pigs.
@@ -51,7 +51,7 @@ if __name__=="__main__":
  
                       [Final Answer]: True \n\n
                       Following the given examples, 
-                      Think step by step and using information in goven context Evidence:"""+top_3+""" answer as one of true or false strictly preceded by [Final Answer]: for the Question:"""+row.question.text()
+                      Think step by step generate rationale and using information in given context Evidence:"""+top_3+""" answer as one of true or false strictly preceded by [Final Answer]: for the Question:"""+row.question.text()
                 print("user_prompt",user_prompt)
                 chain_answer = llm_instance.get_chat_completion(user_prompt,system_prompt)
                 # if "not possible" in chain_answer.lower():
@@ -76,6 +76,6 @@ if __name__=="__main__":
                 final_questions = pd.DataFrame(question_df)
                 print("EM", matches/(matches+mismatches))
                 print(final_questions)
-                final_questions.to_csv("chatgpt_rag_strategy_few_shot_cot.tsv",sep="\t",index=False)
+                final_questions.to_csv("chatgpt_rag_strategy_few_shot_cot_5.tsv",sep="\t",index=False)
 
 

@@ -5,7 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 class MistralEngine:
 
-    def __init__(self, data, model_name="mistralai/Mistral-7B-Instruct-v0.1", temperature=0.3, top_n=1, max_new_tokens=512):
+    def __init__(self, data, model_name="mistralai/Mistral-7B-Instruct-v0.1", temperature=0.3, top_n=1, max_new_tokens=256):
         self.model_name = model_name
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.temperature = temperature
@@ -32,7 +32,6 @@ class MistralEngine:
             {"role": "user", "content": user_prompt
 },
         ]
-
         prompt = self.pipeline.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         outputs = self.pipeline(prompt,
             max_new_tokens=self.max_new_tokens,

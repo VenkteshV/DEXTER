@@ -1,4 +1,4 @@
-from llms.llm_engine_orchestrator import LLMEngineOrchestrator
+from dexter.llms.llm_engine_orchestrator import LLMEngineOrchestrator
 import json
 import pandas as pd
 from dexter.config.constants import Split
@@ -28,7 +28,7 @@ if __name__=="__main__":
                         continue
                 else:
                         ids.append(row.question.id())
-                top_3 = " ".join(evidence[row.question.id()][0:10])
+                top_3 = " ".join(evidence[row.question.id()][0:5])
                 #print(evidence_text)
                 try:
                         user_prompt = """ Follow the examples, Think step by step, use information from given table and text"""+"Table and Text:"+top_3 +"and answer the Question:""" +row.question.text()+"""Give step by step solution rationale preceded by Rationale: and  direct final answer preceded by [Final Answer]: wihtout lengthy descriptions"""
@@ -41,7 +41,7 @@ if __name__=="__main__":
                 #         mismatches+=1
                 #         continue
                 except:
-                        top_3 = " ".join(evidence[row.question.id()][0:10])
+                        top_3 = " ".join(evidence[row.question.id()][0:5])
 
                         user_prompt = """ 
                                               Table: $ in millions | year ended december 2014 | year ended december 2013 | year ended december 2012
@@ -149,6 +149,6 @@ Think step by step, use information from given table and text. For answer """+"T
                 print("EM", matches/(matches+mismatches))
                 print(final_questions)
                 evidences = []
-                final_questions.to_csv("chatgpt_finqa_rag_few_shot_cot.tsv",sep="\t",index=False)
+                final_questions.to_csv("chatgpt_finqa_rag_few_shot_cot_5.tsv",sep="\t",index=False)
 
 
