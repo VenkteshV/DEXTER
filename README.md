@@ -122,6 +122,13 @@ export PYTHONPATH=/path
 ```
 python3 evaluation/tatqa/run_dpr_inference.py
 ```
+
+## To reproduce colbert results run
+```
+python3 evaluation/tatqa/test_tctcolbert_inference.py
+```
+Similarly other retrievers can be also run using other scripts in the folder
+
 # Building your own custom dataset
 
 You can quickly build your own dataset in three steps:
