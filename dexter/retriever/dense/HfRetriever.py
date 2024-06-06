@@ -173,7 +173,7 @@ class HfRetriever(BaseRetriver):
             corpus_embeddings = embeddings
         else:
             corpus_embeddings = self.encode_corpus(corpus)
-            joblib.dump(corpus_embeddings,"indices/corpus/index")
+            #joblib.dump(corpus_embeddings,"indices/corpus/index")
 
         # Compute similarites using either cosine-similarity or dot product
         cos_scores = score_function.evaluate(query_embeddings,corpus_embeddings)
