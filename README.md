@@ -109,7 +109,18 @@ if __name__ == "__main__":
 ```
 # Running Evaluation for Results in Paper
 All evaluation scripts dataset wise can be found in the evaluation folder
+## Example TAT-QA
 ```
+curl https://gitlab.tudelft.nl/venkteshviswan/bcqa_data/-/raw/main/tatqa.zip -o tatqa.zip
+```
+In evaluation/config.ini configure the corresponding paths to downloaded files
+configure project root directory to PYTHONPATH variable
+```
+export PYTHONPATH=/path
+```
+## To reproduce dpr results run
+```
+python3 evaluation/tatqa/run_dpr_inference.py
 ```
 # Building your own custom dataset
 
