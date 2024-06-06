@@ -109,7 +109,7 @@ if __name__ == "__main__":
 ```
 # Running Evaluation for Results in Paper
 All evaluation scripts dataset wise can be found in the evaluation folder
-## Example TAT-QA
+## Example TAT-QA ( When building from source)
 ```
 curl https://gitlab.tudelft.nl/venkteshviswan/bcqa_data/-/raw/main/tatqa.zip -o tatqa.zip
 ```
