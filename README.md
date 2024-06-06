@@ -129,6 +129,15 @@ python3 evaluation/tatqa/test_tctcolbert_inference.py
 ```
 Similarly other retrievers can be also run using other scripts in the folder
 
+# To Reproduce LLm Results
+```
+export OPENAI_KEY="<you key here>"
+```
+To run openAI model using colbert docs, run:
+```
+python3 evaluation/tatqa/llms/run_rag_few_shot_cot.py
+```
+Above experiment would help get numbers for FEW-SHOT-COT for gpt-3.5-turbo which can be checked with Table 3.
 # Building your own custom dataset
 
 You can quickly build your own dataset in three steps:
