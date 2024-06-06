@@ -107,7 +107,10 @@ if __name__ == "__main__":
     metrics = RetrievalMetrics(k_values=[1,10,100])
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))
 ```
-
+# Running Evaluation for Results in Paper
+All evaluation scripts dataset wise can be found in the evaluation folder
+```
+```
 # Building your own custom dataset
 
 You can quickly build your own dataset in three steps:
