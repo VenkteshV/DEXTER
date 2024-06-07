@@ -31,11 +31,11 @@ setup(
         'transformers==4.30.0',
         'protobuf',
         'openai',
-        "annoy",
+        'annoy',
         'pytrec_eval',
-        "joblib",
-        "tqdm",
-        "pandas"
+        'joblib',
+        'tqdm',
+        'pandas'
     ],
     extras_require = optional_packages,
     classifiers=[
