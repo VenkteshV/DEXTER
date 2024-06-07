@@ -32,7 +32,10 @@ setup(
         'protobuf',
         'openai',
         "annoy",
-        'pytrec_eval'
+        'pytrec_eval',
+        "joblib",
+        "tqdm",
+        "pandas"
     ],
     extras_require = optional_packages,
     classifiers=[
