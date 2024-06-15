@@ -117,6 +117,11 @@ In evaluation/config.ini configure the corresponding paths to downloaded files
 configure project root directory to PYTHONPATH variable
 ```
 export PYTHONPATH=/path
+
+export OPENAI_KEY=<your openai key>
+
+export huggingface_token = <your huggingface token to access llama2  >
+
 ```
 ## To reproduce dpr results run
 ```
