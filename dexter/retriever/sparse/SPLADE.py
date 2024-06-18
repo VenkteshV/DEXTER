@@ -155,7 +155,7 @@ class SpladeNaver(torch.nn.Module):
     def __init__(self, model_path):
         super().__init__()
         self.transformer = AutoModelForMaskedLM.from_pretrained(model_path)
-        #self.transformer.cuda()
+
     def forward(self, **kwargs):
         out = self.transformer(**kwargs)["logits"]  # output (logits) of MLM head, shape (bs, pad_len, voc_size)
         return torch.max(torch.log(1 + torch.relu(out)) * kwargs["attention_mask"].unsqueeze(-1), dim=1).values
@@ -230,8 +230,9 @@ class SpladeNaver(torch.nn.Module):
             # print(sentences_batch)
             features = tokenizer(sentences_batch,
                                  add_special_tokens=True,
-                                 padding=True,  # pad to max sequence length in batch
-                                 truncation=True,  # truncates to self.max_length
+                                 padding="longest",  # pad to max sequence length in batch
+                                 truncation="only_first",  # truncates to self.max_length
+                                 max_length=maxlen,
                                  return_attention_mask=True,
                                  return_tensors="pt")
             # print(features)

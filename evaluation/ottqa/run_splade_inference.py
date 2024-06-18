@@ -20,10 +20,10 @@ if __name__ == "__main__":
     splade_search = SPLADE(config_instance)
 
     similarity_measure = CosScore()
-    response = splade_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=200000)
+    response = splade_search.retrieve(corpus,queries,100,similarity_measure,data_name="ottqa",chunk=True,chunksize=200000)
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))
     res = metrics.evaluate_retrieval(qrels=qrels,results=response)
-    with open("evaluation/ottqa/results/ottqa_splade.json","w+") as fp:
+    with open("evaluation/ottqa/ottqa_splade.json","w+") as fp:
         json.dump(res,fp) 

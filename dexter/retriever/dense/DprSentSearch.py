@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class DprSentSearch():
 
     def __init__(self,
-                 config: DenseHyperParams):
+                 config: DenseHyperParams,dataset_name=None):
         self.query_encoder = SentenceTransformer(config.query_encoder_path, device='cuda')
         self.document_encoder = SentenceTransformer(
             config.document_encoder_path, device='cuda')
@@ -29,6 +29,7 @@ class DprSentSearch():
         self.ann_algo = None
         self.sep = "[SEP]"
         self.config = config
+        self.dataset_name = dataset_name
         self.logger = logging.getLogger(__name__)
 
     def get_passage_embeddings(self, passages:List[str] = None):
@@ -53,7 +54,7 @@ class DprSentSearch():
         passages = [self.documents[idx]+"[SEP]"+self.titles[idx]
                          for idx in self.index_mapping]
         #print("passages",len(passages))
-        index_exists = self.ann_algo.load_index_if_available()
+        index_exists = self.ann_algo.load_index_if_available(self.dataset_name)
         ##TODO: Uncomment below for index usage
         #index_exists = False
         if index_exists:
@@ -62,7 +63,7 @@ class DprSentSearch():
         else:
             passage_vectors = self.get_passage_embeddings(passages)
             assert len(passage_vectors)==len(self.index_mapping)
-            self.ann_algo.create_index(passage_vectors)
+            self.ann_algo.create_index(passage_vectors,self.dataset_name)
 
     def retrieve_in_chunks(self,
                corpus: List[Evidence], 

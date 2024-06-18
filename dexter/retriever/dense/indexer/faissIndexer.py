@@ -24,14 +24,14 @@ class FaissSearch:
         #passages = [self.data[idx] for passage_ids in indices for idx in passage_ids]
         return {"ids": indices, "distances": distances}
 
-    def load_index_if_available(self)->None:
-        if os.path.exists("indices/faiss/index_faiss"):
-            self.ann = faiss.read_index("indices/faiss/index_faiss")
+    def load_index_if_available(self,dataset_name=None)->None:
+        if os.path.exists("indices/faiss/index_faiss_{}".format(dataset_name)):
+            self.ann = faiss.read_index("indices/faiss/index_faiss_{}".format(dataset_name))
             return True
         else:
             return False
-    def create_index(self, passage_vectors):
+    def create_index(self, passage_vectors,dataset_name=None):
         self.ann.add(passage_vectors)
         if not os.path.exists("indices/faiss"):
             os.makedirs("indices/faiss")
-        faiss.write_index(self.ann, "indices/faiss/index_faiss")
+        faiss.write_index(self.ann, "indices/faiss/index_faiss_{}".format(dataset_name))

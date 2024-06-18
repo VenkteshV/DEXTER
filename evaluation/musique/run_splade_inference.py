@@ -27,7 +27,7 @@ if __name__ == "__main__":
     #     corpus = json.load(f)
 
     similarity_measure = CosScore()
-    response = tasb_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=30000)
+    response = tasb_search.retrieve(corpus,queries,100,similarity_measure,chunk=True,chunksize=30000,data_name="misuqueqa")
     print("indices",len(response))
     metrics = RetrievalMetrics(k_values=[1,10,100])
     print(metrics.evaluate_retrieval(qrels=qrels,results=response))

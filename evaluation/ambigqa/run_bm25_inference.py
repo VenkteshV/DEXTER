@@ -2,7 +2,7 @@ from dexter.data.loaders.RetrieverDataset import RetrieverDataset
 from dexter.config.constants import Split
 from dexter.retriever.lexical.bm25 import BM25Search
 from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
-
+import os
 
 if __name__ == "__main__":
 
@@ -11,8 +11,10 @@ if __name__ == "__main__":
     loader = RetrieverDataset("ambignq","ambignq-corpus",
                                "evaluation/config.ini", Split.DEV,tokenizer=None)
     queries, qrels, corpus = loader.qrels()
-    print("queries",len(queries),len(qrels),len(corpus),queries[0])
-    bm25_search = BM25Search(index_name="ambigqa",initialize=True)
+    print("queries", len(queries), len(qrels), len(corpus), queries[0])
+    cert_path = os.environ["ca_certs"]
+    password = os.environ["http_auth"]
+    bm25_search = BM25Search(index_name="ambigqa",initialize=False,cert_path=cert_path,elastic_passoword=password)
 
     ## wikimultihop
     

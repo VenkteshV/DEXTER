@@ -2,6 +2,9 @@ from setuptools import setup, find_packages
 
 with open("README.md", mode="r", encoding="utf-8") as readme_file:
     readme = readme_file.read()
+package_data = {
+    "": ["*.cpp", "*.cu"],
+}
 
 optional_packages = {
     "tf" : ['tensorflow>=2.2.0', 'tensorflow-text', 'tensorflow-hub']
@@ -9,7 +12,7 @@ optional_packages = {
 
 setup(
     name="dexter-cqa",
-    version="1.0.3",
+    version="1.0.7",
     author="Venktesh V, Deepali Prabhu",
     author_email="venkyviswa12@gmail.com",
     description="A Benchmark for Complex Heterogeneous Question answering",
@@ -36,6 +39,8 @@ setup(
         'joblib',
         'tqdm',
         'pandas'
+        "ujson",
+        "gitpython"
     ],
     extras_require = optional_packages,
     classifiers=[
@@ -45,5 +50,6 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Topic :: Scientific/Engineering :: Artificial Intelligence"
     ],
+    package_data=package_data,
     keywords="Information Retrieval Transformer Networks Complex Question Answering BERT PyTorch Question Answering IR NLP deep learning"
 )

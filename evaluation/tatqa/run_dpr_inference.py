@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     loader = RetrieverDataset("tatqa","tatqa-corpus","evaluation/config.ini",Split.DEV)
     queries, qrels, corpus = loader.qrels()
-    dpr_sent_search = DprSentSearch(config_instance)
+    dpr_sent_search = DprSentSearch(config_instance,dataset_name="tatqa")
     _ = dpr_sent_search.get_ann_algo(768, 100, "euclidean")
 
     dpr_sent_search.create_index(corpus)

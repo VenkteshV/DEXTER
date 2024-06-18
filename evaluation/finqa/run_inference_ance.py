@@ -6,7 +6,7 @@ from dexter.utils.metrics.retrieval.RetrievalMetrics import RetrievalMetrics
 
 if __name__ == "__main__":
     loader = RetrieverDataset("finqa","finqa-corpus","evaluation/config.ini",Split.DEV)
-    retriever = ANCE("tests/retriever/test_config.ini")
+    retriever = ANCE("evaluation/config.ini")
     queries, qrels, corpus = loader.qrels()
     qrels_ret = retriever.retrieve(corpus,queries,100,CosineSimilarity(),True)
     print("queries",len(queries),len(corpus))

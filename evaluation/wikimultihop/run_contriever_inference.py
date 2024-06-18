@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     loader = RetrieverDataset("wikimultihopqa","wiki-musiqueqa-corpus","evaluation/config.ini",Split.DEV)
     queries, qrels, corpus = loader.qrels()
-    print("queries",len(queries),len(qrels),len(corpus),queries[0],qrels["0"])
+    print("queries",len(queries),len(qrels),len(corpus),queries[0])
     tasb_search = Contriever(config_instance)
 
     ## wikimultihop
