@@ -12,7 +12,7 @@ optional_packages = {
 
 setup(
     name="dexter-cqa",
-    version="1.0.7",
+    version="1.0.8",
     author="Venktesh V, Deepali Prabhu",
     author_email="venkyviswa12@gmail.com",
     description="A Benchmark for Complex Heterogeneous Question answering",
@@ -38,7 +38,7 @@ setup(
         'pytrec_eval',
         'joblib',
         'tqdm',
-        'pandas'
+        'pandas',
         "ujson",
         "gitpython"
     ],
