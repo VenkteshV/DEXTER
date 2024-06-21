@@ -53,7 +53,12 @@ pip install dexter-cqa
 Since some of the datasets have corpus collection with large sizes (millions), we also support chunking of corpus when doing retrieval. To avoid storing docs in memory inspired by the issue https://github.com/beir-cellar/beir/pull/117 we maintain a list of top-k docs with scores when computing scores chunkwise using heapq.
 
 # LLM Engines
+- OpenAI models
+- Mistral
+- Llama
+- FlanT5
 
+  Our toolkit is flexible and can support further new generative models. it will be an ongoing effort and we welcome contributions.
 
 
 
