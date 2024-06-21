@@ -128,6 +128,14 @@ export OPENAI_KEY=<your openai key>
 export huggingface_token = <your huggingface token to access llama2  >
 
 ```
+
+If you are using Elasticsearch (ES) installation >8 please export the following values based on your ES setup
+
+```
+export ca_certs = <path to http_ca.crt path in your ES installation>
+
+export http_auth = <your elasticsearch password>
+```
 ## To reproduce dpr results run
 ```
 python3 evaluation/tatqa/run_dpr_inference.py
