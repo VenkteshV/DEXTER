@@ -261,7 +261,8 @@ Thanks to the following collaborators: <br />
 
 
 
-´´´@misc{venky:2024:dexter,
+```
+@misc{venky:2024:dexter,
       title={DEXTER: A Benchmark for open-domain Complex Question Answering using LLMs}, 
       author={Venktesh V. and Deepali Prabhu and Avishek Anand},
       year={2024},
@@ -269,7 +270,8 @@ Thanks to the following collaborators: <br />
       archivePrefix={arXiv},
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2406.17158}, 
-}´´´
+}
+```
 
 
 
