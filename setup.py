@@ -26,6 +26,7 @@ setup(
     install_requires=[
         'sentence-transformers',
         'pytrec_eval',
+        'bert_score',
         'faiss_cpu',
         'elasticsearch==7.9.1',
         'data',
