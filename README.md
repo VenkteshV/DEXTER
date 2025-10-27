@@ -15,11 +15,12 @@ To address this, we propose our easy to use and  extensible benchmark composing 
 For components in retrieval we draw inspiration from BEIR (https://github.com/beir-cellar/beir) and reuse some parts of implementation with modification suited to our setup. We thank the authors for open-sourcing their code.
 
 # Colab notebook
+When running colab notebook navigate to runtime-> change runtime type and set runtime python3 version to 2025.07
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1UOZ_JuDcWGKvwcPs4ygCEoGCUUgC1PUs?usp=sharing)
 
 # Setup (from source)
 1) Clone the repo <br />
-2) Create a conda environment conda create -n bcqa python=3.12  <br />
+2) Create a conda environment conda create -n bcqa python=3.11  <br />
 3) Activate the conda env conda activate bcqa
 4) pip install -e .<br />
 
