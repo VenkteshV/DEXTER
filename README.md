@@ -20,7 +20,8 @@ For components in retrieval we draw inspiration from BEIR (https://github.com/be
 # Setup (from source)
 1) Clone the repo <br />
 2) Create a conda environment conda create -n bcqa  <br />
-3) pip install -e .<br />
+3) Activate the conda env conda activate bcqa
+4) pip install -e .<br />
 
 # From pip
 pip install dexter-cqa
