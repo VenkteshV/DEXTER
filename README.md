@@ -15,7 +15,7 @@ To address this, we propose our easy to use and  extensible benchmark composing 
 For components in retrieval we draw inspiration from BEIR (https://github.com/beir-cellar/beir) and reuse some parts of implementation with modification suited to our setup. We thank the authors for open-sourcing their code.
 
 # Colab notebook
-## When running colab notebook navigate to runtime-> change runtime type and set runtime python3 version to 2025.07
+## When running colab notebook navigate to runtime-> change runtime type and set runtime python3 version to 2025.07 to avoid tokenizer wheel issue. if you still face issue check if python version in colab is 3.11.13 or any of the 3.11 versions. 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1UOZ_JuDcWGKvwcPs4ygCEoGCUUgC1PUs?usp=sharing)
 
 # Setup (from source)
